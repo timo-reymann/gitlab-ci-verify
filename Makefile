@@ -27,30 +27,17 @@ create-dist: ## Create dist folder if not already existent
 
 build-linux: create-dist ## Build binaries for linux
 	@CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o $(BIN_PREFIX)linux-amd64 $(BUILD_ARGS)
-	@CGO_ENABLED=0 GOOS=linux GOARCH=386 go build -o $(BIN_PREFIX)linux-i386 $(BUILD_ARGS)
-	@CGO_ENABLED=0 GOOS=linux GOARCH=arm go build -o $(BIN_PREFIX)linux-arm $(BUILD_ARGS)
 	@CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -o $(BIN_PREFIX)linux-arm64 $(BUILD_ARGS)
 
 build-windows: create-dist ## Build binaries for windows
 	@CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -o $(BIN_PREFIX)windows-amd64.exe $(BUILD_ARGS)
-	@CGO_ENABLED=0 GOOS=windows GOARCH=386 go build -o $(BIN_PREFIX)windows-i386.exe $(BUILD_ARGS)
-	@CGO_ENABLED=0 GOOS=windows GOARCH=arm go build -o $(BIN_PREFIX)windows-arm.exe $(BUILD_ARGS)
 
 build-darwin: create-dist  ## Build binaries for macOS
 	@CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -o $(BIN_PREFIX)darwin-amd64 $(BUILD_ARGS)
 	@CGO_ENABLED=0 GOOS=darwin GOARCH=arm64 go build -o $(BIN_PREFIX)darwin-arm64 $(BUILD_ARGS)
 
-build-freebsd: create-dist ## Build binaries for FreeBSD
-	@CGO_ENABLED=0 GOOS=freebsd GOARCH=amd64 go build -o $(BIN_PREFIX)freebsd-amd64 $(BUILD_ARGS)
-    @CGO_ENABLED=0 GOOS=freebsd GOARCH=386 go build -o $(BIN_PREFIX)freebsd-i386 $(BUILD_ARGS)
-    @CGO_ENABLED=0 GOOS=freebsd GOARCH=arm64 go build -o $(BIN_PREFIX)freebsd-arm64 $(BUILD_ARGS)
-    @CGO_ENABLED=0 GOOS=freebsd GOARCH=arm go build -o $(BIN_PREFIX)freebsd-arm $(BUILD_ARGS)
-
-build-openbsd: create-dist ## Build binaries for OpenBSD
-	@CGO_ENABLED=0 GOOS=openbsd GOARCH=amd64 go build -o $(BIN_PREFIX)openbsd-amd64 $(BUILD_ARGS)
-    @CGO_ENABLED=0 GOOS=openbsd GOARCH=386 go build -o $(BIN_PREFIX)openbsd-i386 $(BUILD_ARGS)
 
 create-checksums: ## Create checksums for binaries
 	@find ./dist -type f -exec sh -c 'sha256sum {} | cut -d " " -f 1 > {}.sha256' {} \;
 
-build: build-linux build-darwin build-windows build-freebsd build-openbsd create-checksums ## Build binaries for all platform
+build: build-linux build-darwin build-windows create-checksums ## Build binaries for all platform
