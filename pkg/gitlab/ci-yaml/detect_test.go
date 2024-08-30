@@ -35,7 +35,7 @@ func TestGetFirstValidationResult(t *testing.T) {
 			ClonedViaHttps: true,
 			RepoSlug:       "project/foo",
 		},
-	}, "", "test_data/valid.yaml", time.Second*2)
+	}, "", "test_data/valid.yaml", 600*time.Millisecond)
 
 	if err != nil {
 		t.Fatal(err)
