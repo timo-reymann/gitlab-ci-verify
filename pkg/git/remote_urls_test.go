@@ -31,7 +31,7 @@ func TestGetRemoteUrls(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		urls, err := GetRemoteUrls(fmt.Sprintf("testdata/repo-%s", tc.repoPath))
+		urls, err := GetRemoteUrls(fmt.Sprintf("testdata/repo-%s.git", tc.repoPath))
 		if err != nil {
 			if tc.expectedErrMsg != "" {
 				t.Fatalf("Expected no error, but got %v", err)

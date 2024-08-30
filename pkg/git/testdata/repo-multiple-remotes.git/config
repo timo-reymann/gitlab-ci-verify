@@ -1,0 +1,13 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+	ignorecase = true
+	precomposeunicode = true
+[remote "remote01"]
+	url = https://git.example.com
+	fetch = +refs/heads/*:refs/remotes/remote01/*
+[remote "remote02"]
+	url = https://git02.example.com
+	fetch = +refs/heads/*:refs/remotes/remote02/*
