@@ -1,6 +1,9 @@
 package git
 
-import "github.com/go-git/go-git/v5"
+import (
+	"github.com/go-git/go-git/v5"
+	"slices"
+)
 
 func openRepository(path string) (*git.Repository, error) {
 	r, err := git.PlainOpen(path)
@@ -12,7 +15,7 @@ func openRepository(path string) (*git.Repository, error) {
 }
 
 func getRemoteUrls(r *git.Repository) ([]string, error) {
-	urls := make([]string, 0)
+	var uniqueUrls = make(map[string]bool)
 
 	remotes, err := r.Remotes()
 	if err != nil {
@@ -20,8 +23,19 @@ func getRemoteUrls(r *git.Repository) ([]string, error) {
 	}
 
 	for _, remote := range remotes {
-		urls = append(urls, remote.Config().URLs...)
+		for _, remoteUrl := range remote.Config().URLs {
+			uniqueUrls[remoteUrl] = true
+		}
 	}
+
+	var urls = make([]string, len(uniqueUrls))
+	i := 0
+	for url, _ := range uniqueUrls {
+		urls[i] = url
+		i++
+	}
+
+	slices.Sort(urls)
 
 	return urls, nil
 }
