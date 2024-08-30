@@ -6,6 +6,8 @@ import (
 
 // Configuration for the CLI
 type Configuration struct {
+	GitLabCiFile  string
+	GitlabBaseUrl string
 }
 
 func (conf *Configuration) addBoolFlag(field *bool, long string, short string, val bool, usage string) {
@@ -25,7 +27,8 @@ func (conf *Configuration) addStringFlag(field *string, long string, short strin
 }
 
 func (conf *Configuration) defineFlags() {
-
+	conf.addStringFlag(&conf.GitLabCiFile, "gitlab-ci-file", "", ".gitlab-ci.yml", "The Yaml file used to configure GitLab CI")
+	conf.addStringFlag(&conf.GitlabBaseUrl, "gitlab-base-url", "", "auto-detect", "Set the gitlab base url explicitly in case detection does not work or your clone and base url differs")
 }
 
 func (conf *Configuration) Help() {
