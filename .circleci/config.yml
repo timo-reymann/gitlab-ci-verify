@@ -9,6 +9,7 @@ orbs:
   github-cli: circleci/github-cli@2.4.0
   docker: circleci/docker@2.6.0
   codecov: codecov/codecov@4.1.0
+  go: circleci/go@1.11.0
 
 executors:
   go:
@@ -20,6 +21,7 @@ jobs:
     executor: go
     steps:
       - checkout
+      - go/load-cache
       - run:
           name: Run tests
           command: |
@@ -29,6 +31,7 @@ jobs:
           name: Get test coverage
           command: |
             go test -race -coverprofile=coverage.txt -covermode=atomic  -v ./...
+      - go/save-cache
       - codecov/upload
       - store_test_results:
           path: unit-tests.xml
@@ -37,10 +40,12 @@ jobs:
       - store_artifacts:
           path: coverage.html
 
+
   build:
     executor: go
     steps:
       - checkout
+      - go/load-cache
       - run:
           name: Build binaries
           command: make build
@@ -48,6 +53,7 @@ jobs:
           root: ./
           paths:
             - dist/
+      - go/save-cache
 
 workflows:
   version: 2
