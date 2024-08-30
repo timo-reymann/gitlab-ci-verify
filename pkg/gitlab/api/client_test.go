@@ -1,4 +1,4 @@
-package gitlab_api
+package api
 
 import (
 	"net/http"
