@@ -62,3 +62,34 @@ func TestParseGitlabRemoteUrlInfo(t *testing.T) {
 		})
 	}
 }
+
+func TestFilterGitlabRemoteUrls(t *testing.T) {
+	testCases := []struct {
+		name          string
+		remoteUrls    []string
+		expectedInfos []GitlabRemoteUrlInfo
+	}{
+		{
+			name: "Valid GitLab remote URLs",
+			remoteUrls: []string{
+				"git@gitlab.com:group/project.git",
+				"https://gitlab.com/user/repo.git",
+				"http://gitlab.example.com/namespace/repository.git",
+			},
+			expectedInfos: []GitlabRemoteUrlInfo{
+				{Hostname: "gitlab.com", ClonedViaHttps: false, RepoSlug: "group/project"},
+				{Hostname: "gitlab.com", ClonedViaHttps: true, RepoSlug: "user/repo"},
+				{Hostname: "gitlab.example.com", ClonedViaHttps: false, RepoSlug: "namespace/repository"},
+			},
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			actualInfos := FilterGitlabRemoteUrls(tc.remoteUrls)
+			if !reflect.DeepEqual(actualInfos, tc.expectedInfos) {
+				t.Errorf("Expected: %v, Actual: %v", tc.expectedInfos, actualInfos)
+			}
+		})
+	}
+}

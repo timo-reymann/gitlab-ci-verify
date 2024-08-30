@@ -44,5 +44,4 @@ func TestShellChecker_Version(t *testing.T) {
 	if match, _ := regexp.Match("[0-9]*\\.[0-9]*\\.[0-9]*", []byte(sc.Version())); !match {
 		t.Fatalf("Expted version %s to match semantic release number", sc.Version())
 	}
-
 }
