@@ -21,7 +21,7 @@ func TestCheckStatus(t *testing.T) {
 		},
 		{
 			name:        "Forbidden - 403",
-			statusCode:  http.StatusForbidden,
+			statusCode:  http.StatusUnauthorized,
 			expectedErr: ErrInvalidAuthentication,
 		},
 		{

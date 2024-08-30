@@ -23,7 +23,7 @@ func TestNewRequest(t *testing.T) {
 			path:               "/users",
 			token:              "your_token",
 			payload:            nil,
-			expectedPath:       "/users",
+			expectedPath:       "/api/v4/users",
 			expectedAuthHeader: "your_token",
 		},
 		{
@@ -33,7 +33,7 @@ func TestNewRequest(t *testing.T) {
 			path:               "/",
 			token:              "your_token",
 			payload:            []byte("{\"name\":\"John\"}"),
-			expectedPath:       "/",
+			expectedPath:       "/api/v4/",
 			expectedAuthHeader: "your_token",
 		},
 		{
@@ -43,7 +43,7 @@ func TestNewRequest(t *testing.T) {
 			path:               "/projects/1/",
 			token:              "your_token",
 			payload:            nil,
-			expectedPath:       "/projects/1/",
+			expectedPath:       "/api/v4/projects/1/",
 			expectedAuthHeader: "your_token",
 		},
 		{
@@ -53,7 +53,7 @@ func TestNewRequest(t *testing.T) {
 			path:               "/projects/2",
 			token:              "your_token",
 			payload:            nil,
-			expectedPath:       "/projects/2",
+			expectedPath:       "/api/v4/projects/2",
 			expectedAuthHeader: "your_token",
 		},
 	}
