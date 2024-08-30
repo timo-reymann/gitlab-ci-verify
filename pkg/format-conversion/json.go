@@ -3,8 +3,8 @@ package format_conversion
 import "encoding/json"
 
 // ParseJson from the given raw content into a generic map
-func ParseJson(content []byte) (map[any]any, error) {
-	result := map[any]any{}
+func ParseJson(content []byte) (map[string]any, error) {
+	result := map[string]any{}
 	err := json.Unmarshal(content, &result)
 	return result, err
 }
