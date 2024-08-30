@@ -67,7 +67,7 @@ func (g *Client) LintCiYaml(ctx context.Context, projectSlug string, ciYaml []by
 // NewClient creates a new api client instance for the gitlab api
 func NewClient(baseUrl string, token string) *Client {
 	protocolPrefix := ""
-	if !strings.HasPrefix("http", baseUrl) {
+	if !strings.HasPrefix(baseUrl, "http") {
 		protocolPrefix = "https://"
 	}
 
