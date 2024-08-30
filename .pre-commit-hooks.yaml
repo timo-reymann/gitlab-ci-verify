@@ -1,0 +1,6 @@
+- id: gitlab-ci-verify
+  name: Verify Gitlab CI
+  description: Verify your gitlab ci YML configuration
+  entry: gitlab-ci-verify
+  language: golang
+  files: ^.gitlab-ci\.yml$
