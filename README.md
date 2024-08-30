@@ -68,7 +68,7 @@ pipx install gitlab-ci-verify
 If you want to use it directly using the `subprocess` module you can install it with pip:
 
 ````sh
-pip install deterministic-zip-go
+pip install gitlab-ci-verify
 ````
 
 And use the package like this:
