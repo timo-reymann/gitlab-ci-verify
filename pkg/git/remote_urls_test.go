@@ -31,17 +31,19 @@ func TestGetRemoteUrls(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		urls, err := GetRemoteUrls(fmt.Sprintf("testdata/repo-%s.git", tc.repoPath))
-		if err != nil {
-			if tc.expectedErrMsg != "" {
-				t.Fatalf("Expected no error, but got %v", err)
-			} else if tc.expectedErrMsg != err.Error() {
-				t.Fatalf("Expected error message %s, but got %s", tc.expectedErrMsg, err.Error())
+		t.Run(tc.repoPath, func(t *testing.T) {
+			urls, err := GetRemoteUrls(fmt.Sprintf("testdata/repo-%s.git", tc.repoPath))
+			if err != nil {
+				if tc.expectedErrMsg != "" {
+					t.Fatalf("Expected no error, but got %v", err)
+				} else if tc.expectedErrMsg != err.Error() {
+					t.Fatalf("Expected error message %s, but got %s", tc.expectedErrMsg, err.Error())
+				}
 			}
-		}
 
-		if !reflect.DeepEqual(urls, tc.expectedUrls) {
-			t.Fatalf("Expected urls to be %v, but got %v", tc.expectedUrls, urls)
-		}
+			if !reflect.DeepEqual(urls, tc.expectedUrls) {
+				t.Fatalf("Expected urls to be %v, but got %v", tc.expectedUrls, urls)
+			}
+		})
 	}
 }
