@@ -22,7 +22,7 @@ type Response struct {
 // if the HTTP status code does not indicate a general error nil is returned.
 func (r *Response) CheckStatus() error {
 	switch r.StatusCode {
-	case http.StatusForbidden:
+	case http.StatusUnauthorized:
 		return ErrInvalidAuthentication
 	case http.StatusNotFound:
 		return ErrNotFound

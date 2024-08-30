@@ -28,3 +28,17 @@ func ParseGitlabRemoteUrlInfo(remoteUrl string) (*GitlabRemoteUrlInfo, error) {
 		RepoSlug:       strings.TrimSuffix(strings.TrimPrefix(u.Path, "/"), ".git"),
 	}, nil
 }
+
+// FilterGitlabRemoteUrls parses the remote urls and only returns ones that are potentially gitlab remote urls
+func FilterGitlabRemoteUrls(remoteUrls []string) []GitlabRemoteUrlInfo {
+	remoteInfos := make([]GitlabRemoteUrlInfo, 0)
+	for _, remoteUrl := range remoteUrls {
+		parsed, err := ParseGitlabRemoteUrlInfo(remoteUrl)
+		if err != nil {
+			continue
+		}
+		remoteInfos = append(remoteInfos, *parsed)
+	}
+
+	return remoteInfos
+}

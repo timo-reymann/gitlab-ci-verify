@@ -3,6 +3,7 @@ package api
 import (
 	"context"
 	"fmt"
+	format_conversion "github.com/timo-reymann/gitlab-ci-verify/pkg/format-conversion"
 	"net/http"
 	"net/url"
 	"strings"
@@ -37,8 +38,15 @@ func (g *Client) NewRequestWithContext(ctx context.Context, method string, path 
 }
 
 // LintCiYaml against the api for a project
-func (g *Client) LintCiYaml(ctx context.Context, projectSlug string, ciJson []byte) (*CiLintResult, error) {
-	req, err := g.NewRequestWithContext(ctx, "POST", fmt.Sprintf("/projects/%s/ci/lint", url.QueryEscape(projectSlug)), ciJson)
+func (g *Client) LintCiYaml(ctx context.Context, projectSlug string, ciYaml []byte) (*CiLintResult, error) {
+	wrapped, err := format_conversion.ToJson(map[string]any{
+		"content": string(ciYaml),
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := g.NewRequestWithContext(ctx, "POST", fmt.Sprintf("/projects/%s/ci/lint", url.QueryEscape(projectSlug)), wrapped)
 	if err != nil {
 		return nil, err
 	}
@@ -59,7 +67,8 @@ func (g *Client) LintCiYaml(ctx context.Context, projectSlug string, ciJson []by
 // NewClient creates a new api client instance for the gitlab api
 func NewClient(baseUrl string, token string) *Client {
 	return &Client{
-		apiBaseUrl: strings.TrimSuffix(baseUrl, "/") + "/",
+		// TODO make protocol flexible
+		apiBaseUrl: "https://" + strings.TrimSuffix(baseUrl, "/") + "/",
 		token:      token,
 		httpClient: http.Client{
 			Transport: nil,

@@ -1,8 +1,7 @@
 package format_conversion
 
 import (
-	"gopkg.in/yaml.v2"
-	_ "gopkg.in/yaml.v2"
+	"gopkg.in/yaml.v3"
 )
 
 // ParseYaml from the given raw content into a generic map

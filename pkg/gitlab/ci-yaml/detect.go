@@ -3,35 +3,27 @@ package ci_yaml
 import (
 	"context"
 	"errors"
-	formatconversion "github.com/timo-reymann/gitlab-ci-verify/pkg/format-conversion"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/git"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/api"
 	"time"
 )
 
 // ErrTimeout happens when no remote can validate the CI linting after the specified timeout
-var ErrTimeout = errors.New("no remote url could validate")
+var ErrTimeout = errors.New("no remote url could validate due to a timeout")
+
+// ErrNoResult happens when no remote can validate the CI as the requests don't succeed
+var ErrNoResult = errors.New("no remote url could validate due to invalid responses")
 
 // VerificationResultWithRemoteInfo contains both the remote that was used and the according lint result
 type VerificationResultWithRemoteInfo struct {
-	remoteInfo *git.GitlabRemoteUrlInfo
-	lintResult *api.CiLintResult
+	RemoteInfo *git.GitlabRemoteUrlInfo
+	LintResult *api.CiLintResult
 }
 
 // GetFirstValidationResult starts a parallel request to all remotes and tries to use the API to lint the CI file
 // the first to report a result will be used as a validation result. If none of the remotes can produce a result or
 // timeout is reached, the validation is aborted and the error is set accordingly.
-func GetFirstValidationResult(remoteInfos []git.GitlabRemoteUrlInfo, baseUrlOverwrite string, file string, timeout time.Duration) (*VerificationResultWithRemoteInfo, error) {
-	ciYaml, err := LoadRaw(file)
-	if err != nil {
-		return nil, err
-	}
-
-	ciJson, err := formatconversion.ToJson(ciYaml)
-	if err != nil {
-		return nil, err
-	}
-
+func GetFirstValidationResult(remoteInfos []git.GitlabRemoteUrlInfo, token string, baseUrlOverwrite string, ciYaml []byte, timeout time.Duration) (*VerificationResultWithRemoteInfo, error) {
 	result := make(chan VerificationResultWithRemoteInfo, 1)
 	ctx, cancel := context.WithCancel(context.Background())
 	for _, remoteInfo := range remoteInfos {
@@ -43,8 +35,8 @@ func GetFirstValidationResult(remoteInfos []git.GitlabRemoteUrlInfo, baseUrlOver
 				baseUrl = r.Hostname
 			}
 
-			gl := api.NewClient(baseUrl, "tbd")
-			lintRes, err := gl.LintCiYaml(ctx, r.RepoSlug, ciJson)
+			gl := api.NewClient(baseUrl, token)
+			lintRes, err := gl.LintCiYaml(ctx, r.RepoSlug, ciYaml)
 			if err != nil {
 				return
 			}
@@ -55,14 +47,16 @@ func GetFirstValidationResult(remoteInfos []git.GitlabRemoteUrlInfo, baseUrlOver
 			}()
 
 			result <- VerificationResultWithRemoteInfo{
-				remoteInfo: r,
-				lintResult: lintRes,
+				RemoteInfo: r,
+				LintResult: lintRes,
 			}
 
 			// close once the first request finishes
 			close(result)
 		}(&remoteInfo)
 	}
+
+	var err error
 
 	// wait for the first validation to arrive, or timeout
 	var res VerificationResultWithRemoteInfo
@@ -75,6 +69,10 @@ func GetFirstValidationResult(remoteInfos []git.GitlabRemoteUrlInfo, baseUrlOver
 
 	// cancel context either way
 	cancel()
+
+	if res.LintResult == nil {
+		return nil, ErrNoResult
+	}
 
 	return &res, err
 }

@@ -5,6 +5,7 @@ import (
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/git"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"strconv"
 	"testing"
 	"time"
@@ -19,6 +20,8 @@ func mockCiValidate(status int, duration time.Duration, valid bool) *httptest.Se
 }
 
 func TestGetFirstValidationResult(t *testing.T) {
+	yamlContent, _ := os.ReadFile("test_data/valid.yml")
+
 	res, err := GetFirstValidationResult([]git.GitlabRemoteUrlInfo{
 		{
 			Hostname:       mockCiValidate(http.StatusOK, 500*time.Millisecond, true).URL,
@@ -35,7 +38,7 @@ func TestGetFirstValidationResult(t *testing.T) {
 			ClonedViaHttps: true,
 			RepoSlug:       "project/foo",
 		},
-	}, "", "test_data/valid.yaml", 600*time.Millisecond)
+	}, "", "", yamlContent, 600*time.Millisecond)
 
 	if err != nil {
 		t.Fatal(err)
@@ -45,5 +48,5 @@ func TestGetFirstValidationResult(t *testing.T) {
 		t.Fatal("No res given but did not throw error")
 	}
 
-	fmt.Printf("%v", *res.lintResult)
+	fmt.Printf("%v", *res.LintResult)
 }

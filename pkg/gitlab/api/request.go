@@ -16,12 +16,13 @@ type Request struct {
 // NewRequest for usage with gitlab api client
 func NewRequest(ctx context.Context, method string, baseUrl string, path string, token string, payload []byte) (*Request, error) {
 	strippedPath := strings.TrimPrefix(path, "/")
-	req, err := http.NewRequestWithContext(ctx, method, baseUrl+"/"+strippedPath, bytes.NewReader(payload))
+	req, err := http.NewRequestWithContext(ctx, method, baseUrl+"api/v4/"+strippedPath, bytes.NewReader(payload))
 	if err != nil {
 		return nil, err
 	}
 
 	req.Header.Set("PRIVATE-TOKEN", token)
+	req.Header.Set("Content-Type", "application/json")
 	return &Request{
 		path:    strippedPath,
 		Request: req,
