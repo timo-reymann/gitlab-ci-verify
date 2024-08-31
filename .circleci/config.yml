@@ -15,6 +15,9 @@ executors:
   go:
     docker:
       - image: cimg/go:1.22
+  python:
+    docker:
+      - image: cimg/python:3.12
 
 jobs:
   test:
@@ -39,8 +42,6 @@ jobs:
           path: unit-tests.xml
       - store_artifacts:
           path: coverage.html
-
-
   build:
     executor: go
     steps:
@@ -54,6 +55,26 @@ jobs:
           paths:
             - dist/
       - go/save-cache
+  publish_python_wheel:
+    executor: python
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+          name: Retrieve persisted binaries
+      - run:
+          name: Install dependencies
+          command: |
+            pip install twine==5.* binary_wheel_builder[cli]==3.*
+      - run:
+          name: Build wheel
+          command: |
+            mkdir -p dist/wheel/
+            binary-wheel-builder --wheel-spec wheel.yaml --dist-folder dist/wheel/
+      - run:
+          name: Upload wheel
+          command: |
+            twine upload -r pypi dist/wheel/* 
 
 workflows:
   version: 2
@@ -61,8 +82,15 @@ workflows:
     jobs:
       - test:
           <<: *job_defaults
-
       - build:
           <<: *job_defaults
           requires:
             - test
+      - publish_python_wheel:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
+          requires:
+            - build
