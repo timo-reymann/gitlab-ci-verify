@@ -124,7 +124,12 @@ gitlab-ci-verify --help
 
 ### pre-commit
 
-> TBD
+```yaml
+- repo: https://github.com/timo-reymann/gitlab-ci-verify
+  rev: main
+  hooks:
+    - id: gitlab-ci-verify
+```
 
 ## Motivation
 
