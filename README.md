@@ -95,15 +95,12 @@ The following platforms are supported (and have prebuilt binaries /
 ready to use integration):
 
 - Linux
-    - 32-bit
     - 64-bit
     - ARM 64-bit
-    - ARM 32-bit
 - Darwin
     - 64-bit
     - ARM (M1/M2)
 - Windows
-    - 32-bit
     - 64-bit
 - pre-commit
 
