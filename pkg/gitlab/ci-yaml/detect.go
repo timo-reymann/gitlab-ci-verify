@@ -5,7 +5,6 @@ import (
 	"errors"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/git"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/api"
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/netrc"
 	"time"
 )
 
@@ -25,11 +24,6 @@ type VerificationResultWithRemoteInfo struct {
 // the first to report a result will be used as a validation result. If none of the remotes can produce a result or
 // timeout is reached, the validation is aborted and the error is set accordingly.
 func GetFirstValidationResult(remoteInfos []git.GitlabRemoteUrlInfo, token string, baseUrlOverwrite string, ciYaml []byte, timeout time.Duration) (*VerificationResultWithRemoteInfo, error) {
-	var userNetRc []netrc.Line
-	if token == "" {
-		userNetRc, _ = netrc.ReadUserNetrc()
-	}
-
 	result := make(chan VerificationResultWithRemoteInfo, 1)
 	ctx, cancel := context.WithCancel(context.Background())
 	for _, remoteInfo := range remoteInfos {
@@ -41,7 +35,7 @@ func GetFirstValidationResult(remoteInfos []git.GitlabRemoteUrlInfo, token strin
 				baseUrl = r.Hostname
 			}
 
-			gl := api.NewClient(baseUrl, useNetrcPasswordIfSet(token, userNetRc, baseUrl))
+			gl := api.NewClientWithMultiTokenSources(baseUrl, token)
 			lintRes, err := gl.LintCiYaml(ctx, r.RepoSlug, ciYaml)
 			if err != nil {
 				return
@@ -81,14 +75,4 @@ func GetFirstValidationResult(remoteInfos []git.GitlabRemoteUrlInfo, token strin
 	}
 
 	return &res, err
-}
-
-func useNetrcPasswordIfSet(token string, userNetRc []netrc.Line, baseUrl string) string {
-	if token == "" && userNetRc != nil {
-		credentials, err := netrc.GetCredentials(userNetRc, baseUrl)
-		if err == nil && credentials.Password != "" {
-			token = credentials.Password
-		}
-	}
-	return token
 }

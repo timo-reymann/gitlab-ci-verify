@@ -4,8 +4,10 @@ import (
 	"context"
 	"fmt"
 	format_conversion "github.com/timo-reymann/gitlab-ci-verify/pkg/format-conversion"
+	"github.com/timo-reymann/gitlab-ci-verify/pkg/netrc"
 	"net/http"
 	"net/url"
+	"os"
 	"strings"
 	"time"
 )
@@ -79,4 +81,27 @@ func NewClient(baseUrl string, token string) *Client {
 			Timeout:   5 * time.Second,
 		},
 	}
+}
+
+// NewClientWithMultiTokenSources creates a new client instance for the gitlab api, taking multiple sources for the token
+// The order is as following
+// 1. token specified via parameter is non-empty
+// 2. netrc contains a host entry with a password
+// 3. environment variable GITLAB_TOKEN is set
+func NewClientWithMultiTokenSources(baseUrl string, token string) *Client {
+	if token != "" {
+		return NewClient(baseUrl, token)
+	}
+
+	// try to load netrc for user and get credential form that
+	userNetrc, err := netrc.ReadUserNetrc()
+	if err == nil {
+		credentials, err := netrc.GetCredentials(userNetrc, baseUrl)
+		if err == nil && credentials.Password != "" {
+			return NewClient(baseUrl, credentials.Password)
+		}
+	}
+
+	// fallback is the GITLAB_TOKEN env var
+	return NewClient(baseUrl, os.Getenv("GITLAB_TOKEN"))
 }
