@@ -12,7 +12,7 @@
 <p align="center">
 	<img width="300" src="https://raw.githubusercontent.com/timo-reymann/gitlab-ci-verify/main/.github/images/logo.png">
     <br />
-    Validate and lint your gitlab ci files using ShellCheck, the Gitlab API and curated checks - timo-reymann/gitlab-ci-verify
+    Validate and lint your gitlab ci files using ShellCheck, the Gitlab API and curated checks
 </p>
 
 ## Features
