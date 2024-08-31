@@ -36,7 +36,7 @@ func Execute() {
 	errCheck(err, c)
 	remoteInfos := git.FilterGitlabRemoteUrls(remoteUrls)
 
-	res, err := ciyaml.GetFirstValidationResult(remoteInfos, c.GitlabToken, "", ciYamlContent, 3*time.Second)
+	res, err := ciyaml.GetFirstValidationResult(remoteInfos, c.GitlabToken, c.GitlabBaseUrlOverwrite(), ciYamlContent, 3*time.Second)
 	errCheck(err, c)
 
 	if res.LintResult.Valid {

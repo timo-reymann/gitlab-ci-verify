@@ -4,6 +4,8 @@ import (
 	flag "github.com/spf13/pflag"
 )
 
+var AutoDetectValue = "auto-detect"
+
 // Configuration for the CLI
 type Configuration struct {
 	GitLabCiFile  string
@@ -29,7 +31,7 @@ func (conf *Configuration) addStringFlag(field *string, long string, short strin
 
 func (conf *Configuration) defineFlags() {
 	conf.addStringFlag(&conf.GitLabCiFile, "gitlab-ci-file", "", ".gitlab-ci.yml", "The Yaml file used to configure GitLab CI")
-	conf.addStringFlag(&conf.GitlabBaseUrl, "gitlab-base-url", "", "auto-detect", "Set the gitlab base url explicitly in case detection does not work or your clone and base url differs")
+	conf.addStringFlag(&conf.GitlabBaseUrl, "gitlab-base-url", "", AutoDetectValue, "Set the gitlab base url explicitly in case detection does not work or your clone and base url differs")
 	conf.addStringFlag(&conf.GitlabToken, "gitlab-token", "", "", "Gitlab token to use")
 }
 
@@ -37,6 +39,16 @@ func (conf *Configuration) Help() {
 	PrintCompactInfo()
 	println("gitlab-ci-verify [-options]")
 	flag.PrintDefaults()
+}
+
+// GitlabBaseUrlOverwrite returns an empty string in case the value should be automatically detected
+// or otherwise the value of the cli parameter
+func (conf *Configuration) GitlabBaseUrlOverwrite() string {
+	if conf.GitlabBaseUrl == AutoDetectValue {
+		return ""
+	}
+
+	return conf.GitlabBaseUrl
 }
 
 // Parse the configuration from cli args
