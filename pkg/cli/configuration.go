@@ -1,10 +1,17 @@
 package cli
 
 import (
+	"errors"
 	flag "github.com/spf13/pflag"
+	"github.com/timo-reymann/gitlab-ci-verify/internal/buildinfo"
+	"os"
 )
 
+// AutoDetectValue indicates that the value should be detected automatically from a set of sources
 var AutoDetectValue = "auto-detect"
+
+// ErrAbort states that the regular execution should be aborted
+var ErrAbort = errors.New("abort")
 
 // Configuration for the CLI
 type Configuration struct {
@@ -36,7 +43,7 @@ func (conf *Configuration) defineFlags() {
 }
 
 func (conf *Configuration) Help() {
-	PrintCompactInfo()
+	buildinfo.PrintCompactInfo(os.Stdout)
 	println("gitlab-ci-verify [-options]")
 	flag.PrintDefaults()
 }
@@ -63,7 +70,7 @@ func (conf *Configuration) Parse() error {
 		conf.Help()
 		return ErrAbort
 	} else if *isVersion {
-		PrintVersionInfo()
+		buildinfo.PrintVersionInfo(os.Stderr)
 		return ErrAbort
 	}
 
