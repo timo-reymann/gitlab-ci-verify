@@ -3,9 +3,9 @@ package api
 import (
 	"context"
 	"fmt"
-	format_conversion "github.com/timo-reymann/gitlab-ci-verify/pkg/format-conversion"
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/logging"
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/netrc"
+	"github.com/timo-reymann/gitlab-ci-verify/internal/format-conversion"
+	"github.com/timo-reymann/gitlab-ci-verify/internal/logging"
+	"github.com/timo-reymann/gitlab-ci-verify/internal/netrc"
 	"net/http"
 	"net/url"
 	"os"

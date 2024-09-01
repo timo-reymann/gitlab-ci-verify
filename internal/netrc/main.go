@@ -6,7 +6,7 @@ package netrc
 
 import (
 	"errors"
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/logging"
+	"github.com/timo-reymann/gitlab-ci-verify/internal/logging"
 	"os"
 	"path/filepath"
 	"runtime"

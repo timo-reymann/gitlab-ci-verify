@@ -3,9 +3,9 @@ package ci_yaml
 import (
 	"context"
 	"errors"
+	"github.com/timo-reymann/gitlab-ci-verify/internal/logging"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/git"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/api"
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/logging"
 	"time"
 )
 

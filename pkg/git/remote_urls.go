@@ -2,7 +2,7 @@ package git
 
 import (
 	"github.com/go-git/go-git/v5"
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/logging"
+	"github.com/timo-reymann/gitlab-ci-verify/internal/logging"
 	"slices"
 )
 

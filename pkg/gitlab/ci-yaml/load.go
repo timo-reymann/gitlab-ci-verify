@@ -1,7 +1,7 @@
 package ci_yaml
 
 import (
-	format_conversion "github.com/timo-reymann/gitlab-ci-verify/pkg/format-conversion"
+	"github.com/timo-reymann/gitlab-ci-verify/internal/format-conversion"
 	"os"
 )
 
