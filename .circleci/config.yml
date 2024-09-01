@@ -49,7 +49,7 @@ jobs:
       - go/load-cache
       - run:
           name: Build binaries
-          command: make build
+          command: make build -j4
       - persist_to_workspace:
           root: ./
           paths:
