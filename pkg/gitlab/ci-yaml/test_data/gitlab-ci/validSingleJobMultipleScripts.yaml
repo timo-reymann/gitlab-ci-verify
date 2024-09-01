@@ -1,0 +1,8 @@
+job-name:
+  stage: stage
+  before_script:
+    - echo "We are in the before script"
+  script:
+    - echo "We are in the script"
+  after_script:
+    - echo "We are in the after script"

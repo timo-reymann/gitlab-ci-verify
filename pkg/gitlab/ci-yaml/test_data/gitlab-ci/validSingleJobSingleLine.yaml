@@ -1,0 +1,3 @@
+build-job:
+  stage: build
+  script: echo "Hello World"

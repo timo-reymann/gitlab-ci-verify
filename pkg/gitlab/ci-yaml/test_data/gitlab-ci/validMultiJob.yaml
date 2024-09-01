@@ -1,0 +1,16 @@
+build-job:
+  stage: build
+  script:
+    - echo "Hello World"
+    - echo "How are you?"
+
+test-job:
+  stage: test
+  script: echo "Such testing, much wow"
+
+test-job-with-before-script:
+  stage: test
+  script: echo "Such testing, much wow"
+  before_script: echo "Before is after"
+
+.ignore:
