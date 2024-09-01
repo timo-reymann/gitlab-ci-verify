@@ -5,6 +5,7 @@ import (
 	"errors"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/git"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/api"
+	"github.com/timo-reymann/gitlab-ci-verify/pkg/logging"
 	"time"
 )
 
@@ -38,6 +39,7 @@ func GetFirstValidationResult(remoteInfos []git.GitlabRemoteUrlInfo, token strin
 			gl := api.NewClientWithMultiTokenSources(baseUrl, token)
 			lintRes, err := gl.LintCiYaml(ctx, r.RepoSlug, ciYaml)
 			if err != nil {
+				logging.Warn("lint request failed for remote", remoteInfo.Hostname, ":", err.Error())
 				return
 			}
 
@@ -50,6 +52,7 @@ func GetFirstValidationResult(remoteInfos []git.GitlabRemoteUrlInfo, token strin
 				RemoteInfo: r,
 				LintResult: lintRes,
 			}
+			logging.Verbose("lint request succeeded for remote", remoteInfo.Hostname, ": valid =", lintRes.Valid)
 
 			// close once the first request finishes
 			close(result)

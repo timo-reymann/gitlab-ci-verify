@@ -2,6 +2,7 @@ package git
 
 import (
 	"github.com/chainguard-dev/git-urls"
+	"github.com/timo-reymann/gitlab-ci-verify/pkg/logging"
 	"strings"
 )
 
@@ -17,6 +18,7 @@ type GitlabRemoteUrlInfo struct {
 
 // ParseGitlabRemoteUrlInfo relevant for project detection for a given remote url string
 func ParseGitlabRemoteUrlInfo(remoteUrl string) (*GitlabRemoteUrlInfo, error) {
+	logging.Verbose("parse git remote url", remoteUrl, "for gitlab information")
 	u, err := giturls.Parse(remoteUrl)
 	if err != nil {
 		return nil, err
@@ -35,6 +37,7 @@ func FilterGitlabRemoteUrls(remoteUrls []string) []GitlabRemoteUrlInfo {
 	for _, remoteUrl := range remoteUrls {
 		parsed, err := ParseGitlabRemoteUrlInfo(remoteUrl)
 		if err != nil {
+			logging.Verbose("discord remote url", remoteUrl, "due to parse error", err.Error())
 			continue
 		}
 		remoteInfos = append(remoteInfos, *parsed)

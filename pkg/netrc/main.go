@@ -6,6 +6,7 @@ package netrc
 
 import (
 	"errors"
+	"github.com/timo-reymann/gitlab-ci-verify/pkg/logging"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -94,7 +95,6 @@ func netrcPath() (string, error) {
 func ReadUserNetrc() ([]Line, error) {
 	path, err := netrcPath()
 	if err != nil {
-
 		return nil, err
 	}
 
@@ -104,6 +104,7 @@ func ReadUserNetrc() ([]Line, error) {
 	}
 
 	netrc := parseNetrc(string(data))
+	logging.Debug("Found netrc for user in", path)
 	return netrc, nil
 }
 
@@ -121,6 +122,7 @@ func GetCredentials(lines []Line, host string) (*Credentials, error) {
 
 	for _, line := range lines {
 		if line.machine == hostWithoutScheme || strings.HasSuffix(hostWithoutScheme, line.machine) {
+			logging.Verbose("Found credentials for", host, "in netrc")
 			return &Credentials{
 				Login:    line.login,
 				Password: line.password,

@@ -2,6 +2,7 @@ package git
 
 import (
 	"github.com/go-git/go-git/v5"
+	"github.com/timo-reymann/gitlab-ci-verify/pkg/logging"
 	"slices"
 )
 
@@ -31,6 +32,7 @@ func getRemoteUrls(r *git.Repository) ([]string, error) {
 	var urls = make([]string, len(uniqueUrls))
 	i := 0
 	for url, _ := range uniqueUrls {
+		logging.Debug("found git remote url", url)
 		urls[i] = url
 		i++
 	}

@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	format_conversion "github.com/timo-reymann/gitlab-ci-verify/pkg/format-conversion"
+	"github.com/timo-reymann/gitlab-ci-verify/pkg/logging"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/netrc"
 	"net/http"
 	"net/url"
@@ -21,6 +22,7 @@ type Client struct {
 
 // Do the http request to the gitlab api
 func (g *Client) Do(r *Request) (*Response, error) {
+	logging.Debug("perform gitlab api request", r.Method, r.path, "against API host", g.apiBaseUrl)
 	res, err := g.httpClient.Do(r.Request)
 	if err != nil {
 		return nil, err
@@ -48,7 +50,7 @@ func (g *Client) LintCiYaml(ctx context.Context, projectSlug string, ciYaml []by
 		return nil, err
 	}
 
-	req, err := g.NewRequestWithContext(ctx, "POST", fmt.Sprintf("/projects/%s/ci/lint", url.QueryEscape(projectSlug)), wrapped)
+	req, err := g.NewRequestWithContext(ctx, "POST", fmt.Sprintf("/api/v4/projects/%s/ci/lint", url.QueryEscape(projectSlug)), wrapped)
 	if err != nil {
 		return nil, err
 	}

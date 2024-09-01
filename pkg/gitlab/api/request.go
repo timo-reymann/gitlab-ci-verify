@@ -16,7 +16,7 @@ type Request struct {
 // NewRequest for usage with gitlab api client
 func NewRequest(ctx context.Context, method string, baseUrl string, path string, token string, payload []byte) (*Request, error) {
 	strippedPath := strings.TrimPrefix(path, "/")
-	req, err := http.NewRequestWithContext(ctx, method, strings.TrimSuffix(baseUrl, "/")+"/api/v4/"+strippedPath, bytes.NewReader(payload))
+	req, err := http.NewRequestWithContext(ctx, method, strings.TrimSuffix(baseUrl, "/")+"/"+strippedPath, bytes.NewReader(payload))
 	if err != nil {
 		return nil, err
 	}

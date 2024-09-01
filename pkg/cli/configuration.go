@@ -44,7 +44,7 @@ func (conf *Configuration) defineFlags() {
 	conf.addStringFlag(&conf.GitlabBaseUrl, "gitlab-base-url", "", AutoDetectValue, "Set the gitlab base url explicitly in case detection does not work or your clone and base url differs")
 	conf.addStringFlag(&conf.GitlabToken, "gitlab-token", "", "", "Gitlab token to use")
 	conf.addBoolFlag(&conf.Debug, "debug", "", false, "Enable debug output")
-	conf.addBoolFlag(&conf.Debug, "verbose", "", false, "Enable verbose output")
+	conf.addBoolFlag(&conf.Verbose, "verbose", "", false, "Enable verbose output")
 }
 
 func (conf *Configuration) Help() {
