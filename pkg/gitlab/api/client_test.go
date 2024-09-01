@@ -5,6 +5,7 @@ import (
 	"github.com/google/go-cmp/cmp"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 	"testing"
 )
@@ -95,4 +96,63 @@ func TestClient_LintCiYaml(t *testing.T) {
 		})
 	}
 
+}
+
+func TestNewClientWithMultiTokenSources(t *testing.T) {
+	testCases := []struct {
+		name          string
+		token         string
+		netrcFile     string
+		gitlabToken   string
+		expectedToken string
+		expectedError bool
+	}{
+		{
+			name:          "Token parameter is non-empty",
+			token:         "my-token",
+			expectedToken: "my-token",
+		},
+		{
+			name:          "Netrc contains a host entry with a password",
+			netrcFile:     "test.netrc",
+			expectedToken: "my-password",
+		},
+		{
+			name:          "Environment variable GITLAB_TOKEN is set",
+			gitlabToken:   "my-env-token",
+			expectedToken: "my-env-token",
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			if tc.netrcFile != "" {
+				err := os.WriteFile(tc.netrcFile, []byte("machine gitlab.example.com login user password my-password"), 0600)
+				if err != nil {
+					t.Fatalf("Failed to create netrc file: %v", err)
+				}
+				defer os.Remove(tc.netrcFile)
+
+				// Set the NETRC environment variable to point to the temporary file
+				_ = os.Setenv("NETRC", tc.netrcFile)
+			}
+
+			if tc.gitlabToken != "" {
+				_ = os.Setenv("GITLAB_TOKEN", tc.gitlabToken)
+			}
+
+			client := NewClientWithMultiTokenSources("https://gitlab.example.com", tc.token)
+			if client.token != tc.expectedToken {
+				t.Errorf("Expected token to be '%s', but got '%s'", tc.expectedToken, client.token)
+			}
+
+			if tc.netrcFile != "" {
+				_ = os.Remove(tc.netrcFile)
+				_ = os.Unsetenv("NETRC")
+			}
+			if tc.gitlabToken != "" {
+				_ = os.Unsetenv("GITLAB_TOKEN")
+			}
+		})
+	}
 }
