@@ -4,6 +4,7 @@ import (
 	"errors"
 	flag "github.com/spf13/pflag"
 	"github.com/timo-reymann/gitlab-ci-verify/internal/buildinfo"
+	"github.com/timo-reymann/gitlab-ci-verify/pkg/logging"
 	"os"
 )
 
@@ -18,6 +19,8 @@ type Configuration struct {
 	GitLabCiFile  string
 	GitlabBaseUrl string
 	GitlabToken   string
+	Verbose       bool
+	Debug         bool
 }
 
 func (conf *Configuration) addBoolFlag(field *bool, long string, short string, val bool, usage string) {
@@ -40,6 +43,8 @@ func (conf *Configuration) defineFlags() {
 	conf.addStringFlag(&conf.GitLabCiFile, "gitlab-ci-file", "", ".gitlab-ci.yml", "The Yaml file used to configure GitLab CI")
 	conf.addStringFlag(&conf.GitlabBaseUrl, "gitlab-base-url", "", AutoDetectValue, "Set the gitlab base url explicitly in case detection does not work or your clone and base url differs")
 	conf.addStringFlag(&conf.GitlabToken, "gitlab-token", "", "", "Gitlab token to use")
+	conf.addBoolFlag(&conf.Debug, "debug", "", false, "Enable debug output")
+	conf.addBoolFlag(&conf.Debug, "verbose", "", false, "Enable verbose output")
 }
 
 func (conf *Configuration) Help() {
@@ -58,6 +63,14 @@ func (conf *Configuration) GitlabBaseUrlOverwrite() string {
 	return conf.GitlabBaseUrl
 }
 
+func (conf *Configuration) configureLogLevel() {
+	if conf.Verbose {
+		logging.Level = logging.LevelVerbose
+	} else if conf.Debug {
+		logging.Level = logging.LevelDebug
+	}
+}
+
 // Parse the configuration from cli args
 func (conf *Configuration) Parse() error {
 	conf.defineFlags()
@@ -65,6 +78,7 @@ func (conf *Configuration) Parse() error {
 	isHelp := flag.BoolP("help", "h", false, "Show available commands")
 	isVersion := flag.Bool("version", false, "Show version info")
 	flag.Parse()
+	conf.configureLogLevel()
 
 	if *isHelp {
 		conf.Help()
