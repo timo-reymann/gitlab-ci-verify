@@ -130,7 +130,20 @@ gitlab-ci-verify --help
 
 ## Motivation
 
-> tbd
+Unfortunately, GitLab didn't provide a tool to validate CI configuration for quite a while.
+Now that changed with the `glab` CLI providing `glab ci lint` but it is quite limited and under the hood just calls the
+new CI Lint API.
+
+Throughout the years quite some tools evolved, but most of them are either outdated, painful to use or install, and
+basically also provide the lint functionality from the API.
+
+As most of the logic in pipelines is written in shell scripts via the `*script` attributes these are lacking completely
+from all tools out there as well as the official lint API.
+
+The goal of gitlab-ci-verify is to provide the stock CI Lint functionality plus shellcheck.
+Completed in the future some
+rules to lint that common patterns are working as intended by GitLab
+and void them from being pushed and leading to unexpected behavior.
 
 ## Contributing
 
