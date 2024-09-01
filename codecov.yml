@@ -2,3 +2,7 @@ coverage:
   precision: 2
   round: down
   range: "50...75"
+ignore:
+  - pkg/cli/configuration.go
+  - main.go
+  - cmd/main.go
