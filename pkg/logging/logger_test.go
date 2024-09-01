@@ -23,31 +23,31 @@ func TestConsoleLogger(t *testing.T) {
 			logLevel:       LevelDebug,
 			typ:            "debug",
 			message:        "This is a debug message",
-			expectedOutput: "DEBUG: This is a debug message\n",
+			expectedOutput: "debug   - This is a debug message\n",
 		},
 		{
 			logLevel:       LevelVerbose,
 			typ:            "debug",
 			message:        "This is a debug message",
-			expectedOutput: "DEBUG: This is a debug message\n",
+			expectedOutput: "debug   - This is a debug message\n",
 		},
 		{
 			logLevel:       LevelSilent,
 			typ:            "warn",
-			message:        "This is a warning message",
+			message:        "warning - This is a warning message",
 			expectedOutput: "",
 		},
 		{
 			logLevel:       LevelDebug,
 			typ:            "warn",
 			message:        "This is a warning message",
-			expectedOutput: "WARN: This is a warning message\n",
+			expectedOutput: "warning - This is a warning message\n",
 		},
 		{
 			logLevel:       LevelVerbose,
 			typ:            "verbose",
 			message:        "This is a verbose message",
-			expectedOutput: "VERBOSE: This is a verbose message\n",
+			expectedOutput: "verbose - This is a verbose message\n",
 		},
 		{
 			logLevel:       LevelSilent,
@@ -65,7 +65,7 @@ func TestConsoleLogger(t *testing.T) {
 			logLevel:       LevelVerbose,
 			typ:            "verbose",
 			message:        "This is a verbose message",
-			expectedOutput: "VERBOSE: This is a verbose message\n",
+			expectedOutput: "verbose - This is a verbose message\n",
 		},
 	}
 
