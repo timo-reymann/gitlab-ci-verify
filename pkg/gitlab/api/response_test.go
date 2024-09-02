@@ -39,7 +39,7 @@ func TestCheckStatus(t *testing.T) {
 				},
 			}
 			err := resp.CheckStatus()
-			if err != tc.expectedErr {
+			if !errors.Is(err, tc.expectedErr) {
 				t.Errorf("Expected error %v, got %v", tc.expectedErr, err)
 			}
 		})
