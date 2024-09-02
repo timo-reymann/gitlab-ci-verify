@@ -2,6 +2,7 @@ package shellcheck
 
 import (
 	"github.com/amenzhinsky/go-memexec"
+	"os"
 	"strings"
 )
 
@@ -12,7 +13,6 @@ type ShellChecker struct {
 
 // Version of shellcheck bundled with the application
 func (s *ShellChecker) Version() string {
-	version := "N/A"
 	cmd := s.exec.Command("--version")
 	output, _ := cmd.Output()
 	lines := strings.Split(string(output), "\n")
@@ -28,7 +28,7 @@ func (s *ShellChecker) Version() string {
 		}
 	}
 
-	return version
+	return "N/A"
 }
 
 // Close handle to shellcheck
@@ -45,6 +45,26 @@ func (s *ShellChecker) execute(args ...string) (*Result, error) {
 // AnalyzeFile for a given path
 func (s *ShellChecker) AnalyzeFile(path string) (*Result, error) {
 	return s.execute("-f", "json", "-s", "bash", path)
+}
+
+// AnalyzeSnippet writes the snippet to a temporary file, analyzes it with shellcheck, and returns the result
+func (s *ShellChecker) AnalyzeSnippet(snippet []byte) (*Result, error) {
+	tmpFile, err := os.CreateTemp("", "shellcheck-snippet.*.sh")
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = tmpFile.Write(snippet)
+	if err != nil {
+		return nil, err
+	}
+
+	err = tmpFile.Sync()
+	if err != nil {
+		return nil, err
+	}
+
+	return s.AnalyzeFile(tmpFile.Name())
 }
 
 // NewShellChecker instantiates a new shellcheck instance and loads the binary
