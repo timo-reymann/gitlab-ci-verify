@@ -1,6 +1,8 @@
 package shellcheck
 
-import "encoding/json"
+import (
+	"encoding/json"
+)
 
 type Result struct {
 	ExitCode  int

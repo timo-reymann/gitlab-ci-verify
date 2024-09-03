@@ -10,3 +10,10 @@ func ParseYaml(content []byte) (map[string]any, error) {
 	err := yaml.Unmarshal(content, result)
 	return result, err
 }
+
+// ParseYamlNode from the given raw content
+func ParseYamlNode(content []byte) (*yaml.Node, error) {
+	var result yaml.Node
+	err := yaml.Unmarshal(content, &result)
+	return &result, err
+}
