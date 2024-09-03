@@ -17,16 +17,16 @@ func TestScriptPart_SplitContentLines(t *testing.T) {
 			name:  "Single line",
 			input: "This is a single line",
 			expected: []ScriptPartLine{
-				{LineContent: "This is a single line", LineNumber: 0, Node: nil},
+				{LineContent: "This is a single line", LineNumber: 1, Node: nil},
 			},
 		},
 		{
 			name:  "Multiple lines",
 			input: "Line 1\nLine 2\nLine 3",
 			expected: []ScriptPartLine{
-				{LineContent: "Line 1", LineNumber: 0, Node: nil},
-				{LineContent: "Line 2", LineNumber: 1, Node: nil},
-				{LineContent: "Line 3", LineNumber: 2, Node: nil},
+				{LineContent: "Line 1", LineNumber: 1, Node: nil},
+				{LineContent: "Line 2", LineNumber: 2, Node: nil},
+				{LineContent: "Line 3", LineNumber: 3, Node: nil},
 			},
 		},
 	}
@@ -60,8 +60,8 @@ func TestConcat(t *testing.T) {
 			name:  "Single part",
 			parts: []ScriptPart{{Content: "Line 1\nLine 2"}},
 			expectedLines: []ScriptPartLine{
-				{LineContent: "Line 1", LineNumber: 0, Node: nil},
-				{LineContent: "Line 2", LineNumber: 1, Node: nil},
+				{LineContent: "Line 1", LineNumber: 1, Node: nil},
+				{LineContent: "Line 2", LineNumber: 2, Node: nil},
 			},
 			expectedScript: []byte("Line 1\nLine 2\n"),
 		},
@@ -69,9 +69,9 @@ func TestConcat(t *testing.T) {
 			name:  "Multiple parts",
 			parts: []ScriptPart{{Content: "Part 1"}, {Content: "Part 2\nPart 3"}},
 			expectedLines: []ScriptPartLine{
-				{LineContent: "Part 1", LineNumber: 0, Node: nil},
-				{LineContent: "Part 2", LineNumber: 0, Node: nil},
-				{LineContent: "Part 3", LineNumber: 1, Node: nil},
+				{LineContent: "Part 1", LineNumber: 1, Node: nil},
+				{LineContent: "Part 2", LineNumber: 2, Node: nil},
+				{LineContent: "Part 3", LineNumber: 3, Node: nil},
 			},
 			expectedScript: []byte("Part 1\nPart 2\nPart 3\n"),
 		},
