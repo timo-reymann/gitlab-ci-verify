@@ -6,19 +6,10 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-// ScriptPart represents a part of a script
-type ScriptPart struct {
-	// Content is the script content lines
-	Content string
-	// Node the script was extracted from
-	Node *yaml.Node
-}
-
-func newScriptPart(n *yaml.Node) ScriptPart {
-	return ScriptPart{
-		Content: n.Value,
-		Node:    n,
-	}
+var keysToExtractScriptsFrom = []string{
+	"script",
+	"before_script",
+	"after_script",
 }
 
 // JobWithScripts represents the parsed scripts from a job and the name of the job
@@ -34,40 +25,6 @@ func (jws *JobWithScripts) setPart(key string, parts []ScriptPart) {
 		return
 	}
 	jws.ScriptParts[key] = parts
-}
-
-func mustPath(path *yamlpath.Path, err error) *yamlpath.Path {
-	if err != nil {
-		panic(err)
-	}
-	return path
-}
-
-func getScriptFromKey(node *yaml.Node, key string) []ScriptPart {
-	parts := make([]ScriptPart, 0)
-	scriptPath := mustPath(yamlpath.NewPath(fmt.Sprintf(".%s", key)))
-	scriptNodes, _ := scriptPath.Find(node)
-	if scriptNodes == nil {
-		return parts
-	}
-
-	for _, scriptNode := range scriptNodes {
-		if scriptNode.Kind == yaml.SequenceNode {
-			for _, nestedScriptNode := range scriptNode.Content {
-				parts = append(parts, newScriptPart(nestedScriptNode))
-			}
-		} else {
-			parts = append(parts, newScriptPart(scriptNode))
-		}
-	}
-
-	return parts
-}
-
-var keysToExtractScriptsFrom = []string{
-	"script",
-	"before_script",
-	"after_script",
 }
 
 // ExtractScripts from a YAML document
@@ -102,4 +59,25 @@ func ExtractScripts(doc *yaml.Node) chan JobWithScripts {
 	}()
 
 	return ch
+}
+
+func getScriptFromKey(node *yaml.Node, key string) []ScriptPart {
+	parts := make([]ScriptPart, 0)
+	scriptPath := mustPath(yamlpath.NewPath(fmt.Sprintf(".%s", key)))
+	scriptNodes, _ := scriptPath.Find(node)
+	if scriptNodes == nil {
+		return parts
+	}
+
+	for _, scriptNode := range scriptNodes {
+		if scriptNode.Kind == yaml.SequenceNode {
+			for _, nestedScriptNode := range scriptNode.Content {
+				parts = append(parts, newScriptPart(nestedScriptNode))
+			}
+		} else {
+			parts = append(parts, newScriptPart(scriptNode))
+		}
+	}
+
+	return parts
 }
