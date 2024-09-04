@@ -100,8 +100,12 @@ func TestPipelineLintApiCheck_Run(t *testing.T) {
 			ciValidateMockServer := mockCiValidate(tc.lintResult)
 
 			_ = os.Chdir(projectRoot)
+			ciYaml, err := NewCiYaml([]byte(``))
+			if err != nil {
+				t.Fatal(err)
+			}
 			verifyFindings(t, tc.expectedFindings, checkMustSucceed(c.Run(&CheckInput{
-				CiYaml: newCiYamlMock(t, []byte(``)),
+				CiYaml: ciYaml,
 				Configuration: &cli.Configuration{
 					GitlabBaseUrl: ciValidateMockServer.URL,
 				},

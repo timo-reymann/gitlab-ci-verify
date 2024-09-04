@@ -2,21 +2,17 @@ package cmd
 
 import (
 	"errors"
-	"fmt"
-	format_conversion "github.com/timo-reymann/gitlab-ci-verify/internal/format-conversion"
 	"github.com/timo-reymann/gitlab-ci-verify/internal/logging"
 	_ "github.com/timo-reymann/gitlab-ci-verify/internal/shellcheck"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/checks"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/cli"
+	"github.com/timo-reymann/gitlab-ci-verify/pkg/formatter"
 	_ "github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/ci-yaml"
 	"log"
 	"os"
-	"strconv"
-	"strings"
-	"text/tabwriter"
 )
 
-func errCheck(err error, c *cli.Configuration) {
+func handleErr(err error, c *cli.Configuration) {
 	if errors.Is(err, cli.ErrAbort) {
 		os.Exit(0)
 	}
@@ -30,53 +26,37 @@ func errCheck(err error, c *cli.Configuration) {
 func Execute() {
 	logging.Verbose("create and parse configuration")
 	c := cli.NewConfiguration()
-	errCheck(c.Parse(), c)
+	handleErr(c.Parse(), c)
 
 	logging.Verbose("read gitlab ci file ", c.GitLabCiFile)
 	ciYamlContent, err := os.ReadFile(c.GitLabCiFile)
-	errCheck(err, c)
+	handleErr(err, c)
 
-	ciYamlDoc, err := format_conversion.ParseYamlNode(ciYamlContent)
-	errCheck(err, c)
-
-	var ciYamlParsed map[string]any
-	err = ciYamlDoc.Decode(&ciYamlParsed)
-	errCheck(err, c)
+	ciYaml, err := checks.NewCiYaml(ciYamlContent)
+	handleErr(err, c)
 
 	checkInput := checks.CheckInput{
-		CiYaml: &checks.CiYaml{
-			FileContent:   ciYamlContent,
-			ParsedYamlMap: ciYamlParsed,
-			ParsedYamlDoc: ciYamlDoc,
-		},
+		CiYaml:        ciYaml,
 		Configuration: c,
 	}
 
-	w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', tabwriter.TabIndent)
-	_, _ = fmt.Fprintln(w, strings.Join([]string{
-		"Severity",
-		"Code",
-		"Line",
-		"Description",
-		"Link",
-	}, "\t"))
+	fmt := formatter.TextFindingsFormatter{}
+	err = fmt.Init(os.Stdout)
+	handleErr(err, c)
 
-	for _, check := range checks.AllChecks() {
-		results, err := check.Run(&checkInput)
-		if err != nil {
-			errCheck(err, c)
-		}
+	err = fmt.Start()
+	handleErr(err, c)
 
-		for _, result := range results {
-			_, _ = fmt.Fprintln(w, strings.Join([]string{
-				strings.ToUpper(result.SeverityName()),
-				result.Code,
-				strconv.Itoa(result.Line),
-				result.Message,
-				result.Link,
-			}, "\t"))
+	checkResults := checks.RunChecksInParallel(checks.AllChecks(), checkInput, func(err error) {
+		handleErr(err, c)
+	})
+	for checkResultFindings := range checkResults {
+		for _, result := range checkResultFindings {
+			err := fmt.Print(&result)
+			handleErr(err, c)
 		}
 	}
-	println("---")
-	_ = w.Flush()
+
+	err = fmt.End()
+	handleErr(err, c)
 }
