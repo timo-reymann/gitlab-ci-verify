@@ -1,0 +1,4 @@
+build:
+  stage: build
+  script:
+    - echo "You are running on `uname`"

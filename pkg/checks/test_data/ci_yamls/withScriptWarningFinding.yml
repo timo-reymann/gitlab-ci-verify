@@ -1,0 +1,5 @@
+build:
+  stage: build
+  script:
+    - '[ current.log -nt backup/*.log ] && echo "This is the latest file"'
+

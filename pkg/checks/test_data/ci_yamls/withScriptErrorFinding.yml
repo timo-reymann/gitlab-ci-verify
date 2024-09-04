@@ -1,0 +1,4 @@
+build:
+  stage: build
+  script:
+    - < file.txt | grep foo
