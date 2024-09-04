@@ -54,8 +54,6 @@ func GetFirstValidationResult(remoteInfos []git.GitlabRemoteUrlInfo, token strin
 			}
 			logging.Verbose("lint request succeeded for remote", remoteInfo.Hostname, ": valid =", lintRes.Valid)
 
-			// close once the first request finishes
-			close(result)
 		}(&remoteInfo)
 	}
 
