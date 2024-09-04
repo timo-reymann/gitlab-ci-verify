@@ -42,7 +42,7 @@ func (p PipelineLintApiCheck) Run(i *CheckInput) ([]CheckFinding, error) {
 	for _, e := range res.LintResult.Errors {
 		findings = append(findings, CheckFinding{
 			Severity: SeverityError,
-			Code:     "GL-1",
+			Code:     "GL-101",
 			Line:     -1,
 			Message:  e,
 			Link:     "https://docs.gitlab.com/ee/ci/yaml",
@@ -52,9 +52,19 @@ func (p PipelineLintApiCheck) Run(i *CheckInput) ([]CheckFinding, error) {
 	for _, w := range res.LintResult.Warnings {
 		findings = append(findings, CheckFinding{
 			Severity: SeverityWarning,
-			Code:     "GL-2",
+			Code:     "GL-102",
 			Line:     -1,
 			Message:  w,
+			Link:     "https://docs.gitlab.com/ee/ci/yaml",
+		})
+	}
+
+	if len(findings) == 0 {
+		findings = append(findings, CheckFinding{
+			Severity: SeverityError,
+			Code:     "GL-103",
+			Line:     -1,
+			Message:  "Pipeline is invalid",
 			Link:     "https://docs.gitlab.com/ee/ci/yaml",
 		})
 	}
