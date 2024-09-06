@@ -42,7 +42,7 @@ func (s ShellScriptCheck) Run(i *CheckInput) ([]CheckFinding, error) {
 			defer wg.Done()
 			for key, parts := range jobWithScripts.ScriptParts {
 				lines, joinedScript := ci_yaml.Concat(parts)
-				result, err := shellChecker.AnalyzeSnippet(joinedScript)
+				result, err := shellChecker.AnalyzeSnippet(joinedScript, i.Configuration.ShellcheckFlags)
 				if err != nil {
 					logging.Warn("Failed to analyze snippet in job", jobWithScripts.JobName)
 					continue

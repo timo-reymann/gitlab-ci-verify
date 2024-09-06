@@ -7,6 +7,7 @@ require (
 	github.com/chainguard-dev/git-urls v1.0.2
 	github.com/go-git/go-git/v5 v5.12.0
 	github.com/google/go-cmp v0.6.0
+	github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510
 	github.com/spf13/pflag v1.0.5
 	github.com/vmware-labs/yaml-jsonpath v0.3.2
 	gopkg.in/yaml.v3 v3.0.1

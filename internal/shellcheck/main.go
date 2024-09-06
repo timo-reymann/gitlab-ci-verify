@@ -2,6 +2,7 @@ package shellcheck
 
 import (
 	"github.com/amenzhinsky/go-memexec"
+	"github.com/google/shlex"
 	"os"
 	"strings"
 )
@@ -43,12 +44,29 @@ func (s *ShellChecker) execute(args ...string) (*Result, error) {
 }
 
 // AnalyzeFile for a given path
-func (s *ShellChecker) AnalyzeFile(path string) (*Result, error) {
-	return s.execute("-f", "json", "-s", "bash", path)
+func (s *ShellChecker) AnalyzeFile(path string, extraFlags string) (*Result, error) {
+	args := []string{
+		"-f", "json",
+		"-s", "bash",
+	}
+
+	args = append(args, ignoredChecksFlags...)
+
+	if extraFlags != "" {
+		extraArgs, err := shlex.Split(extraFlags)
+		if err != nil {
+			return nil, err
+		}
+		args = append(args, extraArgs...)
+	}
+
+	args = append(args, path)
+
+	return s.execute(args...)
 }
 
 // AnalyzeSnippet writes the snippet to a temporary file, analyzes it with shellcheck, and returns the result
-func (s *ShellChecker) AnalyzeSnippet(snippet []byte) (*Result, error) {
+func (s *ShellChecker) AnalyzeSnippet(snippet []byte, extraFlags string) (*Result, error) {
 	tmpFile, err := os.CreateTemp("", "shellcheck-snippet.*.sh")
 	if err != nil {
 		return nil, err
@@ -64,7 +82,7 @@ func (s *ShellChecker) AnalyzeSnippet(snippet []byte) (*Result, error) {
 		return nil, err
 	}
 
-	return s.AnalyzeFile(tmpFile.Name())
+	return s.AnalyzeFile(tmpFile.Name(), extraFlags)
 }
 
 // NewShellChecker instantiates a new shellcheck instance and loads the binary

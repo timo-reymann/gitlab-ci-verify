@@ -16,11 +16,12 @@ var ErrAbort = errors.New("abort")
 
 // Configuration for the CLI
 type Configuration struct {
-	GitLabCiFile  string
-	GitlabBaseUrl string
-	GitlabToken   string
-	Verbose       bool
-	Debug         bool
+	GitLabCiFile    string
+	GitlabBaseUrl   string
+	GitlabToken     string
+	Verbose         bool
+	Debug           bool
+	ShellcheckFlags string
 }
 
 func (conf *Configuration) addBoolFlag(field *bool, long string, short string, val bool, usage string) {
@@ -45,6 +46,7 @@ func (conf *Configuration) defineFlags() {
 	conf.addStringFlag(&conf.GitlabToken, "gitlab-token", "", "", "Gitlab token to use")
 	conf.addBoolFlag(&conf.Debug, "debug", "", false, "Enable debug output")
 	conf.addBoolFlag(&conf.Verbose, "verbose", "", false, "Enable verbose output")
+	conf.addStringFlag(&conf.ShellcheckFlags, "shellcheck-flags", "", "", "Pass custom flags to shellcheck")
 }
 
 func (conf *Configuration) Help() {
