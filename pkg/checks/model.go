@@ -1,5 +1,7 @@
 package checks
 
+import "cmp"
+
 var SeverityError = 0
 var SeverityWarning = 1
 var SeverityInfo = 2
@@ -26,4 +28,12 @@ func (cf *CheckFinding) SeverityName() string {
 		return "Style"
 	}
 	return ""
+}
+
+func (cf *CheckFinding) Compare(o CheckFinding) int {
+	if cf.Severity != o.Severity {
+		return cmp.Compare(cf.Severity, o.Severity)
+	}
+
+	return cmp.Compare(cf.Line, o.Line)
 }

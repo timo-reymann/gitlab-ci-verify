@@ -10,6 +10,7 @@ import (
 	_ "github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/ci-yaml"
 	"log"
 	"os"
+	"slices"
 )
 
 func handleErr(err error, c *cli.Configuration) {
@@ -47,14 +48,24 @@ func Execute() {
 	err = fmt.Start()
 	handleErr(err, c)
 
-	checkResults := checks.RunChecksInParallel(checks.AllChecks(), checkInput, func(err error) {
+	checkResultChans := checks.RunChecksInParallel(checks.AllChecks(), checkInput, func(err error) {
 		handleErr(err, c)
 	})
-	for checkResultFindings := range checkResults {
-		for _, result := range checkResultFindings {
-			err := fmt.Print(&result)
-			handleErr(err, c)
+	findings := make([]checks.CheckFinding, 0)
+
+	for checkResultFindingChan := range checkResultChans {
+		for _, finding := range checkResultFindingChan {
+			findings = append(findings, finding)
 		}
+	}
+
+	slices.SortStableFunc(findings, func(a, b checks.CheckFinding) int {
+		return a.Compare(b)
+	})
+
+	for _, finding := range findings {
+		err := fmt.Print(&finding)
+		handleErr(err, c)
 	}
 
 	err = fmt.End()
