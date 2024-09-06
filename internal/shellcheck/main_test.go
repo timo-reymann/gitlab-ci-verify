@@ -10,7 +10,7 @@ func TestValidScript(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	res, err := sc.AnalyzeFile("testdata/valid_script.sh")
+	res, err := sc.AnalyzeFile("testdata/valid_script.sh", "")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -25,7 +25,7 @@ func TestInValidScript(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	res, err := sc.AnalyzeFile("testdata/invalid_script.sh")
+	res, err := sc.AnalyzeFile("testdata/invalid_script.sh", "")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -80,7 +80,7 @@ func TestAnalyzeSnippet(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			result, err := s.AnalyzeSnippet(tc.snippet)
+			result, err := s.AnalyzeSnippet(tc.snippet, "")
 
 			if (err != nil) != tc.wantErr {
 				t.Errorf("Unexpected error: %v", err)
