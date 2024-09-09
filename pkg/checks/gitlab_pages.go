@@ -27,15 +27,15 @@ func (g GitlabPagesJobCheck) Run(i *CheckInput) ([]CheckFinding, error) {
 
 	pagesJob, _ := yamlpathutils.MustPath(yamlpath.NewPath(".pages")).Find(i.CiYaml.ParsedYamlDoc)
 
-	findings, _ := yamlpathutils.MustPath(yamlpath.NewPath(".artifacts.paths")).Find(pagesJob[0])
-	if len(findings) != 1 {
+	artifactNodes, _ := yamlpathutils.MustPath(yamlpath.NewPath(".artifacts.paths")).Find(pagesJob[0])
+	if len(artifactNodes) != 1 {
 		return []CheckFinding{
-			g.finding(i.Configuration.GitLabCiFile, pagesJob[0].Line),
+			g.finding(i.Configuration.GitLabCiFile, pagesJob[0].Line-1),
 		}, nil
 	}
 
 	var paths []string
-	if err := findings[0].Decode(&paths); err != nil {
+	if err := artifactNodes[0].Decode(&paths); err != nil {
 		return nil, err
 	}
 
@@ -46,6 +46,6 @@ func (g GitlabPagesJobCheck) Run(i *CheckInput) ([]CheckFinding, error) {
 	}
 
 	return []CheckFinding{
-		g.finding(i.Configuration.GitLabCiFile, pagesJob[0].Line),
+		g.finding(i.Configuration.GitLabCiFile, artifactNodes[0].Line-1),
 	}, nil
 }

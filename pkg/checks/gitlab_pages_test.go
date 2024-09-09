@@ -19,14 +19,15 @@ func TestGitlabPagesJobCheck_Run(t *testing.T) {
 			expectedFindings: []CheckFinding{},
 		},
 		{
-			name: "with valid artifacts and job",
-			file: "noArtifacts.yml",
+			name: "with empty artifact paths and job",
+			file: "emptyArtifactPaths.yml",
 			expectedFindings: []CheckFinding{
 				{
 					Severity: SeverityWarning,
 					Code:     "GL-201",
-					Line:     2, Message: "pages job should contain artifacts with public path",
-					Link: "https://docs.gitlab.com/ee/user/project/pages",
+					Line:     2,
+					Message:  "pages job should contain artifacts with public path",
+					Link:     "https://docs.gitlab.com/ee/user/project/pages",
 				},
 			},
 		},
@@ -37,8 +38,22 @@ func TestGitlabPagesJobCheck_Run(t *testing.T) {
 				{
 					Severity: SeverityWarning,
 					Code:     "GL-201",
-					Line:     2, Message: "pages job should contain artifacts with public path",
-					Link: "https://docs.gitlab.com/ee/user/project/pages",
+					Line:     3,
+					Message:  "pages job should contain artifacts with public path",
+					Link:     "https://docs.gitlab.com/ee/user/project/pages",
+				},
+			},
+		},
+		{
+			name: "with empty artifacts configuration",
+			file: "noArtifactPaths.yml",
+			expectedFindings: []CheckFinding{
+				{
+					Severity: SeverityWarning,
+					Code:     "GL-201",
+					Line:     1,
+					Message:  "pages job should contain artifacts with public path",
+					Link:     "https://docs.gitlab.com/ee/user/project/pages",
 				},
 			},
 		},
