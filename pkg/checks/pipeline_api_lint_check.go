@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/timo-reymann/gitlab-ci-verify/internal/logging"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/git"
+	"github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/api"
 	ci_yaml "github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/ci-yaml"
 	"os"
 	"time"
@@ -20,6 +21,14 @@ func (p PipelineLintApiCheck) createFinding(severity int, code int, line int, me
 		Message:  message,
 		Link:     "https://docs.gitlab.com/ee/ci/yaml",
 	}
+}
+
+func (p PipelineLintApiCheck) formatMsg(msg string) string {
+	job, msg := api.ParsePipelineMessage(msg)
+	if job == "" {
+		return msg
+	}
+	return fmt.Sprintf("[%s] %s", job, msg)
 }
 
 func (p PipelineLintApiCheck) Run(i *CheckInput) ([]CheckFinding, error) {
@@ -53,12 +62,12 @@ func (p PipelineLintApiCheck) Run(i *CheckInput) ([]CheckFinding, error) {
 	idx := 0
 
 	for _, e := range res.LintResult.Errors {
-		findings[idx] = p.createFinding(SeverityError, 101, -1, e)
+		findings[idx] = p.createFinding(SeverityError, 101, -1, p.formatMsg(e))
 		idx++
 	}
 
 	for _, w := range res.LintResult.Warnings {
-		findings[idx] = p.createFinding(SeverityWarning, 102, -1, w)
+		findings[idx] = p.createFinding(SeverityWarning, 102, -1, p.formatMsg(w))
 		idx++
 	}
 
