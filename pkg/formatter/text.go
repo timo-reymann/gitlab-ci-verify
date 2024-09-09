@@ -27,6 +27,7 @@ func (t *TextFindingsFormatter) Start() error {
 		c.Sprint("Line"),
 		c.Sprint("Description"),
 		c.Sprint("Link"),
+		c.Sprintf("Location"),
 	}, "\t"))
 	return err
 }
@@ -48,12 +49,15 @@ func (t *TextFindingsFormatter) severity(cf *checks.CheckFinding) string {
 }
 
 func (t *TextFindingsFormatter) Print(finding *checks.CheckFinding) error {
-	_, err := fmt.Fprintln(t.tabWriter, strings.Join([]string{
+	location, err := finding.Location()
+
+	_, err = fmt.Fprintln(t.tabWriter, strings.Join([]string{
 		t.severity(finding),
 		finding.Code,
 		strconv.Itoa(finding.Line),
 		finding.Message,
 		finding.Link,
+		location,
 	}, "\t"))
 	return err
 }

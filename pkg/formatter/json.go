@@ -17,6 +17,7 @@ type jsonFinding struct {
 	Line     int    `json:"line"`
 	Message  string `json:"message"`
 	Link     string `json:"link"`
+	File     string `json:"file"`
 }
 
 func newJsonFinding(f *checks.CheckFinding) jsonFinding {
@@ -26,6 +27,7 @@ func newJsonFinding(f *checks.CheckFinding) jsonFinding {
 		Line:     f.Line,
 		Message:  f.Message,
 		Link:     f.Link,
+		File:     f.File,
 	}
 }
 

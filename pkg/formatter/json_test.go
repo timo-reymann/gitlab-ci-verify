@@ -21,10 +21,11 @@ func TestJsonFindingsFormatter(t *testing.T) {
 					Line:     1,
 					Message:  "test message goes here",
 					Link:     "https://check.link/code",
+					File:     ".gitlab-ci.yml",
 				},
 			},
 			expectedOutput: []byte(
-				"[\n  {\"severity\":\"Info\",\"code\":\"1\",\"line\":1,\"message\":\"test message goes here\",\"link\":\"https://check.link/code\"}\n]",
+				"[\n  {\"severity\":\"Info\",\"code\":\"1\",\"line\":1,\"message\":\"test message goes here\",\"link\":\"https://check.link/code\",\"file\":\".gitlab-ci.yml\"}\n]",
 			),
 		},
 		{
@@ -36,6 +37,7 @@ func TestJsonFindingsFormatter(t *testing.T) {
 					Line:     1,
 					Message:  "test message goes here",
 					Link:     "https://check.link/code",
+					File:     ".gitlab-ci.yml",
 				},
 				{
 					Severity: checks.SeverityStyle,
@@ -43,10 +45,11 @@ func TestJsonFindingsFormatter(t *testing.T) {
 					Line:     1,
 					Message:  "test message goes here",
 					Link:     "https://check.link/code",
+					File:     ".gitlab-ci-1.yml",
 				},
 			},
 			expectedOutput: []byte(
-				"[\n  {\"severity\":\"Info\",\"code\":\"1\",\"line\":1,\"message\":\"test message goes here\",\"link\":\"https://check.link/code\"},\n  {\"severity\":\"Style\",\"code\":\"1\",\"line\":1,\"message\":\"test message goes here\",\"link\":\"https://check.link/code\"}\n]",
+				"[\n  {\"severity\":\"Info\",\"code\":\"1\",\"line\":1,\"message\":\"test message goes here\",\"link\":\"https://check.link/code\",\"file\":\".gitlab-ci.yml\"},\n  {\"severity\":\"Style\",\"code\":\"1\",\"line\":1,\"message\":\"test message goes here\",\"link\":\"https://check.link/code\",\"file\":\".gitlab-ci-1.yml\"}\n]",
 			),
 		},
 	} {

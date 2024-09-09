@@ -55,6 +55,7 @@ func (s ShellScriptCheck) Run(i *CheckInput) ([]CheckFinding, error) {
 						Line:     lines[f.Line-1].Node.Line,
 						Message:  fmt.Sprintf("[%s:%s:%d] %s", jobWithScripts.JobName, key, f.Line, f.Message),
 						Link:     fmt.Sprintf("https://www.shellcheck.net/wiki/SC%d", f.Code),
+						File:     i.Configuration.GitLabCiFile,
 					}
 				}
 			}

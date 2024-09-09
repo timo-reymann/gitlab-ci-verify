@@ -21,11 +21,12 @@ func TestTextFindingsFormatter(t *testing.T) {
 					Line:     1,
 					Message:  "test message goes here",
 					Link:     "https://check.link/code",
+					File:     "/test.yml",
 				},
 			},
 			expectedOutput: []byte(
-				"Severity  Code  Line  Description             Link\n" +
-					"INFO      1     1     test message goes here  https://check.link/code\n",
+				"Severity  Code  Line  Description             Link                     Location\n" +
+					"INFO      1     1     test message goes here  https://check.link/code  /test.yml:1\n",
 			),
 		},
 		{
@@ -37,6 +38,7 @@ func TestTextFindingsFormatter(t *testing.T) {
 					Line:     1,
 					Message:  "test message goes here",
 					Link:     "https://check.link/code",
+					File:     "/test.yml",
 				},
 				{
 					Severity: checks.SeverityStyle,
@@ -44,12 +46,13 @@ func TestTextFindingsFormatter(t *testing.T) {
 					Line:     1,
 					Message:  "test message goes here",
 					Link:     "https://check.link/code",
+					File:     "/test.yml",
 				},
 			},
 			expectedOutput: []byte(
-				"Severity  Code  Line  Description             Link\n" +
-					"INFO      1     1     test message goes here  https://check.link/code\n" +
-					"STYLE     1     1     test message goes here  https://check.link/code\n",
+				"Severity  Code  Line  Description             Link                     Location\n" +
+					"INFO      1     1     test message goes here  https://check.link/code  /test.yml:1\n" +
+					"STYLE     1     1     test message goes here  https://check.link/code  /test.yml:1\n",
 			),
 		},
 	} {
