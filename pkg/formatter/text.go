@@ -2,11 +2,12 @@ package formatter
 
 import (
 	"fmt"
+	"github.com/Ladicle/tabwriter"
+	"github.com/fatih/color"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/checks"
 	"io"
 	"strconv"
 	"strings"
-	"text/tabwriter"
 )
 
 type TextFindingsFormatter struct {
@@ -19,19 +20,36 @@ func (t *TextFindingsFormatter) Init(w io.Writer) error {
 }
 
 func (t *TextFindingsFormatter) Start() error {
+	c := color.New(color.Bold)
 	_, err := fmt.Fprintln(t.tabWriter, strings.Join([]string{
-		"Severity",
-		"Code",
-		"Line",
-		"Description",
-		"Link",
+		c.Sprint("Severity"),
+		c.Sprint("Code"),
+		c.Sprint("Line"),
+		c.Sprint("Description"),
+		c.Sprint("Link"),
 	}, "\t"))
 	return err
 }
 
+func (t *TextFindingsFormatter) severity(cf *checks.CheckFinding) string {
+	var colorize func(string, ...any) string
+	switch cf.Severity {
+	case checks.SeverityError:
+		colorize = color.RedString
+	case checks.SeverityWarning:
+		colorize = color.YellowString
+	case checks.SeverityInfo:
+		colorize = color.CyanString
+	case checks.SeverityStyle:
+		colorize = color.BlueString
+	}
+
+	return colorize(strings.ToUpper(cf.SeverityName()))
+}
+
 func (t *TextFindingsFormatter) Print(finding *checks.CheckFinding) error {
 	_, err := fmt.Fprintln(t.tabWriter, strings.Join([]string{
-		strings.ToUpper(finding.SeverityName()),
+		t.severity(finding),
 		finding.Code,
 		strconv.Itoa(finding.Line),
 		finding.Message,
