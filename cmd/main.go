@@ -73,6 +73,10 @@ func Execute() {
 
 	shouldFail := false
 	for _, finding := range findings {
+		if slices.Contains(c.ExcludedChecks, finding.Code) {
+			continue
+		}
+
 		if severity >= finding.Severity {
 			shouldFail = true
 		}
