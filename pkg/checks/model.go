@@ -10,7 +10,6 @@ var SeverityStyle = 3
 type CheckFinding struct {
 	Severity int
 	Code     string
-	FileName string
 	Line     int
 	Message  string
 	Link     string
