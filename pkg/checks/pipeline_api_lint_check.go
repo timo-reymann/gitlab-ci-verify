@@ -1,6 +1,7 @@
 package checks
 
 import (
+	"fmt"
 	"github.com/timo-reymann/gitlab-ci-verify/internal/logging"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/git"
 	ci_yaml "github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/ci-yaml"
@@ -9,6 +10,16 @@ import (
 )
 
 type PipelineLintApiCheck struct {
+}
+
+func (p PipelineLintApiCheck) createFinding(severity int, code int, line int, message string) CheckFinding {
+	return CheckFinding{
+		Severity: severity,
+		Code:     fmt.Sprintf("GL-%d", code),
+		Line:     line,
+		Message:  message,
+		Link:     "https://docs.gitlab.com/ee/ci/yaml",
+	}
 }
 
 func (p PipelineLintApiCheck) Run(i *CheckInput) ([]CheckFinding, error) {
@@ -37,36 +48,22 @@ func (p PipelineLintApiCheck) Run(i *CheckInput) ([]CheckFinding, error) {
 		return []CheckFinding{}, nil
 	}
 
-	findings := make([]CheckFinding, 0)
+	msgCount := len(res.LintResult.Errors) + len(res.LintResult.Warnings)
+	findings := make([]CheckFinding, msgCount)
+	idx := 0
 
 	for _, e := range res.LintResult.Errors {
-		findings = append(findings, CheckFinding{
-			Severity: SeverityError,
-			Code:     "GL-101",
-			Line:     -1,
-			Message:  e,
-			Link:     "https://docs.gitlab.com/ee/ci/yaml",
-		})
+		findings[idx] = p.createFinding(SeverityError, 101, -1, e)
+		idx++
 	}
 
 	for _, w := range res.LintResult.Warnings {
-		findings = append(findings, CheckFinding{
-			Severity: SeverityWarning,
-			Code:     "GL-102",
-			Line:     -1,
-			Message:  w,
-			Link:     "https://docs.gitlab.com/ee/ci/yaml",
-		})
+		findings[idx] = p.createFinding(SeverityWarning, 102, -1, w)
+		idx++
 	}
 
 	if len(findings) == 0 {
-		findings = append(findings, CheckFinding{
-			Severity: SeverityError,
-			Code:     "GL-103",
-			Line:     -1,
-			Message:  "Pipeline is invalid",
-			Link:     "https://docs.gitlab.com/ee/ci/yaml",
-		})
+		findings = append(findings, p.createFinding(SeverityError, 103, -1, "Pipeline is invalid"))
 	}
 
 	return findings, nil
