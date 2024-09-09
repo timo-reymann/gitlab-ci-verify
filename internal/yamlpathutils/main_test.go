@@ -1,8 +1,7 @@
-package ci_yaml
+package yamlpathutils
 
 import (
 	"errors"
-	"github.com/timo-reymann/gitlab-ci-verify/internal/yamlpathutils"
 	"testing"
 )
 
@@ -13,5 +12,5 @@ func Test_MustPath(t *testing.T) {
 			t.Fatal("Expected error to panic")
 		}
 	}()
-	yamlpathutils.MustPath(nil, errors.New("alarm"))
+	MustPath(nil, errors.New("alarm"))
 }

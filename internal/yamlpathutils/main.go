@@ -1,8 +1,8 @@
-package ci_yaml
+package yamlpathutils
 
 import "github.com/vmware-labs/yaml-jsonpath/pkg/yamlpath"
 
-func mustPath(path *yamlpath.Path, err error) *yamlpath.Path {
+func MustPath(path *yamlpath.Path, err error) *yamlpath.Path {
 	if err != nil {
 		panic(err)
 	}

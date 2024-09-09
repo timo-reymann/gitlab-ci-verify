@@ -15,4 +15,5 @@ func AllChecks() []Check {
 func init() {
 	register(ShellScriptCheck{})
 	register(PipelineLintApiCheck{})
+	register(GitlabPagesJobCheck{})
 }

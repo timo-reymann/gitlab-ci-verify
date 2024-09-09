@@ -1,0 +1,4 @@
+pages:
+  artifacts:
+    paths:
+      - test/public/

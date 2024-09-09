@@ -2,6 +2,7 @@ package ci_yaml
 
 import (
 	"fmt"
+	"github.com/timo-reymann/gitlab-ci-verify/internal/yamlpathutils"
 	"github.com/vmware-labs/yaml-jsonpath/pkg/yamlpath"
 	"gopkg.in/yaml.v3"
 )
@@ -63,7 +64,7 @@ func ExtractScripts(doc *yaml.Node) chan JobWithScripts {
 
 func getScriptFromKey(node *yaml.Node, key string) []ScriptPart {
 	parts := make([]ScriptPart, 0)
-	scriptPath := mustPath(yamlpath.NewPath(fmt.Sprintf(".%s", key)))
+	scriptPath := yamlpathutils.MustPath(yamlpath.NewPath(fmt.Sprintf(".%s", key)))
 	scriptNodes, _ := scriptPath.Find(node)
 	if scriptNodes == nil {
 		return parts

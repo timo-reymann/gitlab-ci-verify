@@ -40,5 +40,5 @@ func NewCiYaml(content []byte) (*CiYaml, error) {
 // Check that runs verifications
 type Check interface {
 	// Run the check
-	Run(rep *CheckInput) ([]CheckFinding, error)
+	Run(i *CheckInput) ([]CheckFinding, error)
 }
