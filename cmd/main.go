@@ -29,6 +29,9 @@ func Execute() {
 	c := cli.NewConfiguration()
 	handleErr(c.Parse(), c)
 
+	fmt, err := formatter.Get(c.OutputFormat)
+	handleErr(err, c)
+
 	logging.Verbose("read gitlab ci file ", c.GitLabCiFile)
 	ciYamlContent, err := os.ReadFile(c.GitLabCiFile)
 	handleErr(err, c)
@@ -41,7 +44,6 @@ func Execute() {
 		Configuration: c,
 	}
 
-	fmt := formatter.TextFindingsFormatter{}
 	err = fmt.Init(os.Stdout)
 	handleErr(err, c)
 
