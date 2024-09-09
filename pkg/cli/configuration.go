@@ -23,6 +23,7 @@ type Configuration struct {
 	Debug           bool
 	ShellcheckFlags string
 	OutputFormat    string
+	FailSeverity    string
 }
 
 func (conf *Configuration) addBoolFlag(field *bool, long string, short string, val bool, usage string) {
@@ -49,6 +50,7 @@ func (conf *Configuration) defineFlags() {
 	conf.addBoolFlag(&conf.Verbose, "verbose", "", false, "Enable verbose output")
 	conf.addStringFlag(&conf.ShellcheckFlags, "shellcheck-flags", "", "", "Pass custom flags to shellcheck")
 	conf.addStringFlag(&conf.OutputFormat, "format", "f", "text", "Format for the output, valid options are json and text.")
+	conf.addStringFlag(&conf.FailSeverity, "severity", "S", "style", "Set the severity level on which to consider findings as errors and exiting with non zero exit code.")
 }
 
 func (conf *Configuration) Help() {

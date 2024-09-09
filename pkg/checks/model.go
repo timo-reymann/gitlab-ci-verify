@@ -16,17 +16,7 @@ type CheckFinding struct {
 }
 
 func (cf *CheckFinding) SeverityName() string {
-	switch cf.Severity {
-	case SeverityError:
-		return "Error"
-	case SeverityWarning:
-		return "Warning"
-	case SeverityInfo:
-		return "Info"
-	case SeverityStyle:
-		return "Style"
-	}
-	return ""
+	return SeverityLevelToName(cf.Severity)
 }
 
 func (cf *CheckFinding) Compare(o CheckFinding) int {

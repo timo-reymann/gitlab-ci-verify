@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"errors"
+	"fmt"
 	"github.com/timo-reymann/gitlab-ci-verify/internal/logging"
 	_ "github.com/timo-reymann/gitlab-ci-verify/internal/shellcheck"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/checks"
@@ -29,8 +30,13 @@ func Execute() {
 	c := cli.NewConfiguration()
 	handleErr(c.Parse(), c)
 
-	fmt, err := formatter.Get(c.OutputFormat)
+	findingsFormatter, err := formatter.Get(c.OutputFormat)
 	handleErr(err, c)
+
+	severity := checks.SeverityNameToLevel(c.FailSeverity)
+	if severity == -1 {
+		handleErr(fmt.Errorf("invalid severity level %s", c.FailSeverity), c)
+	}
 
 	logging.Verbose("read gitlab ci file ", c.GitLabCiFile)
 	ciYamlContent, err := os.ReadFile(c.GitLabCiFile)
@@ -44,10 +50,10 @@ func Execute() {
 		Configuration: c,
 	}
 
-	err = fmt.Init(os.Stdout)
+	err = findingsFormatter.Init(os.Stdout)
 	handleErr(err, c)
 
-	err = fmt.Start()
+	err = findingsFormatter.Start()
 	handleErr(err, c)
 
 	checkResultChans := checks.RunChecksInParallel(checks.AllChecks(), checkInput, func(err error) {
@@ -65,11 +71,20 @@ func Execute() {
 		return a.Compare(b)
 	})
 
+	shouldFail := false
 	for _, finding := range findings {
-		err := fmt.Print(&finding)
+		if severity >= finding.Severity {
+			shouldFail = true
+		}
+
+		err := findingsFormatter.Print(&finding)
 		handleErr(err, c)
 	}
 
-	err = fmt.End()
+	err = findingsFormatter.End()
 	handleErr(err, c)
+
+	if shouldFail {
+		os.Exit(1)
+	}
 }

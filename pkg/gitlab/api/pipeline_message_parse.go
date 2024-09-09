@@ -2,9 +2,15 @@ package api
 
 import "strings"
 
+// ParsePipelineMessage from gitlab api for a message and return
+// the job and the message
 func ParsePipelineMessage(message string) (string, string) {
 	errorString := message
 	messageLine := errorString
+
+	if !strings.Contains(message, ":") {
+		return "", messageLine
+	}
 
 	if strings.HasPrefix(errorString, "jobs:") {
 		messageLine = errorString[5:]
