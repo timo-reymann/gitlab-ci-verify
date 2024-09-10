@@ -102,7 +102,8 @@ ready to use integration):
     - ARM (M1/M2)
 - Windows
     - 64-bit
-- pre-commit
+- pre-commit (x86 & ARM)
+- Docker (x86 & ARM)
 
 ### Where to find the latest release for your platform
 
@@ -111,12 +112,22 @@ ready to use integration):
 Binaries for all of these can be found on
 the [latest release page](https://github.com/timo-reymann/gitlab-ci-verify/releases/latest).
 
+#### Docker
+
+For the docker image check the [docker hub](https://hub.docker.com/r/timoreymann/gitlab-ci-verify).
+
 ## Usage
 
 ### Command Line
 
 ```sh
 gitlab-ci-verify --help
+```
+
+### Containerized
+
+```sh
+docker run --rm -it -v $PWD:/workspace -e GITLAB_TOKEN="your token" timoreymann/gitlab-ci-verify
 ```
 
 ### pre-commit

@@ -75,6 +75,24 @@ jobs:
           name: Upload wheel
           command: |
             twine upload -r pypi dist/wheel/* 
+  publish_docker_image:
+    executor: docker/docker
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ./
+      - setup_remote_docker:
+          version: default
+      - run:
+          name: Build and publish image
+          command: |
+            echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
+            docker buildx create --use
+            make build-docker
+      - docker/update-description:
+          image: timoreymann/deterministic-zip
+          docker-username: DOCKER_USERNAME
+          docker-password: DOCKER_TOKEN
 
 workflows:
   version: 2
@@ -87,6 +105,14 @@ workflows:
           requires:
             - test
       - publish_python_wheel:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
+          requires:
+            - build
+      - publish_docker_image:
           filters:
             branches:
               ignore: /.*/

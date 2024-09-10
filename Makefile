@@ -40,4 +40,18 @@ build-darwin: create-dist  ## Build binaries for macOS
 create-checksums: ## Create checksums for binaries
 	@find ./dist -type f -exec sh -c 'sha256sum {} | cut -d " " -f 1 > {}.sha256' {} \;
 
+build-docker: ## Build docker image based on the built linux builds in the dist folder
+	@docker buildx build --tag timoreymann/gitlab-ci-verify:latest \
+		--platform linux/amd64,linux/arm64 \
+		--build-arg BUILD_TIME="$(NOW)" \
+		--build-arg BUILD_VERSION="$(VERSION)" \
+		--build-arg BUILD_COMMIT_REF="$(COMMIT_REF)" \
+		--push .
+	@docker buildx build --tag timoreymann/gitlab-ci-verify:$(VERSION) \
+		--platform linux/amd64,linux/arm64 \
+		--build-arg BUILD_TIME="$(NOW)" \
+		--build-arg BUILD_VERSION="$(VERSION)" \
+		--build-arg BUILD_COMMIT_REF="$(COMMIT_REF)" \
+		--push .
+
 build: build-linux build-darwin build-windows create-checksums ## Build binaries for all platform
