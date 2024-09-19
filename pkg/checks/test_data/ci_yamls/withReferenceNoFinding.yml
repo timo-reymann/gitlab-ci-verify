@@ -1,0 +1,7 @@
+.template:
+  script:
+    - echo "Hello there!"
+
+build:
+  script:
+    - !reference [".template", "script"]

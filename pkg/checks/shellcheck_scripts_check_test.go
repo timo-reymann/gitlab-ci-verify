@@ -65,6 +65,11 @@ func TestShellScriptCheck_Run(t *testing.T) {
 				},
 			},
 		},
+		{
+			name:             "With no findings and reference",
+			file:             "withReferenceNoFinding.yml",
+			expectedFindings: []CheckFinding{},
+		},
 	}
 
 	for _, tc := range testCases {
