@@ -1,17 +1,18 @@
 package shellcheck
 
-import "fmt"
-
 var ignoredChecksFlags []string
 
 var ignoredChecks = []string{
 	"2034",
+	"1091",
 }
 
 func init() {
 	ignoredChecksFlags = make([]string, len(ignoredChecks)*2)
-	for idx, ignoredCheck := range ignoredChecks {
+	idx := 0
+	for _, ignoredCheck := range ignoredChecks {
 		ignoredChecksFlags[idx] = "-e"
-		ignoredChecksFlags[idx+1] = fmt.Sprintf("SC%s", ignoredCheck)
+		ignoredChecksFlags[idx+1] = "SC" + ignoredCheck
+		idx += 2
 	}
 }
