@@ -46,7 +46,7 @@ func (conf *Configuration) addStringFlag(field *string, long string, short strin
 func (conf *Configuration) defineFlags() {
 	conf.addStringFlag(&conf.GitLabCiFile, "gitlab-ci-file", "", ".gitlab-ci.yml", "The Yaml file used to configure GitLab CI")
 	conf.addStringFlag(&conf.GitlabBaseUrl, "gitlab-base-url", "", AutoDetectValue, "Set the gitlab base url explicitly in case detection does not work or your clone and base url differs")
-	conf.addStringFlag(&conf.GitlabToken, "gitlab-token", "", "", "Gitlab token to use")
+	conf.addStringFlag(&conf.GitlabToken, "gitlab-token", "", "", "Gitlab token to use, if not specified the netrc is evaluated and if that also does not contain credentials, tries to load the environment variable GITLAB_TOKEN")
 	conf.addBoolFlag(&conf.Debug, "debug", "", false, "Enable debug output")
 	conf.addBoolFlag(&conf.Verbose, "verbose", "", false, "Enable verbose output")
 	conf.addStringFlag(&conf.ShellcheckFlags, "shellcheck-flags", "", "", "Pass custom flags to shellcheck")
