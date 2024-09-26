@@ -4,7 +4,7 @@ from os import PathLike
 from gitlab_ci_verify_bin.exec import create_subprocess
 
 
-def execute(
+def _execute(
         root: PathLike | str,
         gitlab_base_url: str | None = None,
         gitlab_ci_file: str | None = None,
@@ -49,6 +49,7 @@ def execute(
                     check,
                 ]
             )
+
     if fail_severity is not None:
         args.extend(
             [

@@ -3,7 +3,7 @@ import json
 from gitlab_ci_verify import Finding
 
 
-def parse_output(proc):
+def _parse_output(proc):
     valid = proc.returncode == 0
     raw_findings = json.loads(proc.stdout.read())
     parsed_findings = []
