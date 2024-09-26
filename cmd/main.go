@@ -30,6 +30,11 @@ func Execute() {
 	c := cli.NewConfiguration()
 	handleErr(c.Parse(), c)
 
+	envOutputFormat := os.Getenv("GITLAB_CI_VERIFY_OUTPUT_FORMAT")
+	if envOutputFormat != "" {
+		c.OutputFormat = envOutputFormat
+	}
+
 	findingsFormatter, err := formatter.Get(c.OutputFormat)
 	handleErr(err, c)
 
