@@ -70,6 +70,7 @@ jobs:
           name: Build wheel
           command: |
             mkdir -p dist/wheel/
+            export VERSION="${CIRCLE_TAG##v}"
             binary-wheel-builder --wheel-spec wheel.yaml --dist-folder dist/wheel/
       - run:
           name: Upload wheel

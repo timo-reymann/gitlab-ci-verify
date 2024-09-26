@@ -1,7 +1,7 @@
 package: gitlab_ci_verify_bin
 executable: gitlab-ci-verify
 name: gitlab-ci-verify-bin
-version: !Env CIRCLE_TAG
+version: !Env VERSION
 summary: Validate and lint your gitlab ci files using ShellCheck, the Gitlab API and curated checks
 description: !FileContent README.md
 license: GPL-3.0
@@ -18,7 +18,9 @@ source: !WheelSource
     !WellknownPlatform MAC_SILICON: "dist/gitlab-ci-verify_darwin-arm64"
     !WellknownPlatform MAC_INTEL: "dist/gitlab-ci-verify_darwin-amd64"
     !WellknownPlatform LINUX_GENERIC_x84_64: "dist/gitlab-ci-verify_linux-amd64"
+    !WellknownPlatform WINDOWS_x86_64: "gitlab-ci-verify_windows-amd64"
 platforms:
   - !WellknownPlatform MAC_INTEL
   - !WellknownPlatform MAC_SILICON
   - !WellknownPlatform LINUX_GENERIC_x84_64
+  - !WellknownPlatform WINDOWS_x86_64
