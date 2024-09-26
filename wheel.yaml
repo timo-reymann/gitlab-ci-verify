@@ -1,6 +1,6 @@
-package: gitlab_ci_verify
+package: gitlab_ci_verify_bin
 executable: gitlab-ci-verify
-name: gitlab-ci-verify
+name: gitlab-ci-verify-bin
 version: !Env CIRCLE_TAG
 summary: Validate and lint your gitlab ci files using ShellCheck, the Gitlab API and curated checks
 description: !FileContent README.md
