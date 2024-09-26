@@ -15,6 +15,8 @@ type FindingsFormatter interface {
 
 func Get(format string) (FindingsFormatter, error) {
 	switch format {
+	case "table":
+		return &TableFindingsFormatter{}, nil
 	case "text":
 		return &TextFindingsFormatter{}, nil
 	case "json":
