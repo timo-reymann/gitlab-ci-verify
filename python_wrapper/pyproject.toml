@@ -1,0 +1,60 @@
+[project]
+name = "gitlab-ci-verify"
+description = "Validate and lint your gitlab ci files using ShellCheck, the Gitlab API and curated checks"
+authors = [
+    { name = "Timo Reymann", email = "mail@timo-reymann.de" }
+]
+readme = "README.md"
+dynamic = ["version"]
+classifiers =  [
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Development Status :: 2 - Pre-Alpha",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Intended Audience :: Developers",
+]
+
+dependencies = [
+    "gitlab-ci-verify-bin==0.*"
+]
+
+
+[project.optional-dependencies]
+dev = [
+    "setuptools==70.*",
+    "setuptools-scm==8.*",
+    "twine==5.1.*",
+    "wheel==0.43.*",
+    "pydoctor==24.3.*",
+    "build==1.*"
+]
+
+
+[tool.setuptools_scm]
+root = ".."
+
+[tool.pydoctor]
+verbose = 0
+warnings-as-errors = true
+
+intersphinx = ["https://docs.python.org/3/objects.inv"]
+docformat = "restructuredtext"
+html-output = "gh-pages"
+
+add-package = ["gitlab_ci_verify"]
+project-name = "gitlab_ci_verify"
+project-url = "https://github.com/timo-reymann/gitlab-ci-verify"
+
+theme = "base"
+template-dir = "pydoctor-theme"
+
+[build-system]
+requires = [
+    "setuptools",
+    "setuptools-scm",
+    "wheel",
+]
+build-backend = "setuptools.build_meta"

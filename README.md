@@ -74,19 +74,13 @@ pip install gitlab-ci-verify
 And use the package like this:
 
 ````python
-import subprocess
+from gitlab_ci_verify import Finding, parse_output, execute
 
-from gitlab_ci_verify import exec
+proc = execute( "/path/to/file")
+valid, findings = parse_output(proc)
 
-# Run process and prefix stdout and stderr
-exec.exec_with_templated_output(["--help"])
-
-# Create a subprocess, specifying how to handle stdout, stderr
-exec.create_subprocess(["--help"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-
-# Perform command with suppressed output and return finished proces instance,
-# on that one can also check if the call was successfully
-exec.exec_silently(["--version"])
+print(f"Valid:    {valid}")
+print(f"Findings: {findings}")
 ````
 
 ### Supported platforms
