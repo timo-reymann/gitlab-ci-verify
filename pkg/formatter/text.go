@@ -6,62 +6,65 @@ import (
 	"github.com/fatih/color"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/checks"
 	"io"
-	"strconv"
-	"strings"
 )
 
 type TextFindingsFormatter struct {
-	tabWriter *tabwriter.Writer
+	tabWriter    *tabwriter.Writer
+	headingColor *color.Color
 }
 
 func (t *TextFindingsFormatter) Init(w io.Writer) error {
 	t.tabWriter = tabwriter.NewWriter(w, 0, 0, 2, ' ', tabwriter.TabIndent)
+	t.headingColor = color.New(color.Bold)
 	return nil
 }
 
 func (t *TextFindingsFormatter) Start() error {
-	c := color.New(color.Bold)
-	_, err := fmt.Fprintln(t.tabWriter, strings.Join([]string{
-		c.Sprint("Severity"),
-		c.Sprint("Code"),
-		c.Sprint("Line"),
-		c.Sprint("Description"),
-		c.Sprint("Link"),
-		c.Sprintf("Location"),
-	}, "\t"))
-	return err
+	return nil
 }
 
-func (t *TextFindingsFormatter) severity(cf *checks.CheckFinding) string {
-	var colorize func(string, ...any) string
-	switch cf.Severity {
-	case checks.SeverityError:
-		colorize = color.RedString
-	case checks.SeverityWarning:
-		colorize = color.YellowString
-	case checks.SeverityInfo:
-		colorize = color.CyanString
-	case checks.SeverityStyle:
-		colorize = color.BlueString
-	}
-
-	return colorize(strings.ToUpper(cf.SeverityName()))
+func (t *TextFindingsFormatter) printEntry(heading, val string) error {
+	_, err := fmt.Fprintf(t.tabWriter, "%s\t%s\n", t.headingColor.Sprint(heading), val)
+	return err
 }
 
 func (t *TextFindingsFormatter) Print(finding *checks.CheckFinding) error {
 	location, err := finding.Location()
+	if err != nil {
+		return err
+	}
 
-	_, err = fmt.Fprintln(t.tabWriter, strings.Join([]string{
-		t.severity(finding),
-		finding.Code,
-		strconv.Itoa(finding.Line),
-		finding.Message,
-		finding.Link,
-		location,
-	}, "\t"))
+	if err := t.printEntry("Code", finding.Code); err != nil {
+		return err
+	}
+
+	if err := t.printEntry("Description", finding.Message); err != nil {
+		return err
+	}
+
+	if err := t.printEntry("Severity", formatSeverity(finding)); err != nil {
+		return err
+	}
+
+	if err := t.printEntry("Location", location); err != nil {
+		return err
+	}
+
+	if err := t.printEntry("Link", finding.Link); err != nil {
+		return err
+	}
+
+	if err := t.tabWriter.Flush(); err != nil {
+		return err
+	}
+
+	if _, err = t.tabWriter.Write([]byte("\n")); err != nil {
+		return err
+	}
+
 	return err
 }
 
 func (t *TextFindingsFormatter) End() error {
-	return t.tabWriter.Flush()
+	return nil
 }

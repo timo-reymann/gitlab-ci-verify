@@ -25,8 +25,11 @@ func TestTextFindingsFormatter(t *testing.T) {
 				},
 			},
 			expectedOutput: []byte(
-				"Severity  Code  Line  Description             Link                     Location\n" +
-					"INFO      1     1     test message goes here  https://check.link/code  /test.yml:1\n",
+				"Code         1\n" +
+					"Description  test message goes here\n" +
+					"Severity     INFO\n" +
+					"Location     /test.yml:1\n" +
+					"Link         https://check.link/code\n\n",
 			),
 		},
 		{
@@ -50,9 +53,16 @@ func TestTextFindingsFormatter(t *testing.T) {
 				},
 			},
 			expectedOutput: []byte(
-				"Severity  Code  Line  Description             Link                     Location\n" +
-					"INFO      1     1     test message goes here  https://check.link/code  /test.yml:1\n" +
-					"STYLE     1     1     test message goes here  https://check.link/code  /test.yml:1\n",
+				"Code         1\n" +
+					"Description  test message goes here\n" +
+					"Severity     INFO\n" +
+					"Location     /test.yml:1\n" +
+					"Link         https://check.link/code\n\n" +
+					"Code         1\n" +
+					"Description  test message goes here\n" +
+					"Severity     STYLE\n" +
+					"Location     /test.yml:1\n" +
+					"Link         https://check.link/code\n\n",
 			),
 		},
 	} {
