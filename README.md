@@ -74,9 +74,9 @@ pip install gitlab-ci-verify
 And use the package like this:
 
 ````python
-from gitlab_ci_verify.model import verify
+from gitlab_ci_verify import verify
 
-valid, findings = verify( "/path/to/file")
+valid, findings = verify("/path/to/file")
 
 print(f"Valid:    {valid}")
 print(f"Findings: {findings}")
