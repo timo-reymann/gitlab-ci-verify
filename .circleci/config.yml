@@ -112,6 +112,7 @@ jobs:
           name: Build package
           command: |
             cd python_wrapper
+            pip install .[dev]
             python3 -m build
       - save_cache:
           key: python-wrapper-dependencies-{{ checksum "python_wrapper/pyproject.toml" }}
@@ -136,6 +137,8 @@ jobs:
           command: |
             git submodule sync
             git submodule update --init --recursive
+            cd python_wrapper
+            pip install .[dev]
             pydoctor
       - save_cache:
           key: python-wrapper-dependencies-{{ checksum "python_wrapper/pyproject.toml" }}
