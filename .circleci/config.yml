@@ -5,6 +5,13 @@ job_defaults: &job_defaults
     tags:
       only: /.*/
 
+only_tags: &only_tags
+  filters:
+    branches:
+      ignore: /.*/
+    tags:
+      only: /.*/
+
 orbs:
   github-cli: circleci/github-cli@2.4.0
   docker: circleci/docker@2.7.1
@@ -60,27 +67,36 @@ jobs:
           paths:
             - dist/
       - go/save-cache
-  publish_python_wheel:
+  publish_python_packages:
     executor: python
+    environment:
+      PIP_CACHE_DIR: /tmp/pip-cache
     steps:
       - checkout
       - attach_workspace:
           at: .
           name: Retrieve persisted binaries
+      - restore_cache:
+          key: python-publish-dependencies-v1
       - run:
-          name: Install dependencies
+          name: Build and upload binary wheel
           command: |
             pip install twine==5.* binary_wheel_builder[cli]==3.*
-      - run:
-          name: Build wheel
-          command: |
             mkdir -p dist/wheel/
             export VERSION="${CIRCLE_TAG##v}"
             binary-wheel-builder --wheel-spec wheel.yaml --dist-folder dist/wheel/
+            twine upload -r pypi dist/wheel/*
       - run:
-          name: Upload wheel
+          name: Build and upload wrapper package
           command: |
-            twine upload -r pypi dist/wheel/* 
+            cd python_wrapper
+            pip install .[dev]
+            python3 -m build
+            twine upload -r pypi dist/*
+      - save_cache:
+          key: python-publish-dependencies-v1
+          paths:
+            - "/tmp/pip-cache"
   publish_docker_image:
     executor: docker/docker
     steps:
@@ -153,7 +169,7 @@ jobs:
 
 workflows:
   version: 2
-  build:
+  main:
     jobs:
       - test:
           <<: *job_defaults
@@ -161,23 +177,17 @@ workflows:
           <<: *job_defaults
           requires:
             - test
-      - build_python_wrapper
+      - build_python_wrapper:
+          <<: *job_defaults
       - build_gh_pages:
+          <<: *only_tags
           requires:
             - build_python_wrapper
-      - publish_python_wheel:
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /.*/
+      - publish_python_packages:
+          <<: *only_tags
           requires:
             - build
       - publish_docker_image:
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /.*/
+          <<: *only_tags
           requires:
             - build
