@@ -89,6 +89,8 @@ print(f"Valid:    {valid}")
 print(f"Findings: {findings}")
 ````
 
+Also see the [python wrapper documentation](https://timo-reymann.github.io/gitlab-ci-verify/python-wrapper/)
+
 ### Supported platforms
 
 The following platforms are supported (and have prebuilt binaries /
