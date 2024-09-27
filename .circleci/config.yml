@@ -11,7 +11,7 @@ orbs:
   codecov: codecov/codecov@4.1.0
   go: circleci/go@1.12.0
   github-utils: trustedshops-public/github-utils@1.1.2
-  python: circleci/python@1.1.0
+  python: circleci/python@1.5.0
 
 executors:
   go:
