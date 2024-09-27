@@ -18,7 +18,8 @@ classifiers =  [
 ]
 
 dependencies = [
-    "gitlab-ci-verify-bin==0.*"
+    "gitlab-ci-verify-bin==0.*",
+    "coverage==7.6.*"
 ]
 
 

@@ -80,7 +80,9 @@ jobs:
           command: |
             cd python_wrapper
             pip install .[dev]
-            python -m unittest discover --pattern "*_test.py"
+            coverage run -m unittest discover --pattern "*_test.py"
+            coverage xml -i
+      - codecov/upload
       - save_cache:
           key: python-wrapper-dependencies-{{ checksum "python_wrapper/pyproject.toml" }}
           paths:
