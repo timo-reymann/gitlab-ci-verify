@@ -1,3 +1,10 @@
+## [0.2.2](https://github.com/timo-reymann/gitlab-ci-verify/compare/v0.2.1...v0.2.2) (2024-09-27)
+
+
+### Bug Fixes
+
+* Checkout for gh release creation ([6c1eab4](https://github.com/timo-reymann/gitlab-ci-verify/commit/6c1eab45440a389939e92ba687fedf14ea89599a))
+
 ## [0.2.1](https://github.com/timo-reymann/gitlab-ci-verify/compare/v0.2.0...v0.2.1) (2024-09-27)
 
 
