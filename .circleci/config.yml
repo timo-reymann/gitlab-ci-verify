@@ -234,6 +234,7 @@ workflows:
           <<: *only_tags
           requires:
             - build
+            - build_python_wrapper
       - publish_docker_image:
           <<: *only_tags
           requires:
