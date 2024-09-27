@@ -152,7 +152,7 @@ jobs:
             - "/tmp/pip-cache"
       - persist_to_workspace:
           paths:
-            - python_wrapper/build
+            - python_wrapper/dist
           root: .
           name: Save python package artifacts
 
