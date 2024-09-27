@@ -22,6 +22,14 @@
 - Automatic detection of the current gitlab project
 - Available as pre-commit hook
 
+### Example output
+
+| Format |                                                                Screenshot                                                                |
+|:-------|:----------------------------------------------------------------------------------------------------------------------------------------:|
+| text   |  ![Text output screenshot](https://raw.githubusercontent.com/timo-reymann/gitlab-ci-verify/main/.github/images/example_output/text.png)  |
+| json   |  ![JSON output screenshot](https://raw.githubusercontent.com/timo-reymann/gitlab-ci-verify/main/.github/images/example_output/json.png)  |
+| table  | ![Table output screenshot](https://raw.githubusercontent.com/timo-reymann/gitlab-ci-verify/main/.github/images/example_output/table.png) |
+
 ## Installation
 
 ### Manual
