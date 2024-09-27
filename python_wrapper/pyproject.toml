@@ -1,16 +1,15 @@
 [project]
 name = "gitlab-ci-verify"
+version = "0.0.0"
 description = "Validate and lint your gitlab ci files using ShellCheck, the Gitlab API and curated checks"
 authors = [
     { name = "Timo Reymann", email = "mail@timo-reymann.de" }
 ]
 readme = "README.md"
-dynamic = ["version"]
 classifiers =  [
     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
-    "Development Status :: 2 - Pre-Alpha",
+    "Development Status :: 4 - Beta",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -37,6 +36,7 @@ dev = [
 [tool.setuptools_scm]
 root = ".."
 
+
 [tool.pydoctor]
 verbose = 0
 warnings-as-errors = true
@@ -51,6 +51,7 @@ project-url = "https://github.com/timo-reymann/gitlab-ci-verify"
 
 theme = "base"
 template-dir = "pydoctor-theme"
+
 
 [build-system]
 requires = [
