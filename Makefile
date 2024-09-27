@@ -4,7 +4,7 @@ SHELL := /bin/bash
 VERSION=$(shell git describe --tags `git rev-list --tags --max-count=1`)
 NOW=$(shell date +'%y-%m-%d_%H:%M:%S')
 COMMIT_REF=$(shell git rev-parse --short HEAD)
-BUILD_ARGS=-ldflags "-s -w -X github.com/timo-reymann/gitlab-ci-verify/pkg/internal/buildinfo.GitSha=$(COMMIT_REF) -X github.com/timo-reymann/gitlab-ci-verify/pkg/internal/buildinfo.Version=$(VERSION) -X github.com/timo-reymann/gitlab-ci-verify/pkg/internal/buildinfo.BuildTime=$(NOW)"
+BUILD_ARGS=-ldflags "-s -w -X github.com/timo-reymann/gitlab-ci-verify/internal/buildinfo.GitSha=$(COMMIT_REF) -X github.com/timo-reymann/gitlab-ci-verify/internal/buildinfo.Version=$(VERSION) -X github.com/timo-reymann/gitlab-ci-verify/internal/buildinfo.BuildTime=$(NOW)"
 BIN_PREFIX="dist/gitlab-ci-verify_"
 
 clean: ## Cleanup artifacts

@@ -18,6 +18,7 @@ orbs:
   codecov: codecov/codecov@4.1.0
   go: circleci/go@1.12.0
   github-utils: trustedshops-public/github-utils@1.1.2
+  semantic-release: trustedshops-public/semantic-release@6.0.0
 
 executors:
   go:
@@ -201,6 +202,19 @@ workflows:
           <<: *job_defaults
           requires:
             - test_python_wrapper
+      - semantic-release/with_existing_config:
+          name: semantic-release
+          additional_packages: "@google/semantic-release-replace-plugin"
+          requires:
+            - build
+            - build_python_wrapper
+          <<: *job_defaults
+          context:
+            - semantic-release
+          filters:
+            branches:
+              only:
+                - main
       - build_gh_pages:
           <<: *only_tags
           requires:
