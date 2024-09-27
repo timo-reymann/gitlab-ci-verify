@@ -149,7 +149,7 @@ docker run --rm -it -v $PWD:/workspace -e GITLAB_TOKEN="your token" timoreymann/
 
 ```yaml
 - repo: https://github.com/timo-reymann/gitlab-ci-verify
-  rev: 0.1.0
+  rev: 0.2.0
   hooks:
     - id: gitlab-ci-verify
 ```
