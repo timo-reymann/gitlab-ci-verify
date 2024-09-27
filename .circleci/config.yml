@@ -188,6 +188,7 @@ jobs:
   attach_binaries_to_release:
     executor: python
     steps:
+      - checkout
       - attach_workspace:
           at: ./
       - github-cli/install:
