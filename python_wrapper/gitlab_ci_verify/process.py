@@ -1,12 +1,13 @@
 import subprocess
 from os import PathLike
+from typing import Unpack
 
 from gitlab_ci_verify_bin.exec import create_subprocess
 
 from gitlab_ci_verify.config import GitlabCiVerifyConfig
 
 
-def _add_arg_if_set(args: list[str], config: GitlabCiVerifyConfig, key: str, flag: str):
+def _add_arg_if_set(args: list[str], config: Unpack[GitlabCiVerifyConfig], key: str, flag: str):
     val = config.get(key, None)
     if val is not None:
         args.extend(
@@ -21,7 +22,7 @@ def _execute(
         root: PathLike | str,
         file: str | None = None,
         stdin=None,
-        **config: GitlabCiVerifyConfig
+        **config: Unpack[GitlabCiVerifyConfig]
 ):
     args = [
         "--format",
