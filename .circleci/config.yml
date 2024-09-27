@@ -131,7 +131,7 @@ jobs:
             docker buildx create --use
             make build-docker
       - docker/update-description:
-          image: timoreymann/deterministic-zip
+          image: timoreymann/gitlab-ci-verify
           docker-username: DOCKER_USERNAME
           docker-password: DOCKER_TOKEN
 
