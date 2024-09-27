@@ -67,6 +67,24 @@ jobs:
           paths:
             - dist/
       - go/save-cache
+  test_python_wrapper:
+    executor: python
+    environment:
+      PIP_CACHE_DIR: /tmp/pip-cache
+    steps:
+      - checkout
+      - restore_cache:
+          key: python-wrapper-dependencies-{{ checksum "python_wrapper/pyproject.toml" }}
+      - run:
+          name: Test package
+          command: |
+            cd python_wrapper
+            pip install .[dev]
+            python -m unittest discover --pattern "*_test.py"
+      - save_cache:
+          key: python-wrapper-dependencies-{{ checksum "python_wrapper/pyproject.toml" }}
+          paths:
+            - "/tmp/pip-cache"
   publish_python_packages:
     executor: python
     environment:
@@ -171,12 +189,16 @@ workflows:
     jobs:
       - test:
           <<: *job_defaults
+      - test_python_wrapper:
+          <<: *job_defaults
       - build:
           <<: *job_defaults
           requires:
             - test
       - build_python_wrapper:
           <<: *job_defaults
+          requires:
+            - test_python_wrapper
       - build_gh_pages:
           <<: *only_tags
           requires:

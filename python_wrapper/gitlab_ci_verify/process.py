@@ -3,7 +3,7 @@ from os import PathLike
 
 from gitlab_ci_verify_bin.exec import create_subprocess
 
-from gitlab_ci_verify import GitlabCiVerifyConfig
+from gitlab_ci_verify.config import GitlabCiVerifyConfig
 
 
 def _add_arg_if_set(args: list[str], config: GitlabCiVerifyConfig, key: str, flag: str):

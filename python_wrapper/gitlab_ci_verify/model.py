@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, fields
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -12,4 +12,5 @@ class Finding:
 
     @classmethod
     def from_dict(cls, dict_val: dict[str, any]):
-        return Finding(**dict_val)
+        class_fields = {f.name for f in fields(cls)}
+        return Finding(**{k: v for k, v in dict_val.items() if k in class_fields})
