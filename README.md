@@ -22,7 +22,7 @@ gitlab-ci-verify
 - Curated checks for common mistakes (feel free to [contribute new ones](./docs/checks/Add_check.md))
 - Automatic detection of the current gitlab project with an option to overwrite
 - Available as pre-commit hook
-- Use to valid dynamically generated pipelines using the [python wrapper](#install-with-pipx)
+- Use to valid dynamically generated pipelines using the [python wrapper](#install-as-library-using-pip)
 
 ### Example output
 
@@ -38,51 +38,16 @@ gitlab-ci-verify
 
 ### [docker](#containerized)
 
-### Manual
 
-#### Linux (64-bit)
-
-```bash
-curl -LO https://github.com/timo-reymann/gitlab-ci-verify/releases/download/$(curl -Lso /dev/null -w %{url_effective} https://github.com/timo-reymann/gitlab-ci-verify/releases/latest | grep -o '[^/]*$')/gitlab-ci-verify_linux-amd64 && \
-chmod +x gitlab-ci-verify_linux-amd64 && \
-sudo mv gitlab-ci-verify_linux-amd64 /usr/local/bin/gitlab-ci-verify
-```
-
-#### Darwin (Intel)
-
-##### brew
-
-```bash
-brew tap timo-reymann/gitlab-ci-verify
-brew install gitlab-ci-verify
-```
-
-##### manual
-
-```bash
-curl -LO https://github.com/timo-reymann/gitlab-ci-verify/releases/download/$(curl -Lso /dev/null -w %{url_effective} https://github.com/timo-reymann/gitlab-ci-verify/releases/latest | grep -o '[^/]*$')/gitlab-ci-verify_darwin-amd64 && \
-chmod +x gitlab-ci-verify_darwin-amd64 && \
-sudo mv gitlab-ci-verify_darwin-amd64 /usr/local/bin/gitlab-ci-verify
-```
-
-#### Windows
-
-Download the latest [release](https://github.com/timo-reymann/gitlab-ci-verify/releases/latest) for Windows and put in
-your `PATH`.
-
-### Install with go
-
-```bash
-go install github.com/timo-reymann/gitlab-ci-verify@latest
-```
-
-### Install with pip(x)
+### Install with pipx
 
 Using pipx you can just use the following command use gitlab-ci-verify as it is:
 
 ```sh
 pipx install gitlab-ci-verify
 ```
+
+### Install as library using pip
 
 If you want to use it directly using the `subprocess` module you can install it with pip:
 
@@ -109,6 +74,35 @@ print(f"Findings: {findings}")
 ````
 
 Also see the [python wrapper documentation](https://timo-reymann.github.io/gitlab-ci-verify/python-wrapper/)
+
+### Manual
+
+#### Linux (64-bit)
+
+```bash
+curl -LO https://github.com/timo-reymann/gitlab-ci-verify/releases/download/$(curl -Lso /dev/null -w %{url_effective} https://github.com/timo-reymann/gitlab-ci-verify/releases/latest | grep -o '[^/]*$')/gitlab-ci-verify_linux-amd64 && \
+chmod +x gitlab-ci-verify_linux-amd64 && \
+sudo mv gitlab-ci-verify_linux-amd64 /usr/local/bin/gitlab-ci-verify
+```
+
+#### Darwin (Intel)
+
+```bash
+curl -LO https://github.com/timo-reymann/gitlab-ci-verify/releases/download/$(curl -Lso /dev/null -w %{url_effective} https://github.com/timo-reymann/gitlab-ci-verify/releases/latest | grep -o '[^/]*$')/gitlab-ci-verify_darwin-amd64 && \
+chmod +x gitlab-ci-verify_darwin-amd64 && \
+sudo mv gitlab-ci-verify_darwin-amd64 /usr/local/bin/gitlab-ci-verify
+```
+
+#### Windows
+
+Download the latest [release](https://github.com/timo-reymann/gitlab-ci-verify/releases/latest) for Windows and put in
+your `PATH`.
+
+### Install with go
+
+```bash
+go install github.com/timo-reymann/gitlab-ci-verify@latest
+```
 
 ### Supported platforms
 

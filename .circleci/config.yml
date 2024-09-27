@@ -185,6 +185,15 @@ jobs:
           folder: gh-pages/
           git_commit_author_email: "no-reply@timo-reymann.de"
           git_commit_author_name: "CircleCI"
+  attach_binaries_to_release:
+    executor: python
+    steps:
+      - attach_workspace:
+          at: ./
+      - run:
+          name: Attach binaries to release
+          command: |
+            gh release upload ${CIRCLE_TAG} dist/*
 
 workflows:
   version: 2
@@ -203,12 +212,12 @@ workflows:
           requires:
             - test_python_wrapper
       - semantic-release/with_existing_config:
+          <<: *job_defaults
           name: semantic-release
           additional_packages: "@google/semantic-release-replace-plugin"
           requires:
             - build
             - build_python_wrapper
-          <<: *job_defaults
           context:
             - semantic-release
           filters:
@@ -223,8 +232,12 @@ workflows:
           <<: *only_tags
           requires:
             - build
-            - build_python_wrapper
       - publish_docker_image:
           <<: *only_tags
           requires:
             - build
+      - attach_binaries_to_release:
+          <<: *only_tags
+          requires:
+            - build
+            - build_python_wrapper
