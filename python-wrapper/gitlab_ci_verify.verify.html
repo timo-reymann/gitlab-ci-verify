@@ -6,7 +6,7 @@
 
   <head>
     
-    <title>gitlab_ci_verify.parse</title>
+    <title>gitlab_ci_verify.verify</title>
     <meta name="generator" content="pydoctor 24.3.3"> 
         
     </meta>
@@ -141,7 +141,7 @@
 
       <div class="thingTitle">
         <span>Module</span>
-        <code class="thisobject"><a href="gitlab_ci_verify.parse.html" class="internal-link" title="This module">parse</a></code> 
+        <code class="thisobject"><a href="gitlab_ci_verify.verify.html" class="internal-link" title="This module">verify</a></code> 
       </div>
       
       <div>
@@ -150,7 +150,10 @@
         
          
 
-        <div class="childrenKindTitle">Classes</div>
+        
+        
+
+        <div class="childrenKindTitle">Functions</div>
         <ul>
     
     <li class="">
@@ -159,23 +162,17 @@
         
 
         
-            <div class="itemName"><code><a href="gitlab_ci_verify.parse.FindingsParseException.html" class="internal-link" title="gitlab_ci_verify.parse.FindingsParseException"><wbr></wbr>Findings<wbr></wbr>Parse<wbr></wbr>Exception</a></code>
+            <div class="itemName"><code><a href="#verify_content" class="internal-link" title="gitlab_ci_verify.verify.verify_content">verify<wbr></wbr>_content</a></code>
             </div>
         
 
-    </li>
-</ul>
-
-        <div class="childrenKindTitle">Functions</div>
-        <ul>
-    
-    <li class="private">
+    </li><li class="">
         
         
         
 
         
-            <div class="itemName"><code><a href="#_parse_output" class="internal-link" title="gitlab_ci_verify.parse._parse_output">_parse<wbr></wbr>_output</a></code>
+            <div class="itemName"><code><a href="#verify_file" class="internal-link" title="gitlab_ci_verify.verify.verify_file">verify<wbr></wbr>_file</a></code>
             </div>
         
 
@@ -235,7 +232,7 @@
             </div>
         
 
-    </li><li class=" thisobject">
+    </li><li class="">
         
         
         
@@ -265,7 +262,7 @@
             </div>
         
 
-    </li><li class="">
+    </li><li class=" thisobject">
         
         
         
@@ -312,7 +309,7 @@
         
 
         <div class="page-header">
-          <h1 class="module"><code><code><a href="index.html" class="internal-link">gitlab_ci_verify</a></code><wbr></wbr>.<code><a href="gitlab_ci_verify.parse.html" class="internal-link" title="gitlab_ci_verify.parse">parse</a></code></code></h1>
+          <h1 class="module"><code><code><a href="index.html" class="internal-link">gitlab_ci_verify</a></code><wbr></wbr>.<code><a href="gitlab_ci_verify.verify.html" class="internal-link" title="gitlab_ci_verify.verify">verify</a></code></code></h1>
           <div id="showPrivate">
             <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
           </div>
@@ -332,19 +329,19 @@
         </div>
 
         <div id="splitTables">
-          <table class="children sortable" id="id8">
+          <table class="children sortable" id="id12">
   
   
-  <tr class="exception">
-    
-    <td>Exception</td>
-    <td><code><a href="gitlab_ci_verify.parse.FindingsParseException.html" class="internal-link" title="gitlab_ci_verify.parse.FindingsParseException"><wbr></wbr>Findings<wbr></wbr>Parse<wbr></wbr>Exception</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="function private">
+  <tr class="function">
     
     <td>Function</td>
-    <td><code><a href="#_parse_output" class="internal-link" title="gitlab_ci_verify.parse._parse_output">_parse<wbr></wbr>_output</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td><code><a href="#verify_content" class="internal-link" title="gitlab_ci_verify.verify.verify_content">verify<wbr></wbr>_content</a></code></td>
+    <td>Verify gitlab ci file contents using gitlab-ci-verify</td>
+  </tr><tr class="function">
+    
+    <td>Function</td>
+    <td><code><a href="#verify_file" class="internal-link" title="gitlab_ci_verify.verify.verify_file">verify<wbr></wbr>_file</a></code></td>
+    <td>Verify gitlab ci file using gitlab-ci-verify</td>
   </tr>
 </table>
           
@@ -353,21 +350,21 @@
         </div>
 
         <div id="childList">
-          <div class="basefunction private">
+          <div class="basefunction">
   
   
-  <a name="gitlab_ci_verify.parse._parse_output">
+  <a name="gitlab_ci_verify.verify.verify_content">
     
   </a>
-  <a name="_parse_output">
+  <a name="verify_content">
     
   </a>
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">_parse_output</span><span class="function-signature">(proc)</span>:
+    <span class="py-keyword">def</span> <span class="py-defname">verify_content</span><span class="function-signature">(root: <code><a href="https://docs.python.org/3/library/os.html#os.PathLike" class="intersphinx-link">PathLike</a> | <a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code>, content: <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code>, **configuration: <code><a href="gitlab_ci_verify.config.GitlabCiVerifyConfig.html" class="internal-link" title="gitlab_ci_verify.config.GitlabCiVerifyConfig">GitlabCiVerifyConfig</a></code>)</span>:
     
-    <a class="headerLink" href="#_parse_output" title="gitlab_ci_verify.parse._parse_output">
+    <a class="headerLink" href="#verify_content" title="gitlab_ci_verify.verify.verify_content">
       
       
       ¶
@@ -375,7 +372,31 @@
   </div>
   <div class="docstring functionBody">
     
-    <div><p class="undocumented">Undocumented</p></div>
+    <div><p>Verify gitlab ci file contents using gitlab-ci-verify</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">root:</span><code><a href="https://docs.python.org/3/library/os.html#os.PathLike" class="intersphinx-link">PathLike</a> | <a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code></td><td class="fieldArgDesc">Root folder of repository</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">content:</span><code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code></td><td class="fieldArgDesc">CI YAML contents</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">**configuration:</span><code><a href="gitlab_ci_verify.config.GitlabCiVerifyConfig.html" class="internal-link" title="gitlab_ci_verify.config.GitlabCiVerifyConfig">GitlabCiVerifyConfig</a></code></td><td class="fieldArgDesc">Configuration to use for verification</td></tr></table></div>
+  </div>
+</div><div class="basefunction">
+  
+  
+  <a name="gitlab_ci_verify.verify.verify_file">
+    
+  </a>
+  <a name="verify_file">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">verify_file</span><span class="function-signature">(root: <code><a href="https://docs.python.org/3/library/os.html#os.PathLike" class="intersphinx-link">PathLike</a> | <a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code>, file: <code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code> = <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a>, **configuration: <code><a href="gitlab_ci_verify.config.GitlabCiVerifyConfig.html" class="internal-link" title="gitlab_ci_verify.config.GitlabCiVerifyConfig">GitlabCiVerifyConfig</a></code>)</span>:
+    
+    <a class="headerLink" href="#verify_file" title="gitlab_ci_verify.verify.verify_file">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>Verify gitlab ci file using gitlab-ci-verify</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">root:</span><code><a href="https://docs.python.org/3/library/os.html#os.PathLike" class="intersphinx-link">PathLike</a> | <a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a></code></td><td class="fieldArgDesc">Root folder of repository</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">file:</span><code><a href="https://docs.python.org/3/library/stdtypes.html#str" class="intersphinx-link">str</a> | <a href="https://docs.python.org/3/library/constants.html#None" class="intersphinx-link">None</a></code></td><td class="fieldArgDesc">Override gitlab ci file to validate</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">**configuration:</span><code><a href="gitlab_ci_verify.config.GitlabCiVerifyConfig.html" class="internal-link" title="gitlab_ci_verify.config.GitlabCiVerifyConfig">GitlabCiVerifyConfig</a></code></td><td class="fieldArgDesc">Configuration to use for verification</td></tr></table></div>
   </div>
 </div>
         </div>
