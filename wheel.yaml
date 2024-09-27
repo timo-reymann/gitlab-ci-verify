@@ -16,7 +16,7 @@ classifier:
   - "Intended Audience :: Developers"
   - "Environment :: Console"
   - "Environment :: MacOS X"
-  - "Operating System :: POSIX",
+  - "Operating System :: POSIX"
   - "Operating System :: Unix"
   - "Operating System :: Windows"
   - "Programming Language :: Python :: 3",
