@@ -1,0 +1,294 @@
+/*
+    Base Reset
+ */
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+a {
+    color: #d65108;
+    text-decoration: none;
+}
+
+#showPrivate button,
+button {
+    padding: 5px;
+    border: 1px solid black;
+    background: white;
+    color: black;
+}
+
+input {
+    background-color: #191a1b;
+    color: #ece8e2;
+    padding: 6px;
+    border: none;
+}
+
+/**
+    Layout overrides
+ */
+.sidebarcontainer {
+    margin: 0;
+}
+
+.page-header {
+    margin-top: 10px;
+}
+
+body > .container-fluid {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+}
+
+#main {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+/*
+    Navigation overrides
+ */
+.navbar {
+    background: #d65108;
+    color: white;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.navbar-default {
+    border: none !important;
+    border-radius: 0 !important;
+}
+
+.navbar a {
+    text-decoration: none !important;
+    color: white;
+}
+
+.navbar a:hover {
+    color: white;
+    font-weight: bold;
+}
+
+/**
+    Search
+ */
+#search-help-button {
+    background: none !important;
+    margin: 2px;
+}
+
+#search-results-container {
+    background-color: rgb(27, 28, 30);
+    border-color: rgb(63, 69, 70);
+}
+
+#search-box-container img {
+    vertical-align: middle;
+}
+
+/**
+    Module contents index
+ */
+#splitTables * {
+    border: none !important;
+    border-collapse: collapse;
+}
+
+/**
+    Boxed content
+ */
+div.tip,
+div.hint,
+div.important {
+    padding: 10px;
+}
+
+@media (prefers-color-scheme: dark) {
+    /**
+    Base
+     */
+    html, body {
+        background: #131516;
+        color: rgb(194, 187, 177);
+    }
+
+    button {
+        border: 1px solid white;
+        background: black;
+        color: white;
+    }
+
+    /**
+    Header
+     */
+    .page-header {
+        background-color: rgb(25, 26, 27);
+        border-bottom: 0px;
+        box-shadow: rgb(25, 26, 27) 0px 0px 8px 8px;
+    }
+
+    .headerLink {
+        color: rgb(236, 232, 226);
+    }
+
+    .headerLink:hover {
+        text-decoration-color: initial;
+        background-color: rgb(54, 58, 59);
+    }
+
+    /**
+        Side bar
+     */
+    .sidebar .childrenKindTitle {
+        color: rgb(194, 187, 177);
+        box-shadow: rgba(72, 77, 78, 0.77) -11px 11px 0px -10px;
+    }
+
+    .sidebar .thingTitle {
+        color: rgb(181, 174, 162);
+        box-shadow: rgb(93, 100, 102) -10px 12px 0px -11px;
+    }
+
+    .sidebarcontainer {
+        background-color: rgb(27, 28, 30);
+        border-color: rgb(56, 60, 62);
+        scrollbar-color: rgb(196, 190, 180) rgb(59, 64, 66);
+    }
+
+    .sidebar li a {
+        color: rgb(194, 187, 177);
+    }
+
+    /**
+        Footer
+     */
+    footer.navbar {
+        background-color: rgb(25, 26, 27);
+        color: rgb(236, 232, 226);
+    }
+
+    /**
+        Links
+     */
+    a.internal-link {
+        color: rgb(218, 77, 110);
+        background-color: rgb(43, 21, 26);
+    }
+
+    a.intersphinx-link {
+        color: rgb(128, 194, 248);
+        background-color: rgba(47, 37, 28, 0.58);
+    }
+
+    /**
+        Code literals
+     */
+    code,
+    .literal {
+        background-color: rgb(31, 33, 34);
+    }
+
+    code,
+    #childList > div .functionHeader,
+    .fieldArg {
+        color: rgb(214, 209, 201);
+    }
+
+    /**
+    Nested nav
+     */
+    ul ul {
+        border-left-color: rgb(8, 75, 105);
+    }
+
+    /**
+        Package index
+     */
+    table .class,
+    table .classvariable,
+    table .baseclassvariable,
+    table .exception {
+        background-color: rgb(49, 45, 2);
+        color: white;
+    }
+
+    table .method,
+    table .function,
+    table .basemethod,
+    table .baseclassmethod,
+    table .classmethod,
+    table .module {
+        background-color: rgb(41, 52, 18);
+        color: white;
+    }
+
+    table .instancevariable,
+    table .baseinstancevariable,
+    table .variable,
+    table .attribute,
+    table .property {
+        background-color: rgb(48, 21, 51);
+        color: white;
+    }
+
+    table .package {
+        background-color: rgb(70, 44, 2);
+        color: white;
+    }
+
+    #childList a:target ~ .functionHeader,
+    #childList a:target ~ .functionBody {
+        background-color: rgb(51, 53, 2);
+    }
+
+    #childList a:target ~ .functionHeader {
+        box-shadow: 0px 0px 0px 10px rgb(51, 53, 2);
+    }
+
+    #childList a:target ~ .functionBody {
+        box-shadow: -2px -8px 0px 13px rgb(51, 53, 2);
+    }
+
+    #summaryTree a:target ~ div {
+        background-color: rgb(51, 53, 2);
+        box-shadow: 0px 0px 0px 7px rgb(51, 53, 2);
+    }
+
+    .undocumented {
+        color: rgb(174, 165, 152);
+    }
+
+    #childList > div {
+        border-left-color: rgb(8, 124, 175);
+        background-image: initial;
+        background-color: rgb(28, 29, 30);
+    }
+
+    /**
+        Hints
+     */
+    div.tip,
+    div.hint,
+    div.important {
+        background-color: rgb(16, 48, 64);
+        border-color: rgb(26, 90, 102);
+    }
+
+    /**
+        Search
+     */
+    #search-box-container img {
+        filter: invert(1);
+    }
+}
