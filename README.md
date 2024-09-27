@@ -1,4 +1,4 @@
-[IN IMPLEMENTATION] gitlab-ci-verify
+gitlab-ci-verify
 ===
 [![GitHub Release](https://img.shields.io/github/v/release/timo-reymann/gitlab-ci-verify?label=version)](https://github.com/timo-reymann/gitlab-ci-verify/releases/latest)
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/timo-reymann/gitlab-ci-verify/tree/main.svg?style=shield)](https://dl.circleci.com/status-badge/redirect/gh/timo-reymann/gitlab-ci-verify/tree/main)
@@ -19,8 +19,10 @@
 
 - ShellCheck for scripts
 - Validation against Pipeline Editor API for project
-- Automatic detection of the current gitlab project
+- Curated checks for common mistakes (feel free to [contribute new ones](./docs/checks/Add_check.md))
+- Automatic detection of the current gitlab project with an option to overwrite
 - Available as pre-commit hook
+- Use to valid dynamically generated pipelines using the [python wrapper](#install-with-pipx)
 
 ### Example output
 
