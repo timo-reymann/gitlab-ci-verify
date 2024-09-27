@@ -87,11 +87,9 @@ jobs:
             binary-wheel-builder --wheel-spec wheel.yaml --dist-folder dist/wheel/
             twine upload -r pypi dist/wheel/*
       - run:
-          name: Build and upload wrapper package
+          name: Upload wrapper package
           command: |
-            cd python_wrapper
-            pip install .[dev]
-            python3 -m build
+            cd python_wrapper/
             twine upload -r pypi dist/*
       - save_cache:
           key: python-publish-dependencies-v1
@@ -187,6 +185,7 @@ workflows:
           <<: *only_tags
           requires:
             - build
+            - build_python_wrapper
       - publish_docker_image:
           <<: *only_tags
           requires:
