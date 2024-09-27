@@ -107,8 +107,9 @@ jobs:
       - checkout
       - python/install-packages:
           pkg-manager: pip
-          pip-dependency-file: "pyproject.toml"
+          pip-dependency-file: ""
           app-dir: "python_wrapper"
+          args: ".[dev]"
       - run:
           name: Build package
           command: |
@@ -126,8 +127,9 @@ jobs:
       - checkout
       - python/install-packages:
           pkg-manager: pip
-          pip-dependency-file: "pyproject.toml"
+          pip-dependency-file: ""
           app-dir: "python_wrapper"
+          args: ".[dev]"
       - run:
           name: Build html documentation for python wrapper
           command: |
