@@ -46,7 +46,7 @@ func (t *TextFindingsFormatter) Print(finding *checks.CheckFinding) error {
 		return err
 	}
 
-	if err := t.printEntry("Location", location); err != nil {
+	if err := t.printEntry("Location", "at "+location); err != nil {
 		return err
 	}
 

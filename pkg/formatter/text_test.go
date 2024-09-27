@@ -28,7 +28,7 @@ func TestTextFindingsFormatter(t *testing.T) {
 				"Code         1\n" +
 					"Description  test message goes here\n" +
 					"Severity     INFO\n" +
-					"Location     /test.yml:1\n" +
+					"Location     at /test.yml:1\n" +
 					"Link         https://check.link/code\n\n",
 			),
 		},
@@ -56,12 +56,12 @@ func TestTextFindingsFormatter(t *testing.T) {
 				"Code         1\n" +
 					"Description  test message goes here\n" +
 					"Severity     INFO\n" +
-					"Location     /test.yml:1\n" +
+					"Location     at /test.yml:1\n" +
 					"Link         https://check.link/code\n\n" +
 					"Code         1\n" +
 					"Description  test message goes here\n" +
 					"Severity     STYLE\n" +
-					"Location     /test.yml:1\n" +
+					"Location     at /test.yml:1\n" +
 					"Link         https://check.link/code\n\n",
 			),
 		},
