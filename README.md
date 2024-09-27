@@ -74,9 +74,16 @@ pip install gitlab-ci-verify
 And use the package like this:
 
 ````python
-from gitlab_ci_verify import verify
+from gitlab_ci_verify import verify_file
 
-valid, findings = verify("/path/to/file")
+# Verify .gitlab-ci.yml in /path/to/repo is valid
+valid, findings = verify_file("/path/to/repo")
+
+# verify include.yml in /path/to/repo is valid
+valid, findings = verify_file("/path/to/repo", "include.yml")
+
+# or if you want to verify file content for a given repository
+# valid, findings = verify_content("/path/to/repo","ci-yaml content")
 
 print(f"Valid:    {valid}")
 print(f"Findings: {findings}")

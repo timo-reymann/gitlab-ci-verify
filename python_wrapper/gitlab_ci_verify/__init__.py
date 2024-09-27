@@ -1,28 +1,44 @@
 from os import PathLike
 
+from gitlab_ci_verify.config import GitlabCiVerifyConfig
 from gitlab_ci_verify.model import Finding
 from gitlab_ci_verify.parse import _parse_output
 from gitlab_ci_verify.process import _execute
 
 
-def verify(
+def verify_file(
         root: PathLike | str,
-        gitlab_base_url: str | None = None,
-        gitlab_ci_file: str | None = None,
-        gitlab_token: str | None = None,
-        excluded_checks: list[str] = None,
-        fail_severity: str | None = None,
+        file: str | None = None,
+        **configuration: GitlabCiVerifyConfig,
 ):
     """
     Verify gitlab ci file using gitlab-ci-verify
 
     :param root: Root folder of repository
-    :param gitlab_base_url: Override gitlab base url
-    :param gitlab_ci_file: Override gitlab ci file
-    :param gitlab_token: Specify explicit gitlab token
-    :param excluded_checks: Exclude set of checks
-    :param fail_severity: On which severity findings should be considered an error
-    :return: Validity of pipeline as first argument and findings as second
+    :param file: Override gitlab ci file to validate
+    :param configuration: Configuration to use for verification
     """
-    proc = _execute(root, gitlab_base_url, gitlab_ci_file, gitlab_token, excluded_checks, fail_severity)
+    proc = _execute(root, file=file, **configuration)
     return _parse_output(proc)
+
+
+def verify_content(
+        root: PathLike | str,
+        content: str,
+        **configuration: GitlabCiVerifyConfig,
+):
+    """
+    Verify gitlab ci file contents using gitlab-ci-verify
+
+    :param root: Root folder of repository
+    :param content: CI YAML contents
+    :param configuration: Configuration to use for verification
+    """
+    proc = _execute(root, file="-", stdin=content, **configuration)
+    return _parse_output(proc)
+
+
+if __name__ == "__main__":
+    # valid, findings = verify_file("/Users/phpe/workspace/backend-csharp")
+    valid, findings = verify_content("/Users/phpe/workspace/backend-csharp", "{}")
+    print(valid, findings)

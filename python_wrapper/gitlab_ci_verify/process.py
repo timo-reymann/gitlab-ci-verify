@@ -3,44 +3,44 @@ from os import PathLike
 
 from gitlab_ci_verify_bin.exec import create_subprocess
 
+from gitlab_ci_verify import GitlabCiVerifyConfig
+
+
+def _add_arg_if_set(args: list[str], config: GitlabCiVerifyConfig, key: str, flag: str):
+    val = config.get(key, None)
+    if val is not None:
+        args.extend(
+            [
+                flag,
+                val,
+            ]
+        )
+
 
 def _execute(
         root: PathLike | str,
-        gitlab_base_url: str | None = None,
-        gitlab_ci_file: str | None = None,
-        gitlab_token: str | None = None,
-        excluded_checks: list[str] = None,
-        fail_severity: str | None = None,
+        file: str | None = None,
+        stdin=None,
+        **config: GitlabCiVerifyConfig
 ):
     args = [
         "--format",
         "json"
     ]
 
-    if gitlab_base_url is not None:
-        args.extend(
-            [
-                "--gitlab-base-url",
-                gitlab_base_url,
-            ]
-        )
+    _add_arg_if_set(args, config, "gitlab_base_url", "--gitlab-base-url")
+    _add_arg_if_set(args, config, "gitlab_token", "--gitlab-token")
+    _add_arg_if_set(args, config, "fail_severity", "--severity")
 
-    if gitlab_ci_file is not None:
+    if file is not None:
         args.extend(
             [
                 "--gitlab-ci-file",
-                gitlab_ci_file,
+                file,
             ]
         )
 
-    if gitlab_token is not None:
-        args.extend(
-            [
-                "--gitlab-token",
-                gitlab_token,
-            ]
-        )
-
+    excluded_checks = config.get("excluded_checks", None)
     if excluded_checks is not None:
         for check in excluded_checks:
             args.extend(
@@ -50,19 +50,17 @@ def _execute(
                 ]
             )
 
-    if fail_severity is not None:
-        args.extend(
-            [
-                "--severity",
-                fail_severity
-            ]
-        )
-
     proc = create_subprocess(
         args,
-        subprocess.PIPE,
-        subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        stdin=subprocess.PIPE if stdin is not None else None,
         cwd=root,
     )
+
+    if stdin is not None:
+        proc.stdin.write(stdin)
+        proc.stdin.close()
+
     proc.wait()
     return proc
