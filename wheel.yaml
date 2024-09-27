@@ -14,16 +14,16 @@ classifier:
   - "License :: OSI Approved :: GNU General Public License v3 (GPLv3)"
   - "Development Status :: 4 - Beta"
   - "Intended Audience :: Developers"
-  - "Environment :: Console",
-  - "Environment :: MacOS X",
+  - "Environment :: Console"
+  - "Environment :: MacOS X"
   - "Operating System :: POSIX",
   - "Operating System :: Unix"
   - "Operating System :: Windows"
   - "Programming Language :: Python :: 3",
-  - "Programming Language :: Python :: 3.8",
+  - "Programming Language :: Python :: 3.8"
   - "Programming Language :: Python :: 3.9"
   - "Programming Language :: Python :: 3.10"
-  - "Programming Language :: Python :: 3.11",
+  - "Programming Language :: Python :: 3.11"
   - "Programming Language :: Python :: 3.12"
 
 project_urls:
