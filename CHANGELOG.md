@@ -1,3 +1,10 @@
+## [0.2.1](https://github.com/timo-reymann/gitlab-ci-verify/compare/v0.2.0...v0.2.1) (2024-09-27)
+
+
+### Bug Fixes
+
+* Fix binary upload for release ([1a74bd1](https://github.com/timo-reymann/gitlab-ci-verify/commit/1a74bd10023100439302baab70195978fdf42875))
+
 ## [0.2.0](https://github.com/timo-reymann/gitlab-ci-verify/compare/v0.1.0...v0.2.0) (2024-09-27)
 
 
