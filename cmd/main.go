@@ -44,7 +44,12 @@ func Execute() {
 	}
 
 	logging.Verbose("read gitlab ci file ", c.GitLabCiFile)
-	ciYamlContent, err := os.ReadFile(c.GitLabCiFile)
+	var ciYamlContent []byte
+	if c.GitLabCiFile == "-" {
+		ciYamlContent, err = cli.ReadStdinPipe()
+	} else {
+		ciYamlContent, err = os.ReadFile(c.GitLabCiFile)
+	}
 	handleErr(err, c)
 
 	ciYaml, err := checks.NewCiYaml(ciYamlContent)

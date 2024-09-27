@@ -32,6 +32,11 @@ func (jws *JobWithScripts) setPart(key string, parts []ScriptPart) {
 func ExtractScripts(doc *yaml.Node) chan JobWithScripts {
 	ch := make(chan JobWithScripts)
 
+	if len(doc.Content) == 0 {
+		close(ch)
+		return ch
+	}
+
 	go func() {
 		jobName := ""
 

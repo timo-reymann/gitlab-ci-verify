@@ -13,7 +13,7 @@ import (
 var ErrTimeout = errors.New("no remote url could validate due to a timeout")
 
 // ErrNoResult happens when no remote can validate the CI as the requests don't succeed
-var ErrNoResult = errors.New("no remote url could validate due to invalid responses")
+var ErrNoResult = errors.New("no remote gitlab url could validate due to invalid responses, this indicates that either there is no remote defined which has an API endpoint or the API endpoint differs from the clone url")
 
 // VerificationResultWithRemoteInfo contains both the remote that was used and the according lint result
 type VerificationResultWithRemoteInfo struct {
