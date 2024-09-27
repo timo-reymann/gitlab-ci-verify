@@ -47,24 +47,15 @@ jobs:
     steps:
       - checkout
       - go/load-cache
-      - restore_cache:
-          key: gocache-v1
-          name: "Restore go cache"
       - run:
           name: Build binaries
           command: |
-            export GOCACHE=${CIRCLE_WORKING_DIRECTORY}/go-build
             make build -j4
       - persist_to_workspace:
           root: ./
           paths:
             - dist/
       - go/save-cache
-      - save_cache:
-          name: "Update go cache"
-          key: gocache-v1
-          paths:
-            - ${CIRCLE_WORKING_DIRECTORY}/go-build
   publish_python_wheel:
     executor: python
     steps:
