@@ -16,10 +16,10 @@ classifier:
   - "Intended Audience :: Developers"
   - "Environment :: Console"
   - "Environment :: MacOS X"
-  - "Operating System :: POSIX",
+  - "Operating System :: POSIX"
   - "Operating System :: Unix"
-  - "Operating System :: Windows"
-  - "Programming Language :: Python :: 3",
+  - "Environment :: Win32 (MS Windows)"
+  - "Programming Language :: Python :: 3"
   - "Programming Language :: Python :: 3.8"
   - "Programming Language :: Python :: 3.9"
   - "Programming Language :: Python :: 3.10"
