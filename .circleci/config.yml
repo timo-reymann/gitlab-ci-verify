@@ -141,7 +141,7 @@ jobs:
             pip install .[dev]
             pydoctor
             mkdir ../gh-pages/
-            mv python_wrapper/gh-pages/ ../gh-pages/python-wrapper/
+            mv gh-pages/ ../gh-pages/python-wrapper/
       - save_cache:
           key: python-wrapper-dependencies-{{ checksum "python_wrapper/pyproject.toml" }}
           paths:
