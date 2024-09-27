@@ -10,6 +10,8 @@ orbs:
   docker: circleci/docker@2.7.1
   codecov: codecov/codecov@4.1.0
   go: circleci/go@1.12.0
+  github-utils: trustedshops-public/github-utils@1.1.2
+  python: circleci/python@1.1.0
 
 executors:
   go:
@@ -18,6 +20,9 @@ executors:
   python:
     docker:
       - image: cimg/python:3.12
+  node:
+    docker:
+      - image: cimg/python:3.12-node
 
 jobs:
   test:
@@ -96,6 +101,44 @@ jobs:
           docker-username: DOCKER_USERNAME
           docker-password: DOCKER_TOKEN
 
+  build_python_wrapper:
+    executor: python
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: pip
+          pip-dependency-file: ""
+          app-dir: "python_wrapper"
+      - run:
+          name: Build package
+          command: |
+            cd python_wrapper
+            python3 -m build
+      - persist_to_workspace:
+          paths:
+            - python_wrapper/build
+          root: .
+          name: Save python package artifacts
+
+  build_gh_pages:
+    executor: node
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: pip
+          pip-dependency-file: ""
+          app-dir: "python_wrapper"
+      - run:
+          name: Build html documentation for python wrapper
+          command: |
+            git submodule sync
+            git submodule update --init --recursive
+            pydoctor
+      - github-utils/publish_github_pages:
+          folder: gh-pages/
+          git_commit_author_email: "no-reply@timo-reymann.de"
+          git_commit_author_name: "CircleCI"
+
 workflows:
   version: 2
   build:
@@ -106,6 +149,10 @@ workflows:
           <<: *job_defaults
           requires:
             - test
+      - build_python_wrapper
+      - build_gh_pages:
+          requires:
+            - build_python_wrapper
       - publish_python_wheel:
           filters:
             branches:
