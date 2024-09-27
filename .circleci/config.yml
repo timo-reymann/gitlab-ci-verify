@@ -11,7 +11,6 @@ orbs:
   codecov: codecov/codecov@4.1.0
   go: circleci/go@1.12.0
   github-utils: trustedshops-public/github-utils@1.1.2
-  python: circleci/python@1.1.0
 
 executors:
   go:
@@ -103,18 +102,21 @@ jobs:
 
   build_python_wrapper:
     executor: python
+    environment:
+      PIP_CACHE_DIR: /tmp/pip-cache
     steps:
       - checkout
-      - python/install-packages:
-          pkg-manager: pip
-          pip-dependency-file: ""
-          app-dir: "python_wrapper"
-          args: ".[dev]"
+      - restore_cache:
+          key: python-wrapper-dependencies-{{ checksum "python_wrapper/pyproject.toml" }}
       - run:
           name: Build package
           command: |
             cd python_wrapper
             python3 -m build
+      - save_cache:
+          key: python-wrapper-dependencies-{{ checksum "python_wrapper/pyproject.toml" }}
+          paths:
+            - "/tmp/pip-cache"
       - persist_to_workspace:
           paths:
             - python_wrapper/build
@@ -123,19 +125,22 @@ jobs:
 
   build_gh_pages:
     executor: node
+    environment:
+      PIP_CACHE_DIR: /tmp/pip-cache
     steps:
       - checkout
-      - python/install-packages:
-          pkg-manager: pip
-          pip-dependency-file: ""
-          app-dir: "python_wrapper"
-          args: ".[dev]"
+      - restore_cache:
+          key: python-wrapper-dependencies-{{ checksum "python_wrapper/pyproject.toml" }}
       - run:
           name: Build html documentation for python wrapper
           command: |
             git submodule sync
             git submodule update --init --recursive
             pydoctor
+      - save_cache:
+          key: python-wrapper-dependencies-{{ checksum "python_wrapper/pyproject.toml" }}
+          paths:
+            - "/tmp/pip-cache"
       - github-utils/publish_github_pages:
           folder: gh-pages/
           git_commit_author_email: "no-reply@timo-reymann.de"
