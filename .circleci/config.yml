@@ -190,6 +190,8 @@ jobs:
     steps:
       - attach_workspace:
           at: ./
+      - github-cli/install:
+          version: "2.21.2"
       - run:
           name: Attach binaries to release
           command: |
