@@ -32,6 +32,10 @@
 
 ## Installation
 
+### [pre-commit](#as-pre-commit-hook)
+
+### [docker](#containerized)
+
 ### Manual
 
 #### Linux (64-bit)
@@ -58,6 +62,11 @@ curl -LO https://github.com/timo-reymann/gitlab-ci-verify/releases/download/$(cu
 chmod +x gitlab-ci-verify_darwin-amd64 && \
 sudo mv gitlab-ci-verify_darwin-amd64 /usr/local/bin/gitlab-ci-verify
 ```
+
+#### Windows
+
+Download the latest [release](https://github.com/timo-reymann/gitlab-ci-verify/releases/latest) for Windows and put in
+your `PATH`.
 
 ### Install with go
 
@@ -124,7 +133,7 @@ the [latest release page](https://github.com/timo-reymann/gitlab-ci-verify/relea
 
 #### Docker
 
-For the docker image check the [docker hub](https://hub.docker.com/r/timoreymann/gitlab-ci-verify).
+For the docker image, check the [docker hub](https://hub.docker.com/r/timoreymann/gitlab-ci-verify).
 
 ## Usage
 
@@ -140,7 +149,7 @@ gitlab-ci-verify --help
 docker run --rm -it -v $PWD:/workspace -e GITLAB_TOKEN="your token" timoreymann/gitlab-ci-verify
 ```
 
-### pre-commit
+### As pre-commit hook
 
 ```yaml
 - repo: https://github.com/timo-reymann/gitlab-ci-verify
