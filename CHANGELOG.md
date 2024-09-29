@@ -1,3 +1,10 @@
+## [0.3.0](https://github.com/timo-reymann/gitlab-ci-verify/compare/v0.2.2...v0.3.0) (2024-09-29)
+
+
+### Features
+
+* Upload python wrapper dist to gh release ([e82352a](https://github.com/timo-reymann/gitlab-ci-verify/commit/e82352a6be599094290c03859881dddbd3de01b1))
+
 ## [0.2.2](https://github.com/timo-reymann/gitlab-ci-verify/compare/v0.2.1...v0.2.2) (2024-09-27)
 
 
