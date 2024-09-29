@@ -196,7 +196,7 @@ jobs:
       - run:
           name: Attach binaries to release
           command: |
-            gh release upload ${CIRCLE_TAG} dist/*
+            gh release upload ${CIRCLE_TAG} dist/*  python_wrapper/dist/*
 
 workflows:
   version: 2
