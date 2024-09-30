@@ -26,6 +26,7 @@ gitlab-ci-verify
 - Automatic detection of the current gitlab project with an option to overwrite
 - Available as pre-commit hook
 - Use to valid dynamically generated pipelines using the [python wrapper](#install-as-library-using-pip)
+- Support for *gitlab.com* and self-hosted instances
 
 ### Example output
 
