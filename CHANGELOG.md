@@ -1,3 +1,12 @@
+## [0.4.0](https://github.com/timo-reymann/gitlab-ci-verify/compare/v0.3.0...v0.4.0) (2024-10-14)
+
+
+### Features
+
+* Add token source abstraction ([10f1c37](https://github.com/timo-reymann/gitlab-ci-verify/commit/10f1c375f13d01e79feb28ffd2f9754a805910c4))
+* Add vault functionality ([d42dd74](https://github.com/timo-reymann/gitlab-ci-verify/commit/d42dd7426cd35bccb33691705da0aa67eaf43391))
+* Support vault for gitlab api client ([3216a91](https://github.com/timo-reymann/gitlab-ci-verify/commit/3216a917dfb96aa9f78715a499abceaa23689777))
+
 ## [0.3.0](https://github.com/timo-reymann/gitlab-ci-verify/compare/v0.2.2...v0.3.0) (2024-09-29)
 
 
