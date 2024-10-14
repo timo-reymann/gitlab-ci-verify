@@ -163,6 +163,8 @@ The tool takes a few sources into consideration in the following order when auth
 
 - `--gitlab-token` commandline flag
 - [netrc](https://www.gnu.org/software/inetutils/manual/html_node/The-_002enetrc-file.html) in your home folder
+- Vault token specified via `--gitlab-token vault://<path>#<field>` with environment variable `VAULT_ADDR` set to base url for
+  vault, and either `VAULT_TOKEN` set or `~/.vault-token` present
 - `GITLAB_TOKEN` environment variable
 
 For the project detection, all git remote URLs of the repository are tried, and the first URL that returns a valid API
