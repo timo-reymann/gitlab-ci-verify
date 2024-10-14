@@ -5,10 +5,9 @@ import (
 	"fmt"
 	"github.com/timo-reymann/gitlab-ci-verify/internal/format-conversion"
 	"github.com/timo-reymann/gitlab-ci-verify/internal/logging"
-	"github.com/timo-reymann/gitlab-ci-verify/internal/netrc"
 	"net/http"
 	"net/url"
-	"os"
+	"reflect"
 	"strings"
 	"time"
 )
@@ -85,25 +84,42 @@ func NewClient(baseUrl string, token string) *Client {
 	}
 }
 
+// Prioritized list of token sources
+var tokenSources = []TokenSource{
+	NetRcTokenSource{},
+	VaultTokenSource{},
+	EnvVarTokenSource{},
+}
+
 // NewClientWithMultiTokenSources creates a new client instance for the gitlab api, taking multiple sources for the token
 // The order is as following
-// 1. token specified via parameter is non-empty
-// 2. netrc contains a host entry with a password
-// 3. environment variable GITLAB_TOKEN is set
+// 1. The Token specified via parameter is non-empty
+// 2. Try to look up tokenSources and use the first one without an error and return a non-empty string
 func NewClientWithMultiTokenSources(baseUrl string, token string) *Client {
-	if token != "" {
+	if token != "" && !strings.Contains(token, "://") {
 		return NewClient(baseUrl, token)
 	}
 
-	// try to load netrc for user and get credential form that
-	userNetrc, err := netrc.ReadUserNetrc()
-	if err == nil {
-		credentials, err := netrc.GetCredentials(userNetrc, baseUrl)
-		if err == nil && credentials.Password != "" {
-			return NewClient(baseUrl, credentials.Password)
+	hints := TokenSourceLookupHints{
+		ExistingToken: token,
+		BaseUrl:       baseUrl,
+	}
+
+	for _, src := range tokenSources {
+		token, err := src.Lookup(hints)
+		if err != nil {
+			logging.Debug(fmt.Sprintf("Failed to lookup token for token source %v: %s", reflect.TypeOf(tokenSources), err.Error()))
+			continue
 		}
+
+		if token == "" {
+			logging.Debug(fmt.Sprintf("Token for token source %v is empty", reflect.TypeOf(tokenSources)))
+			continue
+		}
+
+		return NewClient(baseUrl, token)
 	}
 
 	// fallback is the GITLAB_TOKEN env var
-	return NewClient(baseUrl, os.Getenv("GITLAB_TOKEN"))
+	return NewClient(baseUrl, token)
 }
