@@ -1,3 +1,10 @@
+## [0.4.1](https://github.com/timo-reymann/gitlab-ci-verify/compare/v0.4.0...v0.4.1) (2024-10-22)
+
+
+### Bug Fixes
+
+* **deps:** update module github.com/fatih/color to v1.18.0 ([d529bfa](https://github.com/timo-reymann/gitlab-ci-verify/commit/d529bfa63ba33a6ee2dbbca9ac9834d667a1432a))
+
 ## [0.4.0](https://github.com/timo-reymann/gitlab-ci-verify/compare/v0.3.0...v0.4.0) (2024-10-14)
 
 
