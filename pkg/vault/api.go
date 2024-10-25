@@ -16,7 +16,10 @@ type vaultResponse struct {
 }
 
 func getSecret(addr string, token string, path string, field string) (string, error) {
-	req, err := http.NewRequest(http.MethodGet, fmt.Sprintf("%s/v1/%s", strings.TrimSuffix(addr, "/"), path), bytes.NewBuffer([]byte{}))
+	pathParts := strings.SplitN(path, "/", 2)
+	engine, secret := pathParts[0], pathParts[1]
+
+	req, err := http.NewRequest(http.MethodGet, fmt.Sprintf("%s/v1/%s/data/%s", strings.TrimSuffix(addr, "/"), engine, secret), bytes.NewBuffer([]byte{}))
 	if err != nil {
 		return "", err
 	}
