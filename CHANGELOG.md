@@ -1,3 +1,10 @@
+## [0.5.0](https://github.com/timo-reymann/gitlab-ci-verify/compare/v0.4.2...v0.5.0) (2024-10-25)
+
+
+### Features
+
+* Add --no-syntax-validate-in-ci flag ([a0acdad](https://github.com/timo-reymann/gitlab-ci-verify/commit/a0acdad0b9c757d3243aabfd2e0cc640d71f45a8))
+
 ## [0.4.2](https://github.com/timo-reymann/gitlab-ci-verify/compare/v0.4.1...v0.4.2) (2024-10-25)
 
 
