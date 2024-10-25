@@ -16,15 +16,16 @@ var ErrAbort = errors.New("abort")
 
 // Configuration for the CLI
 type Configuration struct {
-	GitLabCiFile    string
-	GitlabBaseUrl   string
-	GitlabToken     string
-	Verbose         bool
-	Debug           bool
-	ShellcheckFlags string
-	OutputFormat    string
-	FailSeverity    string
-	ExcludedChecks  []string
+	GitLabCiFile         string
+	GitlabBaseUrl        string
+	GitlabToken          string
+	Verbose              bool
+	Debug                bool
+	ShellcheckFlags      string
+	OutputFormat         string
+	FailSeverity         string
+	ExcludedChecks       []string
+	NoSyntaxValidateInCi bool
 }
 
 func (conf *Configuration) addBoolFlag(field *bool, long string, short string, val bool, usage string) {
@@ -53,6 +54,7 @@ func (conf *Configuration) defineFlags() {
 	conf.addStringFlag(&conf.OutputFormat, "format", "f", "text", "Format for the output, valid options are json, table and text. If GITLAB_CI_VERIFY_OUTPUT_FORMAT this parameter is ignored")
 	conf.addStringFlag(&conf.FailSeverity, "severity", "S", "style", "Set the severity level on which to consider findings as errors and exiting with non zero exit code.")
 	conf.addStringsFlag(&conf.ExcludedChecks, "exclude", "E", []string{}, "Exclude the given check codes")
+	conf.addBoolFlag(&conf.NoSyntaxValidateInCi, "no-syntax-validate-in-ci", "", false, "Add this flag to avoid validating against Pipeline Check API, as its assumed that running in CI is proof enough the syntax is valid.")
 }
 
 func (conf *Configuration) Help() {

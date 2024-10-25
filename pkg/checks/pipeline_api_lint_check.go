@@ -5,7 +5,7 @@ import (
 	"github.com/timo-reymann/gitlab-ci-verify/internal/logging"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/git"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/api"
-	ci_yaml "github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/ci-yaml"
+	ciyaml "github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/ci-yaml"
 	"os"
 	"time"
 )
@@ -33,6 +33,10 @@ func (p PipelineLintApiCheck) formatMsg(msg string) string {
 }
 
 func (p PipelineLintApiCheck) Run(i *CheckInput) ([]CheckFinding, error) {
+	if i.Configuration.NoSyntaxValidateInCi && os.Getenv("CI") != "" {
+		return []CheckFinding{}, nil
+	}
+
 	logging.Verbose("get current working directory")
 	pwd, err := os.Getwd()
 	if err != nil {
@@ -49,7 +53,7 @@ func (p PipelineLintApiCheck) Run(i *CheckInput) ([]CheckFinding, error) {
 	remoteInfos := git.FilterGitlabRemoteUrls(remoteUrls)
 
 	logging.Verbose("validate ci file against gitlab api")
-	res, err := ci_yaml.GetFirstValidationResult(remoteInfos, i.Configuration.GitlabToken, i.Configuration.GitlabBaseUrlOverwrite(), i.CiYaml.FileContent, 3*time.Second)
+	res, err := ciyaml.GetFirstValidationResult(remoteInfos, i.Configuration.GitlabToken, i.Configuration.GitlabBaseUrlOverwrite(), i.CiYaml.FileContent, 3*time.Second)
 	if err != nil {
 		return nil, err
 	}

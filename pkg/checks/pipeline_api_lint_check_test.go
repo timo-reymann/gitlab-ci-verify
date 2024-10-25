@@ -27,6 +27,7 @@ func TestPipelineLintApiCheck_Run(t *testing.T) {
 		folder           string
 		lintResult       api.CiLintResult
 		expectedFindings []CheckFinding
+		ciEnvVarVal      string
 	}{
 		{
 			name:             "Test project with empty ci yaml and valid pipeline",
@@ -86,6 +87,16 @@ func TestPipelineLintApiCheck_Run(t *testing.T) {
 				},
 			},
 		},
+		{
+			name:   "Test project with empty ci yaml and invalid pipeline with errors",
+			folder: "project_with_git_repo_empty_ci_yaml.git",
+			lintResult: api.CiLintResult{
+				Valid:  false,
+				Errors: []string{},
+			},
+			expectedFindings: []CheckFinding{},
+			ciEnvVarVal:      "1",
+		},
 	}
 	c := PipelineLintApiCheck{}
 	oldCwd, _ := os.Getwd()
@@ -95,6 +106,7 @@ func TestPipelineLintApiCheck_Run(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
+			_ = os.Setenv("CI", tc.ciEnvVarVal)
 			projectRoot := path.Join("test_data", tc.folder)
 
 			ciValidateMockServer := mockCiValidate(tc.lintResult)
@@ -107,9 +119,11 @@ func TestPipelineLintApiCheck_Run(t *testing.T) {
 			verifyFindings(t, tc.expectedFindings, checkMustSucceed(c.Run(&CheckInput{
 				CiYaml: ciYaml,
 				Configuration: &cli.Configuration{
-					GitlabBaseUrl: ciValidateMockServer.URL,
+					GitlabBaseUrl:        ciValidateMockServer.URL,
+					NoSyntaxValidateInCi: true,
 				},
 			})))
 		})
+		os.Setenv("CI", "")
 	}
 }
