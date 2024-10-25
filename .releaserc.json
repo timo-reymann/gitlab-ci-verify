@@ -48,7 +48,7 @@
               "README.md"
             ],
             "from": "\\s{2}rev: [v0-9.]+",
-            "to": "  rev: ${nextRelease.version}",
+            "to": "  rev: v${nextRelease.version}",
             "results": [
               {
                 "file": "README.md",
