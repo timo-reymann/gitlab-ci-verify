@@ -1,3 +1,10 @@
+## [0.4.2](https://github.com/timo-reymann/gitlab-ci-verify/compare/v0.4.1...v0.4.2) (2024-10-25)
+
+
+### Bug Fixes
+
+* **vault:** Fix support for versioned k/v store ([164cddf](https://github.com/timo-reymann/gitlab-ci-verify/commit/164cddf42289c42aac15d5fa3f81c15518456331))
+
 ## [0.4.1](https://github.com/timo-reymann/gitlab-ci-verify/compare/v0.4.0...v0.4.1) (2024-10-22)
 
 
