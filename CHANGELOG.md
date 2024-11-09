@@ -1,3 +1,10 @@
+## [0.5.1](https://github.com/timo-reymann/gitlab-ci-verify/compare/v0.5.0...v0.5.1) (2024-11-09)
+
+
+### Bug Fixes
+
+* **deps:** update dependency wheel to ==0.45.* ([30efaa7](https://github.com/timo-reymann/gitlab-ci-verify/commit/30efaa7b7cd9757eee74b662ebfce4510b628709))
+
 ## [0.5.0](https://github.com/timo-reymann/gitlab-ci-verify/compare/v0.4.2...v0.5.0) (2024-10-25)
 
 
