@@ -26,7 +26,7 @@ dependencies = [
 dev = [
     "setuptools==75.*",
     "setuptools-scm==8.*",
-    "twine==5.1.*",
+    "twine==6.0.*",
     "wheel==0.45.*",
     "pydoctor==24.3.*",
     "build==1.*"
