@@ -1,3 +1,10 @@
+## [0.5.2](https://github.com/timo-reymann/gitlab-ci-verify/compare/v0.5.1...v0.5.2) (2024-11-30)
+
+
+### Bug Fixes
+
+* **deps:** update dependency twine to v6 ([ecdc80d](https://github.com/timo-reymann/gitlab-ci-verify/commit/ecdc80d9f4be90b716fa75b7eba59e9af07b1d5f))
+
 ## [0.5.1](https://github.com/timo-reymann/gitlab-ci-verify/compare/v0.5.0...v0.5.1) (2024-11-09)
 
 
