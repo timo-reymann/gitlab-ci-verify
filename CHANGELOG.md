@@ -1,3 +1,10 @@
+## [0.5.3](https://github.com/timo-reymann/gitlab-ci-verify/compare/v0.5.2...v0.5.3) (2024-12-02)
+
+
+### Bug Fixes
+
+* **deps:** update dependency pydoctor to ==24.11.* ([94da34b](https://github.com/timo-reymann/gitlab-ci-verify/commit/94da34be6ba83cc24281db1dd45b6f518b7c4fdb))
+
 ## [0.5.2](https://github.com/timo-reymann/gitlab-ci-verify/compare/v0.5.1...v0.5.2) (2024-11-30)
 
 
