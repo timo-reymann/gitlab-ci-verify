@@ -1,3 +1,10 @@
+## [0.5.4](https://github.com/timo-reymann/gitlab-ci-verify/compare/v0.5.3...v0.5.4) (2024-12-10)
+
+
+### Bug Fixes
+
+* **python-wrapper:** Use unpack for validator config ([491a1ec](https://github.com/timo-reymann/gitlab-ci-verify/commit/491a1ec140c824c4eb7d1a766802bc6560baeccb))
+
 ## [0.5.3](https://github.com/timo-reymann/gitlab-ci-verify/compare/v0.5.2...v0.5.3) (2024-12-02)
 
 
