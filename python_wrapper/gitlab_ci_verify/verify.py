@@ -3,12 +3,12 @@ from os import PathLike
 from gitlab_ci_verify.config import GitlabCiVerifyConfig
 from gitlab_ci_verify.parse import _parse_output
 from gitlab_ci_verify.process import _execute
-
+from typing import Unpack
 
 def verify_file(
         root: PathLike | str,
         file: str | None = None,
-        **configuration: GitlabCiVerifyConfig,
+        **configuration: Unpack[GitlabCiVerifyConfig],
 ):
     """
     Verify gitlab ci file using gitlab-ci-verify
@@ -24,7 +24,7 @@ def verify_file(
 def verify_content(
         root: PathLike | str,
         content: str,
-        **configuration: GitlabCiVerifyConfig,
+        **configuration: Unpack[GitlabCiVerifyConfig],
 ):
     """
     Verify gitlab ci file contents using gitlab-ci-verify
