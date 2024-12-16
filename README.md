@@ -47,7 +47,7 @@ gitlab-ci-verify
 Using pipx you can just use the following command use gitlab-ci-verify as it is:
 
 ```sh
-pipx install gitlab-ci-verify
+pipx install gitlab-ci-verify-bin
 ```
 
 ### Install as library using pip
