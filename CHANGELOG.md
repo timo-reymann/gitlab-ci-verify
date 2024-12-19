@@ -1,3 +1,10 @@
+## [0.6.0](https://github.com/timo-reymann/gitlab-ci-verify/compare/v0.5.4...v0.6.0) (2024-12-19)
+
+
+### Features
+
+* Add retries to http client ([74d9a07](https://github.com/timo-reymann/gitlab-ci-verify/commit/74d9a0731f673a23df6b2f0730615c261f8f5493))
+
 ## [0.5.4](https://github.com/timo-reymann/gitlab-ci-verify/compare/v0.5.3...v0.5.4) (2024-12-10)
 
 
