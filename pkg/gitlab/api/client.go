@@ -3,6 +3,7 @@ package api
 import (
 	"context"
 	"fmt"
+	"github.com/hashicorp/go-retryablehttp"
 	"github.com/timo-reymann/gitlab-ci-verify/internal/format-conversion"
 	"github.com/timo-reymann/gitlab-ci-verify/internal/logging"
 	"net/http"
@@ -16,7 +17,7 @@ import (
 type Client struct {
 	apiBaseUrl string
 	token      string
-	httpClient http.Client
+	httpClient *http.Client
 }
 
 // Do the http request to the gitlab api
@@ -74,13 +75,14 @@ func NewClient(baseUrl string, token string) *Client {
 		protocolPrefix = "https://"
 	}
 
+	retryHttpClient := retryablehttp.NewClient()
+	retryHttpClient.RetryMax = 3
+	retryHttpClient.HTTPClient.Timeout = 5 * time.Second
+
 	return &Client{
 		apiBaseUrl: protocolPrefix + strings.TrimSuffix(baseUrl, "/") + "/",
 		token:      token,
-		httpClient: http.Client{
-			Transport: nil,
-			Timeout:   5 * time.Second,
-		},
+		httpClient: retryHttpClient.StandardClient(),
 	}
 }
 
