@@ -1,0 +1,1 @@
+invalid rego file
