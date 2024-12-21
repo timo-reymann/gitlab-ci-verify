@@ -3,11 +3,7 @@ package checks
 import (
 	"fmt"
 	"github.com/timo-reymann/gitlab-ci-verify/internal/logging"
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/git"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/api"
-	ciyaml "github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/ci-yaml"
-	"os"
-	"time"
 )
 
 type PipelineLintApiCheck struct {
@@ -33,31 +29,12 @@ func (p PipelineLintApiCheck) formatMsg(msg string) string {
 }
 
 func (p PipelineLintApiCheck) Run(i *CheckInput) ([]CheckFinding, error) {
-	if i.Configuration.NoSyntaxValidateInCi && os.Getenv("CI") != "" {
+	if !i.HasLintAPIResult() {
 		return []CheckFinding{}, nil
 	}
 
-	logging.Verbose("get current working directory")
-	pwd, err := os.Getwd()
-	if err != nil {
-		return nil, err
-	}
-
-	logging.Verbose("get remote urls")
-	remoteUrls, err := git.GetRemoteUrls(pwd)
-	if err != nil {
-		return nil, err
-	}
-
-	logging.Verbose("parse remote url contents")
-	remoteInfos := git.FilterGitlabRemoteUrls(remoteUrls)
-
 	logging.Verbose("validate ci file against gitlab api")
-	res, err := ciyaml.GetFirstValidationResult(remoteInfos, i.Configuration.GitlabToken, i.Configuration.GitlabBaseUrlOverwrite(), i.CiYaml.FileContent, 3*time.Second)
-	if err != nil {
-		return nil, err
-	}
-
+	res := i.LintAPIResult
 	if res.LintResult.Valid {
 		return []CheckFinding{}, nil
 	}
@@ -76,7 +53,7 @@ func (p PipelineLintApiCheck) Run(i *CheckInput) ([]CheckFinding, error) {
 		idx++
 	}
 
-	if len(findings) == 0 {
+	if len(findings) == 0 && !res.LintResult.Valid {
 		findings = append(findings, p.createFinding(i.Configuration.GitLabCiFile, SeverityError, 103, -1, "Pipeline is invalid"))
 	}
 

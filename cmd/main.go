@@ -8,10 +8,13 @@ import (
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/checks"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/cli"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/formatter"
+	"github.com/timo-reymann/gitlab-ci-verify/pkg/git"
 	_ "github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/ci-yaml"
+	ciyaml "github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/ci-yaml"
 	"log"
 	"os"
 	"slices"
+	"time"
 )
 
 func handleErr(err error, c *cli.Configuration) {
@@ -43,29 +46,17 @@ func Execute() {
 		handleErr(fmt.Errorf("invalid severity level %s", c.FailSeverity), c)
 	}
 
-	logging.Verbose("read gitlab ci file ", c.GitLabCiFile)
-	var ciYamlContent []byte
-	if c.GitLabCiFile == "-" {
-		ciYamlContent, err = cli.ReadStdinPipe()
-	} else {
-		ciYamlContent, err = os.ReadFile(c.GitLabCiFile)
-	}
-	handleErr(err, c)
-
-	ciYaml, err := checks.NewCiYaml(ciYamlContent)
-	handleErr(err, c)
-
-	checkInput := checks.CheckInput{
-		CiYaml:        ciYaml,
-		Configuration: c,
-	}
-
 	err = findingsFormatter.Init(os.Stdout)
 	handleErr(err, c)
 
+	err, checkInput := setupCheckInput(c)
+	runChecks(checkInput, c, severity, findingsFormatter)
+
 	err = findingsFormatter.Start()
 	handleErr(err, c)
+}
 
+func runChecks(checkInput checks.CheckInput, c *cli.Configuration, severity int, findingsFormatter formatter.FindingsFormatter) {
 	checkResultChans := checks.RunChecksInParallel(checks.AllChecks(), checkInput, func(err error) {
 		handleErr(err, c)
 	})
@@ -95,10 +86,58 @@ func Execute() {
 		handleErr(err, c)
 	}
 
-	err = findingsFormatter.End()
+	err := findingsFormatter.End()
 	handleErr(err, c)
 
 	if shouldFail {
 		os.Exit(1)
 	}
+}
+
+func setupCheckInput(c *cli.Configuration) (error, checks.CheckInput) {
+	var err error
+
+	logging.Verbose("read gitlab ci file ", c.GitLabCiFile)
+	var ciYamlContent []byte
+	if c.GitLabCiFile == "-" {
+		ciYamlContent, err = cli.ReadStdinPipe()
+	} else {
+		ciYamlContent, err = os.ReadFile(c.GitLabCiFile)
+	}
+	handleErr(err, c)
+
+	logging.Verbose("load and parse YAML")
+	ciYaml, err := checks.NewCiYaml(ciYamlContent)
+	handleErr(err, c)
+
+	var lintRes *ciyaml.VerificationResultWithRemoteInfo
+	var mergedCiYaml *checks.CiYaml
+
+	if !c.NoLintAPICallInCi {
+		logging.Verbose("get current working directory")
+		pwd, err := os.Getwd()
+		handleErr(err, c)
+
+		logging.Verbose("get remote urls")
+		remoteUrls, err := git.GetRemoteUrls(pwd)
+		handleErr(err, c)
+
+		logging.Verbose("parse remote url contents")
+		remoteInfos := git.FilterGitlabRemoteUrls(remoteUrls)
+
+		logging.Verbose("validate ci file against gitlab api")
+		lintRes, err = ciyaml.GetFirstValidationResult(remoteInfos, c.GitlabToken, c.GitlabBaseUrlOverwrite(), ciYamlContent, 3*time.Second)
+		handleErr(err, c)
+
+		mergedCiYaml, err = checks.NewCiYaml([]byte(lintRes.LintResult.MergedYaml))
+		handleErr(err, c)
+	}
+
+	checkInput := checks.CheckInput{
+		CiYaml:        ciYaml,
+		Configuration: c,
+		LintAPIResult: lintRes,
+		MergedCiYaml:  mergedCiYaml,
+	}
+	return err, checkInput
 }

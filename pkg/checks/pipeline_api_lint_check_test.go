@@ -3,7 +3,9 @@ package checks
 import (
 	"encoding/json"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/cli"
+	"github.com/timo-reymann/gitlab-ci-verify/pkg/git"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/api"
+	ci_yaml "github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/ci-yaml"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -87,16 +89,6 @@ func TestPipelineLintApiCheck_Run(t *testing.T) {
 				},
 			},
 		},
-		{
-			name:   "Test project with empty ci yaml and invalid pipeline with errors",
-			folder: "project_with_git_repo_empty_ci_yaml.git",
-			lintResult: api.CiLintResult{
-				Valid:  false,
-				Errors: []string{},
-			},
-			expectedFindings: []CheckFinding{},
-			ciEnvVarVal:      "1",
-		},
 	}
 	c := PipelineLintApiCheck{}
 	oldCwd, _ := os.Getwd()
@@ -108,7 +100,6 @@ func TestPipelineLintApiCheck_Run(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			_ = os.Setenv("CI", tc.ciEnvVarVal)
 			projectRoot := path.Join("test_data", tc.folder)
-
 			ciValidateMockServer := mockCiValidate(tc.lintResult)
 
 			_ = os.Chdir(projectRoot)
@@ -118,12 +109,18 @@ func TestPipelineLintApiCheck_Run(t *testing.T) {
 			}
 			verifyFindings(t, tc.expectedFindings, checkMustSucceed(c.Run(&CheckInput{
 				CiYaml: ciYaml,
+				LintAPIResult: &ci_yaml.VerificationResultWithRemoteInfo{
+					RemoteInfo: &git.GitlabRemoteUrlInfo{
+						Hostname:       ciValidateMockServer.URL,
+						ClonedViaHttps: true,
+					},
+					LintResult: &tc.lintResult,
+				},
 				Configuration: &cli.Configuration{
-					GitlabBaseUrl:        ciValidateMockServer.URL,
-					NoSyntaxValidateInCi: true,
+					NoLintAPICallInCi: false,
 				},
 			})))
 		})
-		os.Setenv("CI", "")
+		_ = os.Setenv("CI", "")
 	}
 }
