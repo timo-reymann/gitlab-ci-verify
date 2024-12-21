@@ -17,7 +17,7 @@ import (
 	"time"
 )
 
-func handleErr(err error, c *cli.Configuration) {
+func handleErr(err error) {
 	if errors.Is(err, cli.ErrAbort) {
 		os.Exit(0)
 	}
@@ -31,7 +31,7 @@ func handleErr(err error, c *cli.Configuration) {
 func Execute() {
 	logging.Verbose("create and parse configuration")
 	c := cli.NewConfiguration()
-	handleErr(c.Parse(), c)
+	handleErr(c.Parse())
 
 	envOutputFormat := os.Getenv("GITLAB_CI_VERIFY_OUTPUT_FORMAT")
 	if envOutputFormat != "" {
@@ -39,26 +39,26 @@ func Execute() {
 	}
 
 	findingsFormatter, err := formatter.Get(c.OutputFormat)
-	handleErr(err, c)
+	handleErr(err)
 
 	severity := checks.SeverityNameToLevel(c.FailSeverity)
 	if severity == -1 {
-		handleErr(fmt.Errorf("invalid severity level %s", c.FailSeverity), c)
+		handleErr(fmt.Errorf("invalid severity level %s", c.FailSeverity))
 	}
 
 	err = findingsFormatter.Init(os.Stdout)
-	handleErr(err, c)
+	handleErr(err)
 
 	err, checkInput := setupCheckInput(c)
 	runChecks(checkInput, c, severity, findingsFormatter)
 
 	err = findingsFormatter.Start()
-	handleErr(err, c)
+	handleErr(err)
 }
 
 func runChecks(checkInput checks.CheckInput, c *cli.Configuration, severity int, findingsFormatter formatter.FindingsFormatter) {
 	checkResultChans := checks.RunChecksInParallel(checks.AllChecks(), checkInput, func(err error) {
-		handleErr(err, c)
+		handleErr(err)
 	})
 	findings := make([]checks.CheckFinding, 0)
 
@@ -83,11 +83,11 @@ func runChecks(checkInput checks.CheckInput, c *cli.Configuration, severity int,
 		}
 
 		err := findingsFormatter.Print(&finding)
-		handleErr(err, c)
+		handleErr(err)
 	}
 
 	err := findingsFormatter.End()
-	handleErr(err, c)
+	handleErr(err)
 
 	if shouldFail {
 		os.Exit(1)
@@ -104,11 +104,11 @@ func setupCheckInput(c *cli.Configuration) (error, checks.CheckInput) {
 	} else {
 		ciYamlContent, err = os.ReadFile(c.GitLabCiFile)
 	}
-	handleErr(err, c)
+	handleErr(err)
 
 	logging.Verbose("load and parse YAML")
 	ciYaml, err := checks.NewCiYaml(ciYamlContent)
-	handleErr(err, c)
+	handleErr(err)
 
 	var lintRes *ciyaml.VerificationResultWithRemoteInfo
 	var mergedCiYaml *checks.CiYaml
@@ -116,21 +116,21 @@ func setupCheckInput(c *cli.Configuration) (error, checks.CheckInput) {
 	if !c.NoLintAPICallInCi {
 		logging.Verbose("get current working directory")
 		pwd, err := os.Getwd()
-		handleErr(err, c)
+		handleErr(err)
 
 		logging.Verbose("get remote urls")
 		remoteUrls, err := git.GetRemoteUrls(pwd)
-		handleErr(err, c)
+		handleErr(err)
 
 		logging.Verbose("parse remote url contents")
 		remoteInfos := git.FilterGitlabRemoteUrls(remoteUrls)
 
 		logging.Verbose("validate ci file against gitlab api")
 		lintRes, err = ciyaml.GetFirstValidationResult(remoteInfos, c.GitlabToken, c.GitlabBaseUrlOverwrite(), ciYamlContent, 3*time.Second)
-		handleErr(err, c)
+		handleErr(err)
 
 		mergedCiYaml, err = checks.NewCiYaml([]byte(lintRes.LintResult.MergedYaml))
-		handleErr(err, c)
+		handleErr(err)
 	}
 
 	checkInput := checks.CheckInput{
