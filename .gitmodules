@@ -1,3 +1,6 @@
 [submodule "python_wrapper/pydoctor-theme"]
 	path = python_wrapper/pydoctor-theme
 	url = https://github.com/timo-reymann/pydoctor-theme.git
+[submodule "integration-tests"]
+	path = integration-tests
+	url = https://gitlab.com/timo-reymann/gitlab-ci-verify-test.git
