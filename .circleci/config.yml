@@ -1,10 +1,5 @@
 version: '2.1'
 
-job_defaults: &job_defaults
-  filters:
-    tags:
-      only: /.*/
-
 only_tags: &only_tags
   filters:
     branches:
@@ -32,7 +27,7 @@ executors:
       - image: cimg/python:3.12-node
 
 jobs:
-  test:
+  unit-test-cli:
     executor: go
     steps:
       - checkout
@@ -54,22 +49,7 @@ jobs:
           path: unit-tests.xml
       - store_artifacts:
           path: coverage.html
-  build:
-    executor: go
-    steps:
-      - checkout
-      - go/with-cache:
-          steps:
-            - run:
-                name: Build binaries
-                command: |
-                  make build -j4
-            - persist_to_workspace:
-                root: ./
-                paths:
-                  - dist/
-
-  test_python_wrapper:
+  unit-test-python-wrapper:
     executor: python
     environment:
       PIP_CACHE_DIR: /tmp/pip-cache
@@ -89,7 +69,96 @@ jobs:
           key: python-wrapper-dependencies-{{ checksum "python_wrapper/pyproject.toml" }}
           paths:
             - "/tmp/pip-cache"
-  publish_python_packages:
+  integration-test:
+    executor: node
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: default
+      - go/install:
+          version: 1.22.2
+      - go/with-cache:
+          steps:
+            - run:
+                name: Run integration tests
+                command: make integration-test
+
+  build-cli:
+    executor: go
+    steps:
+      - checkout
+      - go/with-cache:
+          steps:
+            - run:
+                name: Build binaries
+                command: |
+                  make build -j4
+            - persist_to_workspace:
+                root: ./
+                paths:
+                  - dist/
+  build-python-wrapper:
+    executor: python
+    environment:
+      PIP_CACHE_DIR: /tmp/pip-cache
+    steps:
+      - checkout
+      - restore_cache:
+          key: python-wrapper-dependencies-{{ checksum "python_wrapper/pyproject.toml" }}
+      - run:
+          name: Build package
+          command: |
+            cd python_wrapper
+            pip install .[dev]
+            python3 -m build
+      - save_cache:
+          key: python-wrapper-dependencies-{{ checksum "python_wrapper/pyproject.toml" }}
+          paths:
+            - "/tmp/pip-cache"
+      - persist_to_workspace:
+          paths:
+            - python_wrapper/dist
+          root: .
+          name: Save python package artifacts
+  build-gh-pages:
+    executor: node
+    environment:
+      PIP_CACHE_DIR: /tmp/pip-cache
+    steps:
+      - checkout
+      - restore_cache:
+          key: python-wrapper-dependencies-{{ checksum "python_wrapper/pyproject.toml" }}
+      - run:
+          name: Build html documentation for python wrapper
+          command: |
+            git submodule sync
+            git submodule update --init --recursive
+            cd python_wrapper
+            pip install .[dev]
+            pydoctor
+            mkdir ../gh-pages/
+            mv gh-pages/ ../gh-pages/python-wrapper/
+      - save_cache:
+          key: python-wrapper-dependencies-{{ checksum "python_wrapper/pyproject.toml" }}
+          paths:
+            - "/tmp/pip-cache"
+      - github-utils/publish_github_pages:
+          folder: gh-pages/
+          git_commit_author_email: "no-reply@timo-reymann.de"
+          git_commit_author_name: "CircleCI"
+  attach-binaries-to-release:
+    executor: python
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ./
+      - github-cli/install:
+          version: "2.21.2"
+      - run:
+          name: Attach binaries to release
+          command: |
+            gh release upload ${CIRCLE_TAG} dist/*  python_wrapper/dist/*
+  publish-python-wrapper:
     executor: python
     environment:
       PIP_CACHE_DIR: /tmp/pip-cache
@@ -117,7 +186,7 @@ jobs:
           key: python-publish-dependencies-v1
           paths:
             - "/tmp/pip-cache"
-  publish_docker_image:
+  publish-docker-image:
     executor: docker/docker
     steps:
       - checkout
@@ -136,113 +205,55 @@ jobs:
           docker-username: DOCKER_USERNAME
           docker-password: DOCKER_TOKEN
 
-  build_python_wrapper:
-    executor: python
-    environment:
-      PIP_CACHE_DIR: /tmp/pip-cache
-    steps:
-      - checkout
-      - restore_cache:
-          key: python-wrapper-dependencies-{{ checksum "python_wrapper/pyproject.toml" }}
-      - run:
-          name: Build package
-          command: |
-            cd python_wrapper
-            pip install .[dev]
-            python3 -m build
-      - save_cache:
-          key: python-wrapper-dependencies-{{ checksum "python_wrapper/pyproject.toml" }}
-          paths:
-            - "/tmp/pip-cache"
-      - persist_to_workspace:
-          paths:
-            - python_wrapper/dist
-          root: .
-          name: Save python package artifacts
-
-  build_gh_pages:
-    executor: node
-    environment:
-      PIP_CACHE_DIR: /tmp/pip-cache
-    steps:
-      - checkout
-      - restore_cache:
-          key: python-wrapper-dependencies-{{ checksum "python_wrapper/pyproject.toml" }}
-      - run:
-          name: Build html documentation for python wrapper
-          command: |
-            git submodule sync
-            git submodule update --init --recursive
-            cd python_wrapper
-            pip install .[dev]
-            pydoctor
-            mkdir ../gh-pages/
-            mv gh-pages/ ../gh-pages/python-wrapper/
-      - save_cache:
-          key: python-wrapper-dependencies-{{ checksum "python_wrapper/pyproject.toml" }}
-          paths:
-            - "/tmp/pip-cache"
-      - github-utils/publish_github_pages:
-          folder: gh-pages/
-          git_commit_author_email: "no-reply@timo-reymann.de"
-          git_commit_author_name: "CircleCI"
-  attach_binaries_to_release:
-    executor: python
-    steps:
-      - checkout
-      - attach_workspace:
-          at: ./
-      - github-cli/install:
-          version: "2.21.2"
-      - run:
-          name: Attach binaries to release
-          command: |
-            gh release upload ${CIRCLE_TAG} dist/*  python_wrapper/dist/*
-
 workflows:
   version: 2
   main:
     jobs:
-      - test:
-          <<: *job_defaults
-      - test_python_wrapper:
-          <<: *job_defaults
-      - build:
-          <<: *job_defaults
+      - unit-test-cli
+      - unit-test-python-wrapper
+      - build-cli:
           requires:
-            - test
-      - build_python_wrapper:
-          <<: *job_defaults
+            - unit-test-cli
+      - build-python-wrapper:
           requires:
-            - test_python_wrapper
+            - unit-test-python-wrapper
+      - integration-test:
+          requires:
+            - unit-test-python-wrapper
+            - unit-test-cli
       - semantic-release/with_existing_config:
-          <<: *job_defaults
           name: semantic-release
           additional_packages: "@google/semantic-release-replace-plugin"
           requires:
-            - build
-            - build_python_wrapper
+            - build-cli
+            - build-python-wrapper
           context:
             - semantic-release
           filters:
             branches:
               only:
                 - main
-      - build_gh_pages:
+  release:
+    jobs:
+      - build-cli:
+          <<: *only_tags
+      - build-python-wrapper:
+          <<: *only_tags
+      - build-gh-pages:
           <<: *only_tags
           requires:
-            - build_python_wrapper
-      - publish_python_packages:
+            - build-python-wrapper
+      - publish-python-wrapper:
           <<: *only_tags
           requires:
-            - build
-            - build_python_wrapper
-      - publish_docker_image:
+            - build-cli
+            - build-python-wrapper
+      - publish-docker-image:
           <<: *only_tags
           requires:
-            - build
-      - attach_binaries_to_release:
+            - build-cli
+      - attach-binaries-to-release:
           <<: *only_tags
           requires:
-            - build
-            - build_python_wrapper
+            - build-cli
+            - build-python-wrapper
