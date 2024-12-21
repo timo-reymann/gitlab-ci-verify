@@ -3,7 +3,7 @@ package api
 import (
 	"fmt"
 	"github.com/timo-reymann/gitlab-ci-verify/internal/netrc"
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/vault"
+	"github.com/timo-reymann/gitlab-ci-verify/internal/vault"
 	"os"
 	"strings"
 )
