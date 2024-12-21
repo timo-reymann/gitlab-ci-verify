@@ -75,6 +75,11 @@ jobs:
       - checkout
       - setup_remote_docker:
           version: default
+      - run:
+          name: Checkout submodules
+          command: |
+            git submodule sync
+            git submodule update --init --recursive
       - go/install:
           version: 1.22.2
       - go/with-cache:
@@ -82,7 +87,6 @@ jobs:
             - run:
                 name: Run integration tests
                 command: make integration-test
-
   build-cli:
     executor: go
     steps:
