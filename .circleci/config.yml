@@ -227,6 +227,7 @@ workflows:
           requires:
             - build-cli
             - build-python-wrapper
+            - integration-test
           context:
             - semantic-release
           filters:
