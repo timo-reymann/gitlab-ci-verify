@@ -1,3 +1,20 @@
+## [1.0.0](https://github.com/timo-reymann/gitlab-ci-verify/compare/v0.6.0...v1.0.0) (2024-12-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* --no-syntax-validate-in-ci has been removed in favor of --no-lint-api-in-ci, resulting in same behaviour
+
+### Features
+
+* Add more details for failed lint requests ([339b281](https://github.com/timo-reymann/gitlab-ci-verify/commit/339b281ae483430c273212f76f88b3a04f3e2587))
+* Expose ci lint api result to checks ([ce73c3a](https://github.com/timo-reymann/gitlab-ci-verify/commit/ce73c3acdc907c6d748f754023a25c15343370bf))
+
+
+### Bug Fixes
+
+* Handle forbidden errors correctly ([fa8317b](https://github.com/timo-reymann/gitlab-ci-verify/commit/fa8317b7f4740f6d367ac5912b653eff23a20bae))
+
 ## [0.6.0](https://github.com/timo-reymann/gitlab-ci-verify/compare/v0.5.4...v0.6.0) (2024-12-19)
 
 
