@@ -56,7 +56,11 @@ func (g *Client) LintCiYaml(ctx context.Context, projectSlug string, ciYaml []by
 	}
 
 	res, err := g.Do(req)
-	if err != nil || res.CheckStatus() != nil {
+	if err != nil {
+		return nil, err
+	}
+
+	if err := res.CheckStatus(); err != nil {
 		return nil, err
 	}
 
