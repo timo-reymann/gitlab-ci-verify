@@ -2,6 +2,7 @@ gitlab-ci-verify
 ===
 [![GitHub Release](https://img.shields.io/github/v/release/timo-reymann/gitlab-ci-verify?label=version)](https://github.com/timo-reymann/gitlab-ci-verify/releases/latest)
 [![PyPI version](https://badge.fury.io/py/gitlab-ci-verify.svg)](https://pypi.org/project/gitlab-ci-verify)
+[![PyPI - Downloads](https://img.shields.io/pypi/dm/gitlab-ci-verify)](https://pypi.org/project/gitlab-ci-verify)
 [![DockerHub Pulls](https://img.shields.io/docker/pulls/timoreymann/gitlab-ci-verify)](https://hub.docker.com/r/timoreymann/gitlab-ci-verify)
 [![GitHub all releases download count](https://img.shields.io/github/downloads/timo-reymann/gitlab-ci-verify/total)](https://github.com/timo-reymann/gitlab-ci-verify/releases)
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/timo-reymann/gitlab-ci-verify/tree/main.svg?style=shield)](https://dl.circleci.com/status-badge/redirect/gh/timo-reymann/gitlab-ci-verify/tree/main)
