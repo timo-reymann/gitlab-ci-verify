@@ -2,6 +2,7 @@ package checks
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"github.com/open-policy-agent/opa/v1/rego"
 	"github.com/timo-reymann/gitlab-ci-verify/internal/logging"
@@ -9,11 +10,11 @@ import (
 	"log"
 )
 
-type RepoBundleCheck struct {
+type RegoBundleCheck struct {
 	BundlePath string
 }
 
-func (r RepoBundleCheck) convertToCheckFinding(raw map[string]any) CheckFinding {
+func (r RegoBundleCheck) convertToCheckFinding(raw map[string]any) CheckFinding {
 	cf := CheckFinding{
 		Line: -1,
 	}
@@ -34,7 +35,9 @@ func (r RepoBundleCheck) convertToCheckFinding(raw map[string]any) CheckFinding 
 			cf.Link, _ = v.(string)
 			break
 		case "line":
-			cf.Line, _ = v.(int)
+			num, _ := v.(json.Number)
+			numInt, _ := num.Int64()
+			cf.Line = int(numInt)
 			break
 		default:
 			logging.Debug("Ignoring field", k, "for result from bundle", r.BundlePath)
@@ -45,7 +48,7 @@ func (r RepoBundleCheck) convertToCheckFinding(raw map[string]any) CheckFinding 
 	return cf
 }
 
-func (r RepoBundleCheck) Run(i *CheckInput) ([]CheckFinding, error) {
+func (r RegoBundleCheck) Run(i *CheckInput) ([]CheckFinding, error) {
 	ctx := context.Background()
 	rpm := rego_policies.NewRegoPolicyManager()
 
