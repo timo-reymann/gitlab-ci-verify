@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/timo-reymann/gitlab-ci-verify/compare/v1.0.0...v1.0.1) (2024-12-22)
+
+
+### Bug Fixes
+
+* **deps:** update dependency gitlab-ci-verify-bin to v1 ([#36](https://github.com/timo-reymann/gitlab-ci-verify/issues/36)) ([eab00fa](https://github.com/timo-reymann/gitlab-ci-verify/commit/eab00fa2d70ffaabbe3ca346219a90c90b560b01))
+
 ## [1.0.0](https://github.com/timo-reymann/gitlab-ci-verify/compare/v0.6.0...v1.0.0) (2024-12-21)
 
 
