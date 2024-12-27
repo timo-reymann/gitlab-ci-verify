@@ -43,7 +43,7 @@ func TestClient_LintCiYaml(t *testing.T) {
 		{
 			name:        "valid",
 			projectSlug: "org/group/project",
-			response:    `{ "valid": true, "mergedYaml": "merged_yaml", "errors": [], "warnings": [] }`,
+			response:    `{ "valid": true, "merged_yaml": "merged_yaml", "errors": [], "warnings": [] }`,
 			expectedResult: &CiLintResult{
 				Valid:      true,
 				MergedYaml: "merged_yaml",
@@ -54,7 +54,7 @@ func TestClient_LintCiYaml(t *testing.T) {
 		{
 			name:        "warnings",
 			projectSlug: "org/group/project",
-			response:    `{ "valid": false, "mergedYaml": "merged_yaml", "errors": [], "warnings": ["warning text"] }`,
+			response:    `{ "valid": false, "merged_yaml": "merged_yaml", "errors": [], "warnings": ["warning text"] }`,
 			expectedResult: &CiLintResult{
 				Valid:      false,
 				MergedYaml: "merged_yaml",
@@ -65,7 +65,7 @@ func TestClient_LintCiYaml(t *testing.T) {
 		{
 			name:        "errors",
 			projectSlug: "org/group/project",
-			response:    `{ "valid": false, "mergedYaml": "merged_yaml", "errors": ["error text"], "warnings": [] }`,
+			response:    `{ "valid": false, "merged_yaml": "merged_yaml", "errors": ["error text"], "warnings": [] }`,
 			expectedResult: &CiLintResult{
 				Valid:      false,
 				MergedYaml: "merged_yaml",
