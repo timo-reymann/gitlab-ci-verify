@@ -6,5 +6,5 @@ import rego.v1
 findings contains finding if {
 	true
 
-	finding := gitlab_ci_verify.warning("420", "this is a message")
+	finding := gitlab_ci_verify.warning("420", "this is a message", -1)
 }

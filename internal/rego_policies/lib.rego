@@ -2,16 +2,22 @@ package gitlab_ci_verify
 
 import rego.v1
 
-create_finding(code, severity, message, link) := {
+create_finding(code, severity, message, line, link) := {
 	"code": code,
 	"severity": severity,
 	"message": message,
 	"link": link,
-	"line": -1,
+	"line": line,
 }
 
-warning(code, msg) := create_finding(code, "WARNING", msg, "")
+warning(code, msg, line) := create_finding(code, "WARNING", msg, line, "")
 
-error(code, msg) := create_finding(code, "ERROR", msg, "")
+warning_with_link(code, msg, line, link) := create_finding(code, "WARNING", msg, line, link)
 
-info(code, msg) := create_finding(code, "INFO", msg, "")
+error(code, msg, line) := create_finding(code, "ERROR", msg, line, "")
+
+error_with_link(code, msg, line, link) := create_finding(code, "ERROR", msg, line, link)
+
+info(code, msg, line) := create_finding(code, "INFO", msg, line, "")
+
+info_with_link(code, msg, line, link) := create_finding(code, "INFO", msg, line, link)
