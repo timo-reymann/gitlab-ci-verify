@@ -33,6 +33,15 @@ func Execute() {
 	c := cli.NewConfiguration()
 	handleErr(c.Parse())
 
+	logging.Verbose("get current working directory")
+	projectRoot, err := os.Getwd()
+	handleErr(err)
+
+	if checks.HasProjectPoliciesOnDisk(projectRoot) {
+		logging.Debug("register project policies")
+		checks.RegisterProjectPolicies(projectRoot)
+	}
+
 	envOutputFormat := os.Getenv("GITLAB_CI_VERIFY_OUTPUT_FORMAT")
 	if envOutputFormat != "" {
 		c.OutputFormat = envOutputFormat
@@ -49,11 +58,11 @@ func Execute() {
 	err = findingsFormatter.Init(os.Stdout)
 	handleErr(err)
 
-	err, checkInput := setupCheckInput(c)
-	runChecks(checkInput, c, severity, findingsFormatter)
-
 	err = findingsFormatter.Start()
 	handleErr(err)
+
+	err, checkInput := setupCheckInput(c, projectRoot)
+	runChecks(checkInput, c, severity, findingsFormatter)
 }
 
 func runChecks(checkInput checks.CheckInput, c *cli.Configuration, severity int, findingsFormatter formatter.FindingsFormatter) {
@@ -94,7 +103,7 @@ func runChecks(checkInput checks.CheckInput, c *cli.Configuration, severity int,
 	}
 }
 
-func setupCheckInput(c *cli.Configuration) (error, checks.CheckInput) {
+func setupCheckInput(c *cli.Configuration, pwd string) (error, checks.CheckInput) {
 	var err error
 
 	logging.Verbose("read gitlab ci file ", c.GitLabCiFile)
@@ -114,10 +123,6 @@ func setupCheckInput(c *cli.Configuration) (error, checks.CheckInput) {
 	var mergedCiYaml *checks.CiYaml
 
 	if !c.NoLintAPICallInCi {
-		logging.Verbose("get current working directory")
-		pwd, err := os.Getwd()
-		handleErr(err)
-
 		logging.Verbose("get remote urls")
 		remoteUrls, err := git.GetRemoteUrls(pwd)
 		handleErr(err)
