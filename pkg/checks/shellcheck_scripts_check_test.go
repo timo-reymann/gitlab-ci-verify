@@ -74,8 +74,8 @@ func TestShellScriptCheck_Run(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			verifyFindings(t, tc.expectedFindings, checkMustSucceed(c.Run(&CheckInput{
-				CiYaml:        newCiYamlFromFile(t, path.Join("test_data", "ci_yamls", tc.file)),
+			VerifyFindings(t, tc.expectedFindings, CheckMustSucceed(c.Run(&CheckInput{
+				CiYaml:        NewCiYamlFromFile(t, path.Join("test_data", "ci_yamls", tc.file)),
 				Configuration: &cli.Configuration{},
 			})))
 		})

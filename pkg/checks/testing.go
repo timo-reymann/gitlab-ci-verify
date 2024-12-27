@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func newCiYamlFromFile(t *testing.T, fileName string) *CiYaml {
+func NewCiYamlFromFile(t *testing.T, fileName string) *CiYaml {
 	content, err := os.ReadFile(path.Join(".", fileName))
 	if err != nil {
 		t.Fatal(err)
@@ -19,7 +19,7 @@ func newCiYamlFromFile(t *testing.T, fileName string) *CiYaml {
 	return ciYaml
 }
 
-func checkMustSucceed(findings []CheckFinding, err error) []CheckFinding {
+func CheckMustSucceed(findings []CheckFinding, err error) []CheckFinding {
 	if err != nil {
 		panic(err)
 	}
@@ -27,7 +27,7 @@ func checkMustSucceed(findings []CheckFinding, err error) []CheckFinding {
 	return findings
 }
 
-func verifyFindings(t *testing.T, expected []CheckFinding, actual []CheckFinding) {
+func VerifyFindings(t *testing.T, expected []CheckFinding, actual []CheckFinding) {
 	if !cmp.Equal(expected, actual) {
 		t.Fatalf("Expected %v findings, but got %v", expected, actual)
 	}

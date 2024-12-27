@@ -22,6 +22,7 @@ func NewRegoPolicyManager() *RegoPolicyManager {
 	mgr := &RegoPolicyManager{
 		fileLoader: fileLoader,
 		options: []func(r *rego.Rego){
+			rego.EnablePrintStatements(true),
 			rego.PrintHook(logPrinter{}),
 			rego.Query("data[_].findings"),
 		},
@@ -93,7 +94,7 @@ func (rpm *RegoPolicyManager) NewRegoCtx() *rego.Rego {
 func (rpm *RegoPolicyManager) AddBuiltinFunc1(
 	name string,
 	signature *types.Function,
-	impl func(rego.BuiltinContext, *ast.Term) (*ast.Term, error),
+	impl rego.Builtin1,
 ) {
 	f := rego.Function1(
 		&rego.Function{
@@ -111,7 +112,7 @@ func (rpm *RegoPolicyManager) AddBuiltinFunc1(
 func (rpm *RegoPolicyManager) AddBuiltinFunc2(
 	name string,
 	signature *types.Function,
-	impl func(rego.BuiltinContext, *ast.Term, *ast.Term) (*ast.Term, error),
+	impl rego.Builtin2,
 ) {
 	f := rego.Function2(
 		&rego.Function{

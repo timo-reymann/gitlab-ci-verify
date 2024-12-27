@@ -5,7 +5,7 @@ import (
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/cli"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/git"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/api"
-	ci_yaml "github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/ci-yaml"
+	ciyaml "github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/ci-yaml"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -107,9 +107,9 @@ func TestPipelineLintApiCheck_Run(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			verifyFindings(t, tc.expectedFindings, checkMustSucceed(c.Run(&CheckInput{
+			VerifyFindings(t, tc.expectedFindings, CheckMustSucceed(c.Run(&CheckInput{
 				CiYaml: ciYaml,
-				LintAPIResult: &ci_yaml.VerificationResultWithRemoteInfo{
+				LintAPIResult: &ciyaml.VerificationResultWithRemoteInfo{
 					RemoteInfo: &git.GitlabRemoteUrlInfo{
 						Hostname:       ciValidateMockServer.URL,
 						ClonedViaHttps: true,

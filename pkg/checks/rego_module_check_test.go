@@ -6,9 +6,9 @@ import (
 	"testing"
 )
 
-func TestRegoBundleCheck_Run(t *testing.T) {
-	c := BundleCheck{
-		BundlePath: "test_data/rego-bundle",
+func TestRegoModuleCheck_Run(t *testing.T) {
+	c := ModuleCheck{
+		ModulePath: "test_data/rego-bundle/always_trigger.rego",
 	}
 	testCases := []struct {
 		name             string
