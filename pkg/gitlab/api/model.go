@@ -5,7 +5,7 @@ type CiLintResult struct {
 	// Valid indicates if the YAML file is syntactically correct
 	Valid bool `json:"valid"`
 	// MergedYaml contains the final YAML with all includes and anchors resolved
-	MergedYaml string `json:"mergedYaml"`
+	MergedYaml string `json:"merged_yaml"`
 	// Errors encountered with the pipeline
 	Errors []string `json:"errors"`
 	// Warnings encountered with the pipeline

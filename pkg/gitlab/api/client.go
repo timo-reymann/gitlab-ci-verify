@@ -54,6 +54,7 @@ func (g *Client) LintCiYaml(ctx context.Context, projectSlug string, ciYaml []by
 	if err != nil {
 		return nil, err
 	}
+	req.URL.Query().Set("include_merged_yaml", "true")
 
 	res, err := g.Do(req)
 	if err != nil {
