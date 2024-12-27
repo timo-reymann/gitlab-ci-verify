@@ -116,6 +116,7 @@ func parseResults(regoPath string, results rego.ResultSet) ([]CheckFinding, erro
 	parseErrs := make([]error, 0)
 	checkFindings := make([]CheckFinding, 0)
 
+	logging.Verbose("Got rego results", results, "for", regoPath)
 	for _, result := range results {
 		for _, expression := range result.Expressions {
 			findings := expression.Value.([]any)
