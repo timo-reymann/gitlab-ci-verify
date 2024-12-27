@@ -37,10 +37,16 @@ func queryManagerForFindings(rpm *rego_policies.RegoPolicyManager, i *CheckInput
 		return nil, fmt.Errorf("failed to prepare query: %s", err)
 	}
 
+	var mergedCiYaml *map[string]any
+
+	if i.MergedCiYaml != nil {
+		mergedCiYaml = &i.MergedCiYaml.ParsedYamlMap
+	}
+
 	return query.Eval(ctx, rego.EvalInput(
 		map[string]any{
 			"yaml":       &i.CiYaml.ParsedYamlMap,
-			"mergedYaml": &i.MergedCiYaml.ParsedYamlMap,
+			"mergedYaml": mergedCiYaml,
 		},
 	))
 }
