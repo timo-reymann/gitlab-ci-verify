@@ -183,7 +183,7 @@ using [Rego](https://www.openpolicyagent.org/docs/latest/policy-language/).
 To get started to create the folder `.gitlab-ci-verify/checks` in your project and add a file with the extension
 `.rego`.
 
-```
+```rego
 # package does not really matter, as long as is it does **not** contain gitlab_ci_verify
 package my_project_checks
 
