@@ -1,3 +1,20 @@
+## [1.1.0](https://github.com/timo-reymann/gitlab-ci-verify/compare/v1.0.1...v1.1.0) (2024-12-28)
+
+
+### Features
+
+* Add draft for rego bundle check ([6e93844](https://github.com/timo-reymann/gitlab-ci-verify/commit/6e938440ec730e3051cec745213e338f2ea5551a))
+* Add more verbose rego logging ([3be1ac8](https://github.com/timo-reymann/gitlab-ci-verify/commit/3be1ac894fb91523e6bb9432de1eb82a5c99e548))
+* Add rego policy library code ([25e0fe9](https://github.com/timo-reymann/gitlab-ci-verify/commit/25e0fe9332a2ca35f551a89a0c2388fe05579de2))
+* Add support for project local policies ([050bd58](https://github.com/timo-reymann/gitlab-ci-verify/commit/050bd58d5c97a57ac4f61ce2569dc9a0361cc7fe))
+* Add yaml path utils to get line numbers from yamlpath query ([26665ea](https://github.com/timo-reymann/gitlab-ci-verify/commit/26665ea907bf4bf6e03f5c53f524408edb30cde8))
+* Port gitlab pages check to rego ([ad0967b](https://github.com/timo-reymann/gitlab-ci-verify/commit/ad0967bb439e0e36f05c233377e6b78403211cd7))
+
+
+### Bug Fixes
+
+* Make sure merged YAML is included ([2b3536c](https://github.com/timo-reymann/gitlab-ci-verify/commit/2b3536c49b782dff177f00887e4732bc1cced448))
+
 ## [1.0.1](https://github.com/timo-reymann/gitlab-ci-verify/compare/v1.0.0...v1.0.1) (2024-12-22)
 
 
