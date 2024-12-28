@@ -52,7 +52,9 @@ project-url = "https://github.com/timo-reymann/gitlab-ci-verify"
 
 theme = "base"
 template-dir = "pydoctor-theme"
-
+privacy = [
+    "HIDDEN:gitlab_ci_verify.*_test"
+]
 
 [build-system]
 requires = [
