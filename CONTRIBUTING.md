@@ -20,7 +20,7 @@ Pull requests are the best way to propose changes to the codebase (I use [Circle
 5. Make sure your code and commit lints.
 6. Issue that pull request!
 
-## Any contributions you make will be under the "Climate Strike" License Version 1.0 (Draft)
+## Any contributions you make will be under the GPL-3.0
 In short, when you submit code changes, your submissions are understood to be under the same [GNU GENERAL PUBLIC LICENSE v3](https://github.com/timo-reymann/gitlab-ci-verify/blob/main/LICENSE) that covers the project. Feel free to contact the maintainers if that's a concern.
 
 ## Report bugs using Github's issues
@@ -45,4 +45,4 @@ To make your life easier there is also a handy template available so feel free t
 > ATTENTION: If you DONT provide steps to reproduce the ticket will be closed WITHOUT FURTHER NOTICE!
 
 ## License
-By contributing, you agree that your contributions will be licensed under its "Climate Strike" License Version 1.0 (Draft).
+By contributing, you agree that your contributions will be licensed under its GPL-3.0.
