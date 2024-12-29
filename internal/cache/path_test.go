@@ -29,6 +29,13 @@ func TestExists(t *testing.T) {
 		{"File does not exist", "nonexistent", false},
 	}
 
+	cacheDir, err := CacheDir()
+	if err != nil {
+		t.Errorf("CacheDir() failed: %v", err)
+	}
+	os.RemoveAll(cacheDir)
+	_, _ = EnsureCacheDir()
+
 	// Create a file in the temporary directory
 	testFile := filepath.Join(dir, "testfile")
 	_ = os.Remove(testFile)
