@@ -1,9 +1,13 @@
 package httputils
 
 import (
+	"bytes"
 	"fmt"
+	"github.com/timo-reymann/gitlab-ci-verify/internal/cache"
+	"github.com/timo-reymann/gitlab-ci-verify/internal/hashing"
 	"io"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -20,8 +24,60 @@ func NewRfc7232HttpClient() *RFC7232HttpClient {
 	}
 }
 
-// ReadFileWithCondition reads a file from an HTTP endpoint using conditional headers
-func (hc *RFC7232HttpClient) ReadFileWithCondition(url, etag string, lastModified time.Time) (io.ReadCloser, error) {
+func (hc *RFC7232HttpClient) getCachedMeta(urlHash string) (string, *time.Time, error) {
+	if !cache.Exists(urlHash+".meta") || !cache.Exists(urlHash) {
+		return "", nil, nil
+	}
+
+	metaReader, err := cache.OpenFile(urlHash + ".meta")
+	if err != nil {
+		return "", nil, err
+	}
+
+	meta, err := io.ReadAll(metaReader)
+	if err != nil {
+		return "", nil, err
+	}
+
+	content := strings.Split(string(meta), ";")
+	etag := content[0]
+	lastModified, err := time.Parse(http.TimeFormat, content[1])
+	if err != nil {
+		return "", nil, err
+	}
+	return etag, &lastModified, nil
+}
+
+func (hc *RFC7232HttpClient) ReadRemoteOrCached(url string) (io.ReadCloser, error) {
+	urlHash := hashing.CreateHashFromString(url)
+
+	etag, lastModified, err := hc.getCachedMeta(urlHash)
+	if err != nil {
+		return nil, err
+	}
+
+	if lastModified == nil {
+		lastModified = &time.Time{}
+	}
+
+	res, err := hc.GetWithCondition(url, etag, *lastModified)
+	if err != nil {
+		return nil, err
+	} else if res != nil {
+		_ = hc.setCachedMeta(res, urlHash)
+		return res.Body, nil
+	}
+
+	return cache.OpenFile(urlHash)
+}
+
+func (hc *RFC7232HttpClient) setCachedMeta(res *http.Response, urlHash string) error {
+	metaBuffer := bytes.NewBuffer([]byte(res.Header.Get("ETag") + ";" + res.Header.Get("Last-Modified")))
+	return cache.WriteFile(urlHash+".meta", metaBuffer)
+}
+
+// GetWithCondition reads a file from an HTTP endpoint using conditional headers
+func (hc *RFC7232HttpClient) GetWithCondition(url string, etag string, lastModified time.Time) (*http.Response, error) {
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
@@ -48,5 +104,5 @@ func (hc *RFC7232HttpClient) ReadFileWithCondition(url, etag string, lastModifie
 		return nil, fmt.Errorf("unexpected status code: %d", res.StatusCode)
 	}
 
-	return res.Body, nil
+	return res, nil
 }
