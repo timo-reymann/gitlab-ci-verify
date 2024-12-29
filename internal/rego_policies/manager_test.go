@@ -2,10 +2,15 @@ package rego_policies
 
 import (
 	"context"
+	_ "embed"
 	"fmt"
 	"github.com/open-policy-agent/opa/v1/ast"
 	"github.com/open-policy-agent/opa/v1/rego"
 	"github.com/open-policy-agent/opa/v1/types"
+	"io"
+	"net/http"
+	"net/http/httptest"
+	"os"
 	"testing"
 )
 
@@ -75,4 +80,36 @@ func TestRegoPolicyManager_AddBuiltinFunc(t *testing.T) {
 	}
 
 	fmt.Printf("%v\n", results)
+}
+
+func TestRegoPolicyManager_LoadBundleFromRemote(t *testing.T) {
+	mock := httptest.NewServer(http.HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
+		file, _ := os.Open("test_data/bundle.tar.gz")
+
+		writer.WriteHeader(http.StatusOK)
+		writer.Header().Set("Content-Type", "application/gzip")
+		writer.Header().Set("Content-Disposition", "attachment; filename=bundle.tar.gz")
+		_, _ = io.Copy(writer, file)
+	}))
+	defer mock.Close()
+
+	rpm := NewRegoPolicyManager()
+	err := rpm.LoadBundleFromRemote(mock.URL)
+	if err != nil {
+		t.Fatal(err)
+	}
+	regoCtx := rpm.NewRegoCtx()
+	ctx := context.Background()
+	query, err := regoCtx.PrepareForEval(ctx)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	result, err := query.Eval(ctx, rego.EvalInput(map[string]any{}))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(result) != 1 {
+		t.Fatal("expected 1 result, got ", len(result))
+	}
 }
