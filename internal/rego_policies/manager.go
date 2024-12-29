@@ -7,6 +7,7 @@ import (
 	"github.com/open-policy-agent/opa/v1/loader"
 	"github.com/open-policy-agent/opa/v1/rego"
 	"github.com/open-policy-agent/opa/v1/types"
+	"github.com/timo-reymann/gitlab-ci-verify/internal/httputils"
 	"io"
 	"os"
 	"strings"
@@ -53,6 +54,26 @@ func (rpm *RegoPolicyManager) LoadBundle(path string) error {
 
 	for _, v := range modules {
 		rpm.options = append(rpm.options, rego.ParsedModule(v))
+	}
+
+	return nil
+}
+
+func (rpm *RegoPolicyManager) LoadBundleFromRemote(url string) error {
+	hc := httputils.NewRfc7232HttpClient()
+	bundleReader, err := hc.ReadRemoteOrCached(url)
+	if err != nil {
+		return err
+	}
+	tl := bundle.NewTarballLoaderWithBaseURL(bundleReader, url)
+	br := bundle.NewCustomReader(tl)
+	parsedBundle, err := br.Read()
+	if err != nil {
+		return err
+	}
+
+	for _, module := range parsedBundle.Modules {
+		rpm.options = append(rpm.options, rego.ParsedModule(module.Parsed))
 	}
 
 	return nil
