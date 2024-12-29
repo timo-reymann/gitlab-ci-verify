@@ -39,6 +39,8 @@ func TestWriteAndReadFile(t *testing.T) {
 }
 
 func TestOpenFile(t *testing.T) {
+	_, _ = EnsureCacheDir()
+
 	tests := []struct {
 		name     string
 		path     string
