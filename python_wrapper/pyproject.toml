@@ -1,6 +1,6 @@
 [project]
 name = "gitlab-ci-verify"
-version = "1.1.0"
+version = "1.1.1"
 description = "Validate and lint your gitlab ci files using ShellCheck, the Gitlab API and curated checks"
 authors = [
     { name = "Timo Reymann", email = "mail@timo-reymann.de" }

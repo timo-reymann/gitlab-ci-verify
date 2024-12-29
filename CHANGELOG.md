@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/timo-reymann/gitlab-ci-verify/compare/v1.1.0...v1.1.1) (2024-12-29)
+
+
+### Bug Fixes
+
+* **deps:** update module github.com/go-git/go-git/v5 to v5.13.0 ([3f0c85f](https://github.com/timo-reymann/gitlab-ci-verify/commit/3f0c85fefcca7e8d3c24008e53ae85e4bd93a71c))
+
 ## [1.1.0](https://github.com/timo-reymann/gitlab-ci-verify/compare/v1.0.1...v1.1.0) (2024-12-28)
 
 
