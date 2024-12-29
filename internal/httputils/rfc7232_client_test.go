@@ -1,10 +1,13 @@
 package httputils
 
 import (
+	"github.com/timo-reymann/gitlab-ci-verify/internal/cache"
+	"github.com/timo-reymann/gitlab-ci-verify/internal/hashing"
 	"io"
 	"net/http"
 	"net/http/httptest"
 	"os"
+	"strings"
 	"testing"
 	"time"
 )
@@ -62,18 +65,95 @@ func TestRFC7232HttpClient_DownloadFileWithCondition(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			reader, err := client.ReadFileWithCondition(ts.URL, tc.etag, tc.lastModified)
+			reader, err := client.GetWithCondition(ts.URL, tc.etag, tc.lastModified)
 			if (err != nil) != tc.wantErr {
 				t.Errorf("DownloadFileWithCondition() error = %v, wantErr %v", err, tc.wantErr)
 			}
 
 			if tc.expectDownload {
-				if _, err := io.ReadAll(reader); os.IsNotExist(err) {
+				if _, err := io.ReadAll(reader.Body); os.IsNotExist(err) {
 					t.Errorf("Expected file to exist, but it does not")
 				}
 			} else {
 				if reader != nil {
 					t.Errorf("Expected file not to be downloaded, but it exists")
+				}
+			}
+		})
+	}
+}
+
+func TestReadRemoteOrCached(t *testing.T) {
+	ts := mockServer()
+	defer ts.Close()
+
+	urlhash := hashing.CreateHashFromString(ts.URL)
+
+	client := NewRfc7232HttpClient()
+
+	testCases := []struct {
+		name           string
+		setupCache     func()
+		expectDownload bool
+		expectErr      bool
+	}{
+		{
+			name: "Cache contains meta, but no file",
+			setupCache: func() {
+				cache.WriteFile(urlhash+".meta", strings.NewReader("\"123456789abcdef\";Fri, 01 Dec 2023 00:00:00 GMT"))
+			},
+			expectDownload: true,
+			expectErr:      false,
+		},
+		{
+			name: "Cache contains meta and file",
+			setupCache: func() {
+				println(urlhash)
+				cache.WriteFile(urlhash+".meta", strings.NewReader("\"123456789abcdef\";Fri, 01 Dec 2023 00:00:00 GMT"))
+				cache.WriteFile(urlhash, strings.NewReader("cached file content"))
+			},
+			expectDownload: false,
+			expectErr:      false,
+		},
+		{
+			name: "Cache contains none and downloads",
+			setupCache: func() {
+
+			},
+			expectDownload: true,
+			expectErr:      false,
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			// Clean cache
+			dir, _ := cache.CacheDir()
+			os.RemoveAll(dir)
+			tc.setupCache()
+
+			reader, err := client.ReadRemoteOrCached(ts.URL)
+			if (err != nil) != tc.expectErr {
+				t.Errorf("ReadRemoteOrCached() error = %v, expectErr %v", err, tc.expectErr)
+			}
+
+			if tc.expectDownload {
+				if reader == nil {
+					t.Errorf("Expected file to be downloaded, but it was not")
+				} else {
+					content, _ := io.ReadAll(reader)
+					if string(content) != "file content" {
+						t.Errorf("Expected downloaded content to be 'file content', got %s", string(content))
+					}
+				}
+			} else {
+				if reader == nil {
+					t.Errorf("Expected file to be read from cache, but it was not")
+				} else {
+					content, _ := io.ReadAll(reader)
+					if string(content) != "cached file content" {
+						t.Errorf("Expected cached content to be 'cached file content', got '%s'", string(content))
+					}
 				}
 			}
 		})
