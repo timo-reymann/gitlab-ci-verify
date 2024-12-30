@@ -3,7 +3,6 @@ package api
 import (
 	"context"
 	"github.com/google/go-cmp/cmp"
-	"log"
 	"net/http"
 	"os"
 	"strings"
@@ -79,13 +78,13 @@ func TestClient_LintCiYaml(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			server := mockServerWithBodyAndVerifier(http.StatusTeapot, []byte(tc.response), func(request *http.Request) {
 				if !strings.Contains(request.URL.RawPath, "%2F") {
-					log.Fatal("project parameter is not url escaped properly")
+					t.Fatal("project parameter is not url escaped properly")
 				}
 			})
 			defer server.Close()
 
 			client := NewClient(server.URL, "token")
-			result, err := client.LintCiYaml(context.Background(), tc.projectSlug, []byte(""))
+			result, err := client.LintCiYaml(context.TODO(), tc.projectSlug, []byte(""))
 			if err != nil {
 				t.Fatal(err)
 			}

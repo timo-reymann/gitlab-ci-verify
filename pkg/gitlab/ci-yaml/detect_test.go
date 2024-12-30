@@ -48,5 +48,4 @@ func TestGetFirstValidationResult(t *testing.T) {
 		t.Fatal("No res given but did not throw error")
 	}
 
-	fmt.Printf("%v", *res.LintResult)
 }
