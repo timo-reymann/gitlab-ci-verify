@@ -36,13 +36,9 @@ jobs:
             - run:
                 name: Run tests
                 command: |
-                  gotestsum --junitfile unit-tests.xml --  -race -coverprofile=coverage.txt -covermode=atomic   -v ./...
+                  go test -race -coverprofile=coverage.txt -covermode=atomic   -v ./...
                   make save-coverage-report
       - codecov/upload
-      - store_test_results:
-          path: unit-tests.xml
-      - store_artifacts:
-          path: unit-tests.xml
       - store_artifacts:
           path: coverage.html
   unit-test-python-wrapper:
