@@ -62,18 +62,16 @@ jobs:
           paths:
             - "/tmp/pip-cache"
   integration-test:
-    executor: node
+    machine:
+      image: ubuntu-2204:current
+      docker_layer_caching: true
     steps:
       - checkout
-      - setup_remote_docker:
-          version: default
       - run:
           name: Checkout submodules
           command: |
             git submodule sync
             git submodule update --init --recursive
-      - go/install:
-          version: 1.22.2
       - go/with-cache:
           steps:
             - run:
