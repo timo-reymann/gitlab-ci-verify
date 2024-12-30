@@ -54,7 +54,7 @@ build-docker: ## Build docker image based on the built linux builds in the dist 
 		--build-arg BUILD_COMMIT_REF="$(COMMIT_REF)" \
 		--push .
 
-build: build-linux build-darwin build-windows create-checksums ## Build binaries for all platform
+build: build-linux build-darwin build-windows ## Build binaries for all platform
 
 integration-test: ## Run bats tests on the host
 	@CGO_ENABLED=0 go build -o /tmp/gitlab-ci-verify
