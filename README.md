@@ -28,7 +28,8 @@ gitlab-ci-verify
 - Available as pre-commit hook
 - Usable to valid dynamically generated pipelines using the [python wrapper](#install-as-library-using-pip)
 - Support for *gitlab.com* and self-hosted instances
-- Support for custom policies written in [Rego](https://www.openpolicyagent.org/docs/latest/policy-language/)
+- Support for [custom policies](#writing-custom-policies) written
+  in [Rego](https://www.openpolicyagent.org/docs/latest/policy-language/)
 
 ### Example output
 
@@ -244,6 +245,17 @@ The input for the policies is based on the parsed gitlab ci file.
   }
 }
 ```
+
+### Remote bundles
+
+You can use remote bundles to share policies between projects.
+To do so you can use the `--include-opa-bundle` flag to specify a bundle to include.
+
+The bundle should be a tarball containing the rego files, built
+using [opa](https://www.openpolicyagent.org/docs/latest/cli/#opa-build).
+
+To allow caching, the server should support [RFC7232](https://datatracker.ietf.org/doc/html/rfc7232) compliant caching
+headers.
 
 ### Further resources
 

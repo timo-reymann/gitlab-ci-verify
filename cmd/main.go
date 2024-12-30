@@ -42,6 +42,11 @@ func Execute() {
 		checks.RegisterProjectPolicies(projectRoot)
 	}
 
+	if len(c.IncludedOPABundles) > 0 {
+		logging.Debug("register opa bundles")
+		checks.RegisterRemoteOPABundleChecks(c.IncludedOPABundles)
+	}
+
 	envOutputFormat := os.Getenv("GITLAB_CI_VERIFY_OUTPUT_FORMAT")
 	if envOutputFormat != "" {
 		c.OutputFormat = envOutputFormat
