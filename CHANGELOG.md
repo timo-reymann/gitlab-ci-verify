@@ -1,3 +1,17 @@
+## [1.2.0](https://github.com/timo-reymann/gitlab-ci-verify/compare/v1.1.1...v1.2.0) (2025-01-02)
+
+
+### Features
+
+* Add `--include-opa-bundle` flag ([537e0ab](https://github.com/timo-reymann/gitlab-ci-verify/commit/537e0abec20895a6e28daf27a96ea4034aba59d4))
+* **rego-policy:** Allow loading remote bundle ([a2bb481](https://github.com/timo-reymann/gitlab-ci-verify/commit/a2bb481156c4b419909308a1b4e224acf64901ab))
+
+
+### Bug Fixes
+
+* Add missing integration tests file ([59866bd](https://github.com/timo-reymann/gitlab-ci-verify/commit/59866bd4277e7de3afcae4fe0d6a8250bae3473c))
+* **deps:** update module github.com/go-git/go-git/v5 to v5.13.1 ([8f303a9](https://github.com/timo-reymann/gitlab-ci-verify/commit/8f303a9121799cdd3227f30d31514ae2bf29e477))
+
 ## [1.1.1](https://github.com/timo-reymann/gitlab-ci-verify/compare/v1.1.0...v1.1.1) (2024-12-29)
 
 
