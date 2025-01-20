@@ -71,9 +71,26 @@ func TestShellScriptCheck_Run(t *testing.T) {
 			expectedFindings: []CheckFinding{},
 		},
 		{
-			name:             "With script list item continuation",
-			file:             "withScriptListItemContinuation.yml",
-			expectedFindings: []CheckFinding{},
+			name: "With script list item continuation",
+			file: "withScriptListItemContinuation.yml",
+			expectedFindings: []CheckFinding{
+				{
+					Severity: SeverityError,
+					Code:     "SC-1070",
+					Line:     4,
+					Message:  `[build:script:1] Parsing stopped here. Mismatched keywords or invalid parentheses?`,
+					Link:     "https://www.shellcheck.net/wiki/SC1070",
+					File:     "",
+				},
+				{
+					Severity: SeverityError,
+					Code:     "SC-1141",
+					Line:     4,
+					Message:  `[build:script:1] Unexpected tokens after compound command. Bad redirection or missing ;/&&/||/|?`,
+					Link:     "https://www.shellcheck.net/wiki/SC1141",
+					File:     "",
+				},
+			},
 		},
 	}
 
