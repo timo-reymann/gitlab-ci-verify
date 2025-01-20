@@ -1,0 +1,5 @@
+build:
+  stage: build
+  script:
+    - if [ "${TOOL}" == "workflow-engine" ] || [ "${TOOL}" == "workflow-elb-mock-server" ] ; then RELEASE_TYPE="test"; else
+      RELEASE_TYPE="staging"; fi deepctl --verbose release --tool "${TOOL}" --release-type "${RELEASE_TYPE}" --push; fi

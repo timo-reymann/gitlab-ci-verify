@@ -70,6 +70,11 @@ func TestShellScriptCheck_Run(t *testing.T) {
 			file:             "withReferenceNoFinding.yml",
 			expectedFindings: []CheckFinding{},
 		},
+		{
+			name:             "With script list item continuation",
+			file:             "withScriptListItemContinuation.yml",
+			expectedFindings: []CheckFinding{},
+		},
 	}
 
 	for _, tc := range testCases {
