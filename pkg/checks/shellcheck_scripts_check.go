@@ -49,10 +49,17 @@ func (s ShellScriptCheck) Run(i *CheckInput) ([]CheckFinding, error) {
 				}
 
 				for _, f := range result.Findings {
+					// handle cases where the YAML parsing does not match the actual
+					// line, e.g., with multiline list continuation
+					lineNo := f.Line - 1
+					if lineNo < 0 || lineNo >= len(lines) {
+						lineNo = 0
+					}
+
 					findingsChan <- CheckFinding{
 						Severity: s.shellcheckLevelToSeverity(f.Level),
 						Code:     fmt.Sprintf("SC-%s", strconv.Itoa(f.Code)),
-						Line:     lines[f.Line-1].Node.Line,
+						Line:     lines[lineNo].Node.Line,
 						Message:  fmt.Sprintf("[%s:%s:%d] %s", jobWithScripts.JobName, key, f.Line, f.Message),
 						Link:     fmt.Sprintf("https://www.shellcheck.net/wiki/SC%d", f.Code),
 						File:     i.Configuration.GitLabCiFile,
