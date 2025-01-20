@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/timo-reymann/gitlab-ci-verify/compare/v1.2.0...v1.2.1) (2025-01-20)
+
+
+### Bug Fixes
+
+* [#43](https://github.com/timo-reymann/gitlab-ci-verify/issues/43) Handle yaml multiline list item continuation ([1248f29](https://github.com/timo-reymann/gitlab-ci-verify/commit/1248f298900a361392e9cc6e8a1d0c5e8616d4cb))
+
 ## [1.2.0](https://github.com/timo-reymann/gitlab-ci-verify/compare/v1.1.1...v1.2.0) (2025-01-02)
 
 
