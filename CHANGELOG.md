@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/timo-reymann/gitlab-ci-verify/compare/v1.2.2...v1.2.3) (2025-01-21)
+
+
+### Bug Fixes
+
+* **deps:** update dependency twine to ==6.1.* ([b928b9d](https://github.com/timo-reymann/gitlab-ci-verify/commit/b928b9dec6c0ff6246fb23cfd341f5277368b566))
+
 ## [1.2.2](https://github.com/timo-reymann/gitlab-ci-verify/compare/v1.2.1...v1.2.2) (2025-01-21)
 
 
