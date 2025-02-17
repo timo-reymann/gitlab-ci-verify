@@ -8,7 +8,7 @@ only_tags: &only_tags
       only: /.*/
 
 orbs:
-  github-cli: circleci/github-cli@2.6.2
+  github-cli: circleci/github-cli@2.6.3
   docker: circleci/docker@2.8.2
   codecov: codecov/codecov@5.2.1
   go: circleci/go@2.2.4
