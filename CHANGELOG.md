@@ -1,3 +1,10 @@
+## [1.2.8](https://github.com/timo-reymann/gitlab-ci-verify/compare/v1.2.7...v1.2.8) (2025-02-22)
+
+
+### Bug Fixes
+
+* Fix pypi release ([82e333a](https://github.com/timo-reymann/gitlab-ci-verify/commit/82e333a3e6d35739c0e515b9aa6d2ea0e7970a08))
+
 ## [1.2.6](https://github.com/timo-reymann/gitlab-ci-verify/compare/v1.2.5...v1.2.6) (2025-01-29)
 
 
