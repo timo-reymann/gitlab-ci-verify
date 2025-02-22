@@ -127,7 +127,7 @@ func setupCheckInput(c *cli.Configuration, pwd string) (error, checks.CheckInput
 	var lintRes *ciyaml.VerificationResultWithRemoteInfo
 	var mergedCiYaml *checks.CiYaml
 
-	if !c.NoLintAPICallInCi {
+	if c.IsCIEnv() && !c.NoLintAPICallInCi {
 		logging.Verbose("get remote urls")
 		remoteUrls, err := git.GetRemoteUrls(pwd)
 		handleErr(err)
