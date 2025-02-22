@@ -103,6 +103,10 @@ func (conf *Configuration) Parse() error {
 	return nil
 }
 
+func (conf *Configuration) IsCIEnv() bool {
+	return os.Getenv("CI") != ""
+}
+
 // NewConfiguration creates a new configuration
 func NewConfiguration() *Configuration {
 	return &Configuration{}
