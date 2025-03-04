@@ -2,7 +2,7 @@ module github.com/timo-reymann/gitlab-ci-verify
 
 go 1.23.6
 
-toolchain go1.24.0
+toolchain go1.24.1
 
 require (
 	github.com/Ladicle/tabwriter v1.0.0
