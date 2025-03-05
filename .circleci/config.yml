@@ -11,7 +11,7 @@ orbs:
   github-cli: circleci/github-cli@2.6.2
   docker: circleci/docker@2.8.2
   codecov: codecov/codecov@5.2.1
-  go: circleci/go@2.2.4
+  go: circleci/go@2.2.5
   github-utils: trustedshops-public/github-utils@1.1.2
   semantic-release: trustedshops-public/semantic-release@6.0.0
 
