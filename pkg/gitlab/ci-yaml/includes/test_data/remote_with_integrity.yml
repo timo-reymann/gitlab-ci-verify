@@ -1,0 +1,3 @@
+include:
+  - remote: 'https://gitlab.com/example-project/-/raw/main/.gitlab-ci.yml'
+    integrity: 'sha256-L3/GAoKaw0Arw6hDCKeKQlV1QPEgHYxGBHsH4zG1IY8='

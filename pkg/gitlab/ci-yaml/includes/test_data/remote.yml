@@ -1,0 +1,2 @@
+include:
+  - remote: 'https://gitlab.com/example-project/-/raw/main/.gitlab-ci.yml'
