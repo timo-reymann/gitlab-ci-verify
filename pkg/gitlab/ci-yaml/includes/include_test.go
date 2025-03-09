@@ -98,10 +98,8 @@ func TestParseInclude(t *testing.T) {
 				t.Fatalf("Expected %d includes, got %d", len(tt.expectedIncludes), len(include))
 			}
 
-			for i, inc := range include {
-				if !inc.Equals(tt.expectedIncludes[i]) {
-					t.Fatalf("Expected include %v, got %v", tt.expectedIncludes[i], inc)
-				}
+			if !Equals(include, tt.expectedIncludes) {
+				t.Errorf("expected %v, got %v", tt.expectedIncludes, include)
 			}
 		})
 	}

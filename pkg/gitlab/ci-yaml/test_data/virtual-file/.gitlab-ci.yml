@@ -1,0 +1,39 @@
+include:
+  - template: Workflows/MergeRequest-Pipelines.gitlab-ci.yml
+  - project: 'org/ci/gitlab-ci-lib'
+    file:
+      - '/templates/.buildkit.yml'
+      - '/templates/.techdocs.yml'
+      - '/templates/.sonarqube.yml'
+      - '/templates/.colorize.yml'
+      - '/templates/.helm-package.yml'
+  - local: /.gitlab/ci/templates/.mod_download.gitlab-ci.yml
+  - local: /.gitlab/ci/pipelines/release.gitlab-ci.yml
+    rules:
+      - if: '$CI_COMMIT_TAG'
+  - local: /.gitlab/ci/pipelines/merge_request.gitlab-ci.yml
+    rules:
+      - if: '$CI_MERGE_REQUEST_ID'
+  - local: /.gitlab/ci/pipelines/main.gitlab-ci.yml
+    rules:
+      - if: "$CI_COMMIT_TAG"
+        when: never
+      - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+      - if: '$CI_PIPELINE_SOURCE != "schedule"'
+
+stages:
+  - build
+  - test
+  - build-image
+  - release
+  - deploy
+
+default:
+  image: registry.example.com/go1
+  tags: [ k8s ]
+
+variables:
+  CACHE_DIR: ${CI_PROJECT_DIR}/.cache
+  GOPATH: ${CI_PROJECT_DIR}/.go
+  GOCACHE: ${CACHE_DIR}/go-build
+  GOMAXPROCS: "8"
