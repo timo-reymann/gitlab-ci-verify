@@ -2,6 +2,7 @@ package ci_yaml
 
 import (
 	formatconversion "github.com/timo-reymann/gitlab-ci-verify/internal/format-conversion"
+	"github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/ci-yaml/includes"
 	"gopkg.in/yaml.v3"
 )
 
@@ -13,6 +14,8 @@ type CiYamlFile struct {
 	ParsedYamlMap map[string]any
 	// ParsedYamlDoc contains the parsed YAML as node structure
 	ParsedYamlDoc *yaml.Node
+	// Includes contains all includes in the entry file
+	Includes []includes.Include
 }
 
 // NewCiYamlFile from byte contents
@@ -28,9 +31,15 @@ func NewCiYamlFile(content []byte) (*CiYamlFile, error) {
 		return nil, err
 	}
 
+	parsedIncludes, err := includes.ParseIncludes(doc)
+	if err != nil {
+		return nil, err
+	}
+
 	return &CiYamlFile{
 		FileContent:   content,
 		ParsedYamlMap: parsed,
 		ParsedYamlDoc: doc,
+		Includes:      parsedIncludes,
 	}, nil
 }
