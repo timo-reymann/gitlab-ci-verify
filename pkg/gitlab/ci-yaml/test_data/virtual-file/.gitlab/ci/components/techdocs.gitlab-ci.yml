@@ -1,0 +1,14 @@
+pages:
+  allow_failure: true
+  artifacts:
+    paths:
+      - public
+  extends:
+    - .publish-techdocs
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_PIPELINE_SOURCE != "schedule"
+  stage: build
+  variables:
+    ENTITY_KIND: Component
+    ENTITY_NAME: my-service
+    TECHDOCS_OUTPUT_DIR: ./public/

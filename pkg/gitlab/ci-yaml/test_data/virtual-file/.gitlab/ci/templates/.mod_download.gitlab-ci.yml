@@ -1,0 +1,9 @@
+.mod_download:
+  before_script:
+    - go mod download
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - ${CACHE_DIR}
+      - ${GOPATH}
+    policy: pull-push

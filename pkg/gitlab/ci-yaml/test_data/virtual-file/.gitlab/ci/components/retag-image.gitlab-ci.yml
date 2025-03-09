@@ -1,0 +1,8 @@
+retag-image:
+  stage: release
+  image: registry.example.com/crane
+  variables:
+    CONTAINER_IMAGE: registry.example.com/my-service
+  script:
+    - crane tag ${CONTAINER_IMAGE}:${CI_COMMIT_SHA} $CI_COMMIT_TAG
+    - crane tag ${CONTAINER_IMAGE}:${CI_COMMIT_SHA} latest
