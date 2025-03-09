@@ -1,0 +1,2 @@
+include:
+  - local: test.yml
