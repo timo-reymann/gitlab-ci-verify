@@ -1,0 +1,12 @@
+include:
+  - local: test.yml
+  - project: 'my-group/my-project'
+    file: '/templates/.gitlab-ci-template.yml'
+  - project: 'my-group/my-subgroup/my-project-2'
+    file:
+      - '/templates/.builds.yml'
+      - '/templates/.tests.yml'
+  - test1.yml
+  - component: $CI_SERVER_FQDN/my-org/security-components/secret-detection@1.0
+  - template: Workflows/MergeRequest-Pipelines.gitlab-ci.yml
+  - remote: 'https://gitlab.com/example-project/-/raw/main/.gitlab-ci.yml'
