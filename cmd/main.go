@@ -121,11 +121,11 @@ func setupCheckInput(c *cli.Configuration, pwd string) (error, checks.CheckInput
 	handleErr(err)
 
 	logging.Verbose("load and parse YAML")
-	ciYaml, err := checks.NewCiYaml(ciYamlContent)
+	ciYaml, err := ciyaml.NewCiYamlFile(ciYamlContent)
 	handleErr(err)
 
 	var lintRes *ciyaml.VerificationResultWithRemoteInfo
-	var mergedCiYaml *checks.CiYaml
+	var mergedCiYaml *ciyaml.CiYamlFile
 
 	if c.IsCIEnv() && !c.NoLintAPICallInCi {
 		logging.Verbose("get remote urls")
@@ -138,7 +138,7 @@ func setupCheckInput(c *cli.Configuration, pwd string) (error, checks.CheckInput
 		logging.Verbose("validate ci file against gitlab api")
 		lintRes, err = ciyaml.GetFirstValidationResult(remoteInfos, c.GitlabToken, c.GitlabBaseUrlOverwrite(), ciYamlContent, 3*time.Second)
 		handleErr(err)
-		mergedCiYaml, err = checks.NewCiYaml([]byte(lintRes.LintResult.MergedYaml))
+		mergedCiYaml, err = ciyaml.NewCiYamlFile([]byte(lintRes.LintResult.MergedYaml))
 		handleErr(err)
 	}
 

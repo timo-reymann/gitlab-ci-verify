@@ -2,17 +2,18 @@ package checks
 
 import (
 	"github.com/google/go-cmp/cmp"
+	ciyaml "github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/ci-yaml"
 	"os"
 	"path"
 	"testing"
 )
 
-func NewCiYamlFromFile(t *testing.T, fileName string) *CiYaml {
+func NewCiYamlFromFile(t *testing.T, fileName string) *ciyaml.CiYamlFile {
 	content, err := os.ReadFile(path.Join(".", fileName))
 	if err != nil {
 		t.Fatal(err)
 	}
-	ciYaml, err := NewCiYaml(content)
+	ciYaml, err := ciyaml.NewCiYamlFile(content)
 	if err != nil {
 		t.Fatal(err)
 	}

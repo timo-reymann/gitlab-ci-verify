@@ -2,6 +2,7 @@ package checks
 
 import (
 	"errors"
+	ciyaml "github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/ci-yaml"
 	"testing"
 )
 
@@ -122,7 +123,7 @@ func TestRunChecksInParallel(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			ciYaml, _ := NewCiYaml([]byte(``))
+			ciYaml, _ := ciyaml.NewCiYamlFile([]byte(``))
 			findingsChan := RunChecksInParallel(tc.checks, CheckInput{
 				CiYaml: ciYaml,
 			}, func(err error) {
