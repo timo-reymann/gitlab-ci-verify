@@ -26,8 +26,7 @@ func NewCiYamlFile(content []byte) (*CiYamlFile, error) {
 	}
 
 	var parsed map[string]any
-	err = doc.Decode(&parsed)
-	if err != nil {
+	if err = doc.Decode(&parsed); err != nil {
 		return nil, err
 	}
 
