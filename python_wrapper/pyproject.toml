@@ -25,7 +25,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-    "setuptools==75.*",
+    "setuptools==76.*",
     "setuptools-scm==8.*",
     "twine==6.1.*",
     "wheel==0.45.*",
