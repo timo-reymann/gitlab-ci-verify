@@ -1,3 +1,10 @@
+## [1.2.11](https://github.com/timo-reymann/gitlab-ci-verify/compare/v1.2.10...v1.2.11) (2025-03-11)
+
+
+### Bug Fixes
+
+* **deps:** update dependency setuptools to v76 ([19de2c8](https://github.com/timo-reymann/gitlab-ci-verify/commit/19de2c8cb443d9f9730f327a0f91d3820b01e14d))
+
 ## [1.2.10](https://github.com/timo-reymann/gitlab-ci-verify/compare/v1.2.9...v1.2.10) (2025-02-28)
 
 
