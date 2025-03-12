@@ -1,6 +1,7 @@
 package ci_yaml
 
 import (
+	"bytes"
 	formatconversion "github.com/timo-reymann/gitlab-ci-verify/internal/format-conversion"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/ci-yaml/includes"
 	"gopkg.in/yaml.v3"
@@ -26,7 +27,10 @@ func NewCiYamlFile(content []byte) (*CiYamlFile, error) {
 	}
 
 	var parsed map[string]any
-	if err = doc.Decode(&parsed); err != nil {
+	decoder := yaml.NewDecoder(bytes.NewBuffer(content))
+	decoder.UniqueKeys(false)
+
+	if err = decoder.Decode(&parsed); err != nil {
 		return nil, err
 	}
 
