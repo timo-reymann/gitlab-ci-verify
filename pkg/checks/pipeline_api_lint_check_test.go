@@ -103,7 +103,7 @@ func TestPipelineLintApiCheck_Run(t *testing.T) {
 			ciValidateMockServer := mockCiValidate(tc.lintResult)
 
 			_ = os.Chdir(projectRoot)
-			ciYaml, err := ciyaml.NewCiYamlFile([]byte(``))
+			ciYaml, err := ciyaml.NewCiYamlFile([]byte(`{}`))
 			if err != nil {
 				t.Fatal(err)
 			}
