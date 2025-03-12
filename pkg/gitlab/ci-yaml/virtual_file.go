@@ -66,6 +66,8 @@ func CreateVirtualCiYamlFile(projectRoot string, entryFilePath string, entryFile
 		line += includeLineCount + 1
 	}
 
+	// TODO Add joined includes to end
+
 	combinedCiYaml, err := NewCiYamlFile(combined.Bytes())
 	if err != nil {
 		return nil, err
