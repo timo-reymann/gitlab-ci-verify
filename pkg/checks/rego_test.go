@@ -3,7 +3,7 @@ package checks
 import (
 	"encoding/json"
 	"github.com/timo-reymann/gitlab-ci-verify/internal/rego_policies"
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/cli"
+	"path"
 	"testing"
 
 	"github.com/open-policy-agent/opa/v1/rego"
@@ -205,12 +205,7 @@ func TestQueryRegoForFindings(t *testing.T) {
 		t.Fatalf("failed to load rego bundle: %s", err)
 	}
 
-	input := &CheckInput{
-		CiYaml:        NewCiYamlFromFile(t, "test_data/ci_yamls/singleBuild.yml"),
-		MergedCiYaml:  NewCiYamlFromFile(t, "test_data/ci_yamls/singleBuild.yml"),
-		Configuration: &cli.Configuration{},
-	}
-
+	input := createCheckInput(t, NewCiYamlFromFile(t, path.Join("test_data", "ci_yamls", "singleBuild.yml")), ".", "singleBuild.yml")
 	results, err := queryManagerForFindings(rpm, input)
 	if err != nil {
 		t.Fatalf("queryManagerForFindings failed: %s", err)

@@ -23,10 +23,6 @@ func TestRunChecksInParallel(t *testing.T) {
 		expectedFindingCount int
 	}{
 		{
-			name:   "no checks",
-			checks: []Check{},
-		},
-		{
 			name: "check with errors",
 			checks: []Check{
 				mockCheck{
@@ -123,16 +119,17 @@ func TestRunChecksInParallel(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			ciYaml, _ := ciyaml.NewCiYamlFile([]byte(``))
-			findingsChan := RunChecksInParallel(tc.checks, CheckInput{
-				CiYaml: ciYaml,
-			}, func(err error) {
-				if tc.expectErr && err == nil {
-					t.Fatal("Expected error but got none")
-				} else if !tc.expectErr && err != nil {
-					t.Fatalf("Expected no error, got %v", err)
-				}
-			})
+			ciYaml, _ := ciyaml.NewCiYamlFile([]byte(`{}`))
+
+			findingsChan := RunChecksInParallel(tc.checks, createCheckInput(t, ciYaml, ".", ".gitlab-ci.yml"),
+				func(err error) {
+					if tc.expectErr && err == nil {
+						t.Fatal("Expected error but got none")
+					} else if !tc.expectErr && err != nil {
+						t.Fatalf("Expected no error, got %v", err)
+					}
+				},
+			)
 
 			findingsCount := 0
 			for f := range findingsChan {

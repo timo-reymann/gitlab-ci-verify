@@ -21,7 +21,7 @@ func queryManagerForFindings(rpm *rego_policies.RegoPolicyManager, i *CheckInput
 			return nil, err
 		}
 
-		line := yamlpathutils.PathToFirstLineNumber(i.CiYaml.ParsedYamlDoc, yamlpathutils.MustPath(yamlpath.NewPath(yamlPathVal)))
+		line := yamlpathutils.PathToFirstLineNumber(i.VirtualCiYaml.Combined.ParsedYamlDoc, yamlpathutils.MustPath(yamlpath.NewPath(yamlPathVal)))
 		val, err := ast.InterfaceToValue(line)
 		if err != nil {
 			return nil, err
@@ -45,7 +45,7 @@ func queryManagerForFindings(rpm *rego_policies.RegoPolicyManager, i *CheckInput
 
 	return query.Eval(ctx, rego.EvalInput(
 		map[string]any{
-			"yaml":       &i.CiYaml.ParsedYamlMap,
+			"yaml":       &i.VirtualCiYaml.Combined.ParsedYamlMap,
 			"mergedYaml": mergedCiYaml,
 		},
 	))
