@@ -24,5 +24,5 @@ func (r BundleCheck) Run(i *CheckInput) ([]CheckFinding, error) {
 		return nil, err
 	}
 
-	return parseResults(r.BundlePath, results)
+	return parseResults(i, r.BundlePath, results)
 }
