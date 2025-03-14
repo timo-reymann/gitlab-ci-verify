@@ -3,6 +3,7 @@ package checks
 import (
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/cli"
 	ciyaml "github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/ci-yaml"
+	"github.com/timo-reymann/gitlab-ci-verify/pkg/location"
 )
 
 type CheckInput struct {
@@ -23,4 +24,9 @@ func (c *CheckInput) HasLintAPIResult() bool {
 
 func (c *CheckInput) CanProvideMergedYaml() bool {
 	return c.LintAPIResult != nil
+}
+
+func (c *CheckInput) ResolveLocation(line int) *location.Location {
+	_, loc := c.VirtualCiYaml.Resolve(line)
+	return loc
 }
