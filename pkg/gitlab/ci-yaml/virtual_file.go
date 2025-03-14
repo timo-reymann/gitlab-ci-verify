@@ -34,7 +34,7 @@ func (v *VirtualCiYamlFile) Resolve(line int) (*VirtualCiYamlFilePart, *location
 	}
 
 	if part != nil && part.StartLine <= line && part.EndLine >= line {
-		return v.Parts[idx-1], location.NewLocation(part.Path, line-part.StartLine)
+		return part, location.NewLocation(part.Path, line-part.StartLine)
 	}
 
 	return nil, nil
@@ -53,7 +53,14 @@ func CreateVirtualCiYamlFile(projectRoot string, entryFilePath string, entryFile
 	line := 0
 	entryLineCount := bytes.Count(entryFile.FileContent, []byte("\n"))
 	combined := bytes.NewBuffer(entryFile.FileContent)
-	line += entryLineCount + 1
+	virtualFile.Parts = append(virtualFile.Parts, &VirtualCiYamlFilePart{
+		CiYamlFile: entryFile,
+		Path:       entryFilePath,
+		StartLine:  1,
+		EndLine:    entryLineCount + 2,
+	})
+	combined.Write([]byte("\n"))
+	line += entryLineCount + 2
 
 	addedIncludePaths := make([]string, 0)
 	for _, uniqueLocalInclude := range uniqueLocalIncludes {
@@ -71,7 +78,8 @@ func CreateVirtualCiYamlFile(projectRoot string, entryFilePath string, entryFile
 
 		virtualFile.Parts = append(virtualFile.Parts, part)
 		combined.Write(part.CiYamlFile.FileContent)
-		line += part.EndLine + 1
+		combined.Write([]byte("\n"))
+		line += part.EndLine + 2
 	}
 
 	combined.Write([]byte("\n# Auto generated include block\n"))
