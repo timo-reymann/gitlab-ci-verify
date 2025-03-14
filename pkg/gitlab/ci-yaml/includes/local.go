@@ -40,7 +40,7 @@ func (l *LocalInclude) ResolvePath(projectDir, srcFile string) string {
 
 	// Relative paths should be resolved from the source file that includes them
 	srcDir := path.Dir(srcFile)
-	return path.Join(srcDir, l.Path)
+	return path.Join(projectDir, srcDir, l.Path)
 }
 
 func NewLocalInclude(node *yaml.Node, path string) *LocalInclude {
