@@ -1,0 +1,5 @@
+trigger-argoapps-renovate:
+  trigger:
+    project: my-org/platform/platform-argo-apps
+    strategy: depend
+  stage: deploy
