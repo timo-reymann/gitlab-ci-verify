@@ -35,7 +35,7 @@ func TestCheckFinding_Location(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if loc != "/test.yml:20" {
+	if loc.File != "/test.yml" && loc.Line != 20 {
 		t.Fatal("Location generation does not work")
 	}
 }
