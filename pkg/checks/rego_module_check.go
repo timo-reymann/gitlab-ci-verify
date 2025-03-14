@@ -21,5 +21,5 @@ func (m ModuleCheck) Run(i *CheckInput) ([]CheckFinding, error) {
 		return nil, err
 	}
 
-	return parseResults(m.ModulePath, results)
+	return parseResults(i, m.ModulePath, results)
 }

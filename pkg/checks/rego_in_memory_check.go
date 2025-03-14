@@ -21,5 +21,5 @@ func (im InMemoryCheck) Run(i *CheckInput) ([]CheckFinding, error) {
 		return nil, err
 	}
 
-	return parseResults("in-memory", results)
+	return parseResults(i, "in-memory", results)
 }
