@@ -1,0 +1,4 @@
+include:
+  - local: /includes/ci/components/lint.gitlab-ci.yml
+  - local: /includes/ci/components/test.gitlab-ci.yml
+  - local: /includes/ci/components/build.gitlab-ci.yml
