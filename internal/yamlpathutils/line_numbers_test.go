@@ -29,12 +29,12 @@ root:
 		{
 			name:     "Match multiple nodes",
 			yamlPath: "$.root.child1.*",
-			expected: []int{3, 4}, // Lines corresponding to key1 and key2
+			expected: []int{4, 5}, // Lines corresponding to key1 and key2
 		},
 		{
 			name:     "Match single node",
 			yamlPath: "$.root.child2.key3",
-			expected: []int{6}, // Line corresponding to key3
+			expected: []int{7}, // Line corresponding to key3
 		},
 		{
 			name:     "Invalid path",
@@ -87,12 +87,12 @@ root:
 		{
 			name:     "Match multiple nodes",
 			yamlPath: "$.root.child1.*",
-			expected: 3, // First line corresponding to key1
+			expected: 4, // First line corresponding to key1
 		},
 		{
 			name:     "Match single node",
 			yamlPath: "$.root.child2.key3",
-			expected: 6, // Line corresponding to key3
+			expected: 7, // Line corresponding to key3
 		},
 		{
 			name:     "Invalid path",
