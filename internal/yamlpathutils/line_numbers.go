@@ -14,7 +14,7 @@ func PathToLineNumbers(node *yaml.Node, path *yamlpath.Path) []int {
 
 	lines := make([]int, len(nodes))
 	for idx, n := range nodes {
-		lines[idx] = n.Line - 1
+		lines[idx] = n.Line
 	}
 
 	return lines
