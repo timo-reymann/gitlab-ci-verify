@@ -1,0 +1,23 @@
+build:
+  stage: build
+  extends: .mod_download
+  variables:
+    KUBERNETES_CPU_REQUEST: 4
+    KUBERNETES_CPU_LIMIT: 8
+    VERSION: $CI_COMMIT_SHA
+  script:
+    - make dist VERSION="${VERSION}" -j 4
+  artifacts:
+    paths:
+      - bin/
+
+build-image:
+  stage: build-image
+  extends: .buildkit
+  needs:
+    - job: build
+      artifacts: true
+  variables:
+    DOCKER_TAG: ${CI_COMMIT_SHA}
+    CONTAINER_IMAGE: registry.example.com/my-service
+    BUILDKIT_IMAGE: ${CONTAINER_IMAGE}:${DOCKER_TAG},${CONTAINER_IMAGE}:latest

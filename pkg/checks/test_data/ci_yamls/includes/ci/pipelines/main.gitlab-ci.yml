@@ -1,0 +1,9 @@
+include:
+  - project: deepl/ops/ci-cd-infrastructure/gitlab-ci-lib
+    file:
+      - /templates/.auto-releaser.yml
+  - local: /includes/ci/components/techdocs.gitlab-ci.yml
+  - local: /includes/ci/components/build.gitlab-ci.yml
+  - local: /includes/ci/components/test.gitlab-ci.yml
+release:
+  extends: .auto-releaser
