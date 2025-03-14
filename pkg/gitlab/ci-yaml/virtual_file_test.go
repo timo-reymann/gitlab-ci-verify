@@ -27,6 +27,7 @@ func TestCreateVirtualCiYamlFile(t *testing.T) {
 	}
 
 	expectedParts := []string{
+		projectRoot + "/.gitlab-ci.yml",
 		projectRoot + "/.gitlab/ci/templates/.mod_download.gitlab-ci.yml",
 		projectRoot + "/.gitlab/ci/pipelines/release.gitlab-ci.yml",
 		projectRoot + "/.gitlab/ci/pipelines/merge_request.gitlab-ci.yml",
