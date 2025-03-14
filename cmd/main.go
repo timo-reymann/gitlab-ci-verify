@@ -66,11 +66,11 @@ func Execute() {
 	err = findingsFormatter.Start()
 	handleErr(err)
 
-	err, checkInput := setupCheckInput(c, projectRoot)
+	checkInput, err := setupCheckInput(c, projectRoot)
 	runChecks(checkInput, c, severity, findingsFormatter)
 }
 
-func runChecks(checkInput checks.CheckInput, c *cli.Configuration, severity int, findingsFormatter formatter.FindingsFormatter) {
+func runChecks(checkInput *checks.CheckInput, c *cli.Configuration, severity int, findingsFormatter formatter.FindingsFormatter) {
 	checkResultChans := checks.RunChecksInParallel(checks.AllChecks(), checkInput, func(err error) {
 		handleErr(err)
 	})
@@ -108,7 +108,7 @@ func runChecks(checkInput checks.CheckInput, c *cli.Configuration, severity int,
 	}
 }
 
-func setupCheckInput(c *cli.Configuration, pwd string) (error, checks.CheckInput) {
+func setupCheckInput(c *cli.Configuration, pwd string) (*checks.CheckInput, error) {
 	var err error
 
 	logging.Verbose("read gitlab ci file ", c.GitLabCiFile)
@@ -142,11 +142,16 @@ func setupCheckInput(c *cli.Configuration, pwd string) (error, checks.CheckInput
 		handleErr(err)
 	}
 
-	checkInput := checks.CheckInput{
-		CiYaml:        ciYaml,
+	virtual, err := ciyaml.CreateVirtualCiYamlFile(pwd, c.GitLabCiFile, ciYaml)
+	if err != nil {
+		return nil, err
+	}
+
+	checkInput := &checks.CheckInput{
+		VirtualCiYaml: virtual,
 		Configuration: c,
 		LintAPIResult: lintRes,
 		MergedCiYaml:  mergedCiYaml,
 	}
-	return err, checkInput
+	return checkInput, err
 }

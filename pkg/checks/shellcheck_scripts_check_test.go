@@ -1,7 +1,6 @@
 package checks
 
 import (
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/cli"
 	"path"
 	"testing"
 )
@@ -96,10 +95,8 @@ func TestShellScriptCheck_Run(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			VerifyFindings(t, tc.expectedFindings, CheckMustSucceed(c.Run(&CheckInput{
-				CiYaml:        NewCiYamlFromFile(t, path.Join("test_data", "ci_yamls", tc.file)),
-				Configuration: &cli.Configuration{},
-			})))
+			checkInput := createCheckInput(t, NewCiYamlFromFile(t, path.Join("test_data", "ci_yamls", tc.file)), ".", tc.file)
+			VerifyFindings(t, tc.expectedFindings, CheckMustSucceed(c.Run(checkInput)))
 		})
 	}
 }
