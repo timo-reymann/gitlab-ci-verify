@@ -3,6 +3,7 @@ package checks
 import (
 	"encoding/json"
 	"github.com/timo-reymann/gitlab-ci-verify/internal/rego_policies"
+	ci_yaml "github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/ci-yaml"
 	"path"
 	"testing"
 
@@ -182,7 +183,9 @@ func TestParseResults(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			checkFindings, err := parseResults("test.rego", tc.results)
+			checkFindings, err := parseResults(&CheckInput{
+				VirtualCiYaml: &ci_yaml.VirtualCiYamlFile{},
+			}, "test.rego", tc.results)
 			if (err != nil) != tc.expectError {
 				t.Fatalf("parseResults() error = %v, expectError %v", err, tc.expectError)
 			}

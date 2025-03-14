@@ -24,5 +24,5 @@ func (r RemoteBundleCheck) Run(i *CheckInput) ([]CheckFinding, error) {
 		return nil, err
 	}
 
-	return parseResults(r.BundleURL, results)
+	return parseResults(i, r.BundleURL, results)
 }

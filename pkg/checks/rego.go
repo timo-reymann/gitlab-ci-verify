@@ -51,7 +51,7 @@ func queryManagerForFindings(rpm *rego_policies.RegoPolicyManager, i *CheckInput
 	))
 }
 
-func convertToCheckFinding(sourcePath string, raw map[string]any) (*CheckFinding, error) {
+func convertToCheckFinding(checkInput *CheckInput, sourcePath string, raw map[string]any) (*CheckFinding, error) {
 	convertErrs := make([]error, 0)
 
 	addErrIfNotOk := func(ok bool, field string, expectedType string) {
@@ -115,10 +115,18 @@ func convertToCheckFinding(sourcePath string, raw map[string]any) (*CheckFinding
 		convertErrs = append(convertErrs, errors.New("severity is required"))
 	}
 
+	if cf.File == "" && cf.Line != -1 {
+		loc := checkInput.ResolveLocation(cf.Line)
+		if loc != nil {
+			cf.File = loc.File
+			cf.Line = loc.Line
+		}
+	}
+
 	return &cf, errors.Join(convertErrs...)
 }
 
-func parseResults(regoPath string, results rego.ResultSet) ([]CheckFinding, error) {
+func parseResults(checkInput *CheckInput, regoPath string, results rego.ResultSet) ([]CheckFinding, error) {
 	parseErrs := make([]error, 0)
 	checkFindings := make([]CheckFinding, 0)
 
@@ -132,7 +140,7 @@ func parseResults(regoPath string, results rego.ResultSet) ([]CheckFinding, erro
 					return nil, fmt.Errorf("finding is not of map type: %v", finding)
 				}
 
-				checkFinding, err := convertToCheckFinding(regoPath, fields)
+				checkFinding, err := convertToCheckFinding(checkInput, regoPath, fields)
 				if err != nil {
 					parseErrs = append(parseErrs, err)
 				}
