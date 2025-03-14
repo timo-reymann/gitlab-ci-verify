@@ -10,7 +10,7 @@ import (
 )
 
 func NewCiYamlFromFile(t *testing.T, fileName string) *ciyaml.CiYamlFile {
-	content, err := os.ReadFile(path.Join(".", fileName))
+	content, err := os.ReadFile(path.Join(fileName))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -42,7 +42,7 @@ func createCheckInput(t *testing.T, ciYaml *ciyaml.CiYamlFile, projectRoot, ciFi
 	}
 	return &CheckInput{
 		VirtualCiYaml: virtualCiYaml,
-		MergedCiYaml:  ciYaml,
+		MergedCiYaml:  virtualCiYaml.Combined,
 		Configuration: &cli.Configuration{},
 	}
 }
