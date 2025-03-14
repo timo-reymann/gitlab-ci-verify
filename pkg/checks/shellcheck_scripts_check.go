@@ -36,7 +36,7 @@ func (s ShellScriptCheck) Run(i *CheckInput) ([]CheckFinding, error) {
 	defer shellChecker.Close()
 
 	var wg sync.WaitGroup
-	for jobWithScripts := range ci_yaml.ExtractScripts(i.CiYaml.ParsedYamlDoc) {
+	for jobWithScripts := range ci_yaml.ExtractScripts(i.VirtualCiYaml.Combined.ParsedYamlDoc) {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()

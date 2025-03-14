@@ -52,6 +52,7 @@ func TestPipelineLintApiCheck_Run(t *testing.T) {
 					Line:     -1,
 					Message:  "Pipeline is invalid",
 					Link:     "https://docs.gitlab.com/ee/ci/yaml",
+					File:     ".gitlab-ci.yml",
 				},
 			},
 		},
@@ -69,6 +70,7 @@ func TestPipelineLintApiCheck_Run(t *testing.T) {
 					Line:     -1,
 					Message:  "this bad",
 					Link:     "https://docs.gitlab.com/ee/ci/yaml",
+					File:     ".gitlab-ci.yml",
 				},
 			},
 		},
@@ -86,6 +88,7 @@ func TestPipelineLintApiCheck_Run(t *testing.T) {
 					Line:     -1,
 					Message:  "this bad",
 					Link:     "https://docs.gitlab.com/ee/ci/yaml",
+					File:     ".gitlab-ci.yml",
 				},
 			},
 		},
@@ -107,19 +110,20 @@ func TestPipelineLintApiCheck_Run(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			VerifyFindings(t, tc.expectedFindings, CheckMustSucceed(c.Run(&CheckInput{
-				CiYaml: ciYaml,
-				LintAPIResult: &ciyaml.VerificationResultWithRemoteInfo{
-					RemoteInfo: &git.GitlabRemoteUrlInfo{
-						Hostname:       ciValidateMockServer.URL,
-						ClonedViaHttps: true,
-					},
-					LintResult: &tc.lintResult,
+
+			checkInput := createCheckInput(t, ciYaml, projectRoot, ".gitlab-ci.yml")
+			checkInput.LintAPIResult = &ciyaml.VerificationResultWithRemoteInfo{
+				RemoteInfo: &git.GitlabRemoteUrlInfo{
+					Hostname:       ciValidateMockServer.URL,
+					ClonedViaHttps: true,
 				},
-				Configuration: &cli.Configuration{
-					NoLintAPICallInCi: false,
-				},
-			})))
+				LintResult: &tc.lintResult,
+			}
+			checkInput.Configuration = &cli.Configuration{
+				NoLintAPICallInCi: false,
+			}
+
+			VerifyFindings(t, tc.expectedFindings, CheckMustSucceed(c.Run(checkInput)))
 		})
 		_ = os.Setenv("CI", "")
 	}
