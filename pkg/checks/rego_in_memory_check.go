@@ -9,10 +9,6 @@ type InMemoryCheck struct {
 	RegoContent string
 }
 
-func (im InMemoryCheck) convertToCheckFinding(raw map[string]any) (*CheckFinding, error) {
-	return convertToCheckFinding("memory", raw)
-}
-
 func (im InMemoryCheck) Run(i *CheckInput) ([]CheckFinding, error) {
 	rpm := rego_policies.NewRegoPolicyManager()
 
