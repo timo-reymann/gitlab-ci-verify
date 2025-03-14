@@ -2,8 +2,7 @@ package checks
 
 import (
 	"cmp"
-	"fmt"
-	"path/filepath"
+	"github.com/timo-reymann/gitlab-ci-verify/pkg/location"
 )
 
 var SeverityError = 0
@@ -24,13 +23,9 @@ func (cf *CheckFinding) SeverityName() string {
 	return SeverityLevelToName(cf.Severity)
 }
 
-func (cf *CheckFinding) Location() (string, error) {
-	absPath, err := filepath.Abs(cf.File)
-	if err != nil {
-		return "", err
-	}
-
-	return fmt.Sprintf("%s:%d", absPath, cf.Line), nil
+func (cf *CheckFinding) Location() (*location.Location, error) {
+	loc := location.NewLocation(cf.File, cf.Line)
+	return loc.Absolute()
 }
 
 func (cf *CheckFinding) Compare(o CheckFinding) int {
