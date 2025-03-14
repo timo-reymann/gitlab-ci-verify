@@ -10,10 +10,6 @@ type BundleCheck struct {
 	BundlePath string
 }
 
-func (r BundleCheck) convertToCheckFinding(raw map[string]any) (*CheckFinding, error) {
-	return convertToCheckFinding(r.BundlePath, raw)
-}
-
 func (r BundleCheck) Run(i *CheckInput) ([]CheckFinding, error) {
 	rpm := rego_policies.NewRegoPolicyManager()
 

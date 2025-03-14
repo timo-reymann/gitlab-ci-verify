@@ -9,10 +9,6 @@ type ModuleCheck struct {
 	ModulePath string
 }
 
-func (m ModuleCheck) convertToCheckFinding(raw map[string]any) (*CheckFinding, error) {
-	return convertToCheckFinding(m.ModulePath, raw)
-}
-
 func (m ModuleCheck) Run(i *CheckInput) ([]CheckFinding, error) {
 	rpm := rego_policies.NewRegoPolicyManager()
 
