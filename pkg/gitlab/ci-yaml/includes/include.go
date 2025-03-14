@@ -65,7 +65,7 @@ func parseIncludeNode(includeNode *yaml.Node) []Include {
 
 func parseComplexInclude(node *yaml.Node, definition map[string]any) Include {
 	if local, isLocal := definition["local"]; isLocal {
-		return NewLocalInclude(nil, local.(string))
+		return NewLocalInclude(node, local.(string))
 	}
 
 	if project, isProject := definition["project"]; isProject {
