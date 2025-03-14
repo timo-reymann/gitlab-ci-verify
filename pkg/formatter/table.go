@@ -34,6 +34,9 @@ func (t *TableFindingsFormatter) Start() error {
 
 func (t *TableFindingsFormatter) Print(finding *checks.CheckFinding) error {
 	location, err := finding.Location()
+	if err != nil {
+		return err
+	}
 
 	_, err = fmt.Fprintln(t.tabWriter, strings.Join([]string{
 		formatSeverity(finding),
@@ -41,7 +44,7 @@ func (t *TableFindingsFormatter) Print(finding *checks.CheckFinding) error {
 		strconv.Itoa(finding.Line),
 		finding.Message,
 		finding.Link,
-		location,
+		location.String(),
 	}, "\t"))
 	return err
 }
