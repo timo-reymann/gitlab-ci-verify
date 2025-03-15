@@ -135,17 +135,11 @@ func parseResults(checkInput *CheckInput, regoPath string, results rego.ResultSe
 		for _, expression := range result.Expressions {
 			findings := expression.Value.([]any)
 			for _, finding := range findings {
-				fields, ok := finding.(map[string]interface{})
-				if !ok {
-					return nil, fmt.Errorf("finding is not of map type: %v", finding)
-				}
-
-				checkFinding, err := convertToCheckFinding(checkInput, regoPath, fields)
-				if err != nil {
-					parseErrs = append(parseErrs, err)
-				}
-				if checkFinding != nil {
+				checkFinding, err := parseFinding(checkInput, regoPath, finding)
+				if err == nil {
 					checkFindings = append(checkFindings, *checkFinding)
+				} else {
+					parseErrs = append(parseErrs, err)
 				}
 			}
 		}
@@ -159,4 +153,13 @@ func parseResults(checkInput *CheckInput, regoPath string, results rego.ResultSe
 	}
 
 	return checkFindings, err
+}
+
+func parseFinding(checkInput *CheckInput, regoPath string, raw any) (*CheckFinding, error) {
+	fields, ok := raw.(map[string]interface{})
+	if !ok {
+		return nil, fmt.Errorf("finding is not of map type: %v", raw)
+	}
+
+	return convertToCheckFinding(checkInput, regoPath, fields)
 }
