@@ -297,6 +297,7 @@ To get started please read the [Contribution Guidelines](./CONTRIBUTING.md).
 ### Requirements
 
 - [Go](https://go.dev/doc/install)
+- [npm](https://www.npmjs.com/get-npm)
 - [GNU make](https://www.gnu.org/software/make/)
 - [Python 3.10+](https://www.python.org/downloads/)
 
