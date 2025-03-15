@@ -30,6 +30,7 @@ func (h httpLogger) Warn(msg string, keysAndValues ...interface{}) {
 func NewRetryableClient() *http.Client {
 	retryHttpClient := retryablehttp.NewClient()
 	retryHttpClient.RetryMax = 3
+	retryHttpClient.RetryWaitMin = 200 * time.Millisecond
 	retryHttpClient.HTTPClient.Timeout = 5 * time.Second
 	retryHttpClient.Logger = &httpLogger{}
 	return retryHttpClient.StandardClient()
