@@ -2,10 +2,12 @@ package api
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"github.com/timo-reymann/gitlab-ci-verify/internal/format-conversion"
 	"github.com/timo-reymann/gitlab-ci-verify/internal/httputils"
 	"github.com/timo-reymann/gitlab-ci-verify/internal/logging"
+	"io"
 	"net/http"
 	"net/url"
 	"reflect"
@@ -66,6 +68,9 @@ func (g *Client) LintCiYaml(ctx context.Context, projectSlug string, ciYaml []by
 
 	var lintResult = &CiLintResult{}
 	if err = res.UnmarshalJson(lintResult); err != nil {
+		if err == io.EOF {
+			err = errors.New("unable to read response from lint API")
+		}
 		return nil, err
 	}
 
