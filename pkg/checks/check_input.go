@@ -1,7 +1,7 @@
 package checks
 
 import (
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/cli"
+	"github.com/timo-reymann/gitlab-ci-verify/internal/cli"
 	ciyaml "github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/ci-yaml"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/location"
 )

@@ -2,7 +2,7 @@ package checks
 
 import (
 	"github.com/google/go-cmp/cmp"
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/cli"
+	"github.com/timo-reymann/gitlab-ci-verify/internal/cli"
 	ciyaml "github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/ci-yaml"
 	"os"
 	"path"

@@ -3,10 +3,10 @@ package cmd
 import (
 	"errors"
 	"fmt"
+	cli2 "github.com/timo-reymann/gitlab-ci-verify/internal/cli"
 	"github.com/timo-reymann/gitlab-ci-verify/internal/logging"
 	_ "github.com/timo-reymann/gitlab-ci-verify/internal/shellcheck"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/checks"
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/cli"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/formatter"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/git"
 	_ "github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/ci-yaml"
@@ -17,7 +17,7 @@ import (
 )
 
 func handleErr(err error) {
-	if errors.Is(err, cli.ErrAbort) {
+	if errors.Is(err, cli2.ErrAbort) {
 		os.Exit(0)
 	}
 
@@ -29,7 +29,7 @@ func handleErr(err error) {
 
 func Execute() {
 	logging.Verbose("create and parse configuration")
-	c := cli.NewConfiguration()
+	c := cli2.NewConfiguration()
 	handleErr(c.Parse())
 
 	logging.Verbose("get current working directory")
@@ -70,7 +70,7 @@ func Execute() {
 	runChecks(checkInput, c, severity, findingsFormatter)
 }
 
-func runChecks(checkInput *checks.CheckInput, c *cli.Configuration, severity int, findingsFormatter formatter.FindingsFormatter) {
+func runChecks(checkInput *checks.CheckInput, c *cli2.Configuration, severity int, findingsFormatter formatter.FindingsFormatter) {
 	checkResultChans := checks.RunChecksInParallel(checks.AllChecks(), checkInput, func(err error) {
 		handleErr(err)
 	})
@@ -108,13 +108,13 @@ func runChecks(checkInput *checks.CheckInput, c *cli.Configuration, severity int
 	}
 }
 
-func setupCheckInput(c *cli.Configuration, pwd string) (*checks.CheckInput, error) {
+func setupCheckInput(c *cli2.Configuration, pwd string) (*checks.CheckInput, error) {
 	var err error
 
 	logging.Verbose("read gitlab ci file ", c.GitLabCiFile)
 	var ciYamlContent []byte
 	if c.GitLabCiFile == "-" {
-		ciYamlContent, err = cli.ReadStdinPipe()
+		ciYamlContent, err = cli2.ReadStdinPipe()
 	} else {
 		ciYamlContent, err = os.ReadFile(c.GitLabCiFile)
 	}

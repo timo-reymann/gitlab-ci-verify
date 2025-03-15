@@ -2,7 +2,7 @@ package checks
 
 import (
 	"encoding/json"
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/cli"
+	"github.com/timo-reymann/gitlab-ci-verify/internal/cli"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/git"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/api"
 	ciyaml "github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/ci-yaml"
