@@ -11,7 +11,6 @@ import (
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/git"
 	_ "github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/ci-yaml"
 	ciyaml "github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/ci-yaml"
-	"log"
 	"os"
 	"slices"
 	"time"
@@ -23,7 +22,7 @@ func handleErr(err error) {
 	}
 
 	if err != nil {
-		log.Println(err)
+		println("ERR: " + err.Error())
 		os.Exit(2)
 	}
 }
