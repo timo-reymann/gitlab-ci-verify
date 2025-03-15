@@ -1,3 +1,34 @@
+## [2.0.0](https://github.com/timo-reymann/gitlab-ci-verify/compare/v1.2.11...v2.0.0) (2025-03-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* Migrate check input to virtual ci yaml
+
+### Features
+
+* Add rego file and line resolve ([daf90e3](https://github.com/timo-reymann/gitlab-ci-verify/commit/daf90e3c89d57aff578dd27231eb2469236c439f))
+* Add resolve for virtual file ([0d8076e](https://github.com/timo-reymann/gitlab-ci-verify/commit/0d8076e12c6c0a42b1443ffa5b87a29cfad256ad))
+* add resolve util to check input ([ba27491](https://github.com/timo-reymann/gitlab-ci-verify/commit/ba27491cacaf8e6313b27613f9ac0d744347c32d))
+* Add virtual ci yaml file ([c7d7c16](https://github.com/timo-reymann/gitlab-ci-verify/commit/c7d7c16e706bb2aac3e08f6c7cc407e00df352ea))
+* **includes:** Add base code ([5efc251](https://github.com/timo-reymann/gitlab-ci-verify/commit/5efc251dda13ef441b0f98e576808f1979da0f0e))
+* **includes:** Add component support ([7fe8614](https://github.com/timo-reymann/gitlab-ci-verify/commit/7fe8614dac834b5ab71af237d819df065b4ed600))
+* **includes:** Add local support ([ca441f0](https://github.com/timo-reymann/gitlab-ci-verify/commit/ca441f0877b21e8df16d40575dcdddd2034a50b7))
+* **includes:** Add project support ([8bba82f](https://github.com/timo-reymann/gitlab-ci-verify/commit/8bba82f5f7cad84cd3641528879ebaafb87641d4))
+* **includes:** Add remote support ([c09a0b6](https://github.com/timo-reymann/gitlab-ci-verify/commit/c09a0b6284e14dd4e3ed551a3c09b7141c86ea57))
+* **includes:** Add template support ([3322de3](https://github.com/timo-reymann/gitlab-ci-verify/commit/3322de31512b6c817d8d08157e1790ab115c3fcf))
+* Migrate check input to virtual ci yaml ([25d48a7](https://github.com/timo-reymann/gitlab-ci-verify/commit/25d48a75f377af9ce89cf240135a7fe634db12ac))
+* Use decoder with non unique keys for virtual ci file ([fd146bd](https://github.com/timo-reymann/gitlab-ci-verify/commit/fd146bd99abc249bc647804323e4c0580b864be0))
+
+
+### Bug Fixes
+
+* Adjust yamlpath line numbers ([5276daf](https://github.com/timo-reymann/gitlab-ci-verify/commit/5276dafc15a600f45a974974247d9789a7ce7e08))
+* Fix node attachment for local include ([20aa395](https://github.com/timo-reymann/gitlab-ci-verify/commit/20aa39520b7c22e3274a31ac10dcdb2d0b9dab88))
+* Fix virtual file appendix ([a33accb](https://github.com/timo-reymann/gitlab-ci-verify/commit/a33accb541c98db24ea8a140d888bfed786fab58))
+* Resolve ci yaml to project path ([d37f81d](https://github.com/timo-reymann/gitlab-ci-verify/commit/d37f81dfe827d6a30fec50892494da432b7dba9a))
+* Use combined file content for lint ([4b3ed30](https://github.com/timo-reymann/gitlab-ci-verify/commit/4b3ed30ee8950a97460ca833a53793ffb404e121))
+
 ## [1.2.11](https://github.com/timo-reymann/gitlab-ci-verify/compare/v1.2.10...v1.2.11) (2025-03-11)
 
 
