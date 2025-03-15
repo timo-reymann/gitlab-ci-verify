@@ -199,6 +199,8 @@ github.com/tchap/go-patricia/v2 v2.3.2 h1:xTHFutuitO2zqKAQ5rCROYgUb7Or/+IC3fts9/
 github.com/tchap/go-patricia/v2 v2.3.2/go.mod h1:VZRHKAb53DLaG+nA9EaYYiaEx6YztwDlLElMsnSHD4k=
 github.com/timo-reymann/go-yaml v1.0.1 h1:s4H6TuqRw7JCMmO45CISr6EW9BCngQJkb9CZvByPsbU=
 github.com/timo-reymann/go-yaml v1.0.1/go.mod h1:9Vq3yvyCFDFkqH2TEhDSioXkwK4T8+Ifwq50Z7BKy9U=
+github.com/timo-reymann/go-yaml v1.1.0 h1:2ocR8rG1yhfOYVtEPe1oLOgY5kZiHi1m6PfuwPyBFpc=
+github.com/timo-reymann/go-yaml v1.1.0/go.mod h1:1kYk2URY8hyyPFpMz7uh0vwo5vHYBPBoqNfwDkAMUT8=
 github.com/vmware-labs/yaml-jsonpath v0.3.2 h1:/5QKeCBGdsInyDCyVNLbXyilb61MXGi9NP674f9Hobk=
 github.com/vmware-labs/yaml-jsonpath v0.3.2/go.mod h1:U6whw1z03QyqgWdgXxvVnQ90zN1BWz5V+51Ewf8k+rQ=
 github.com/xanzy/ssh-agent v0.3.3 h1:+/15pJfg/RsTxqYcX6fHqOXZwwMP+2VyYWJeWM2qQFM=

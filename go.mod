@@ -53,6 +53,7 @@ require (
 	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/skeema/knownhosts v1.3.1 // indirect
 	github.com/tchap/go-patricia/v2 v2.3.2 // indirect
+	github.com/timo-reymann/go-yaml v1.0.1 // indirect
 	github.com/xanzy/ssh-agent v0.3.3 // indirect
 	github.com/xeipuuv/gojsonpointer v0.0.0-20190905194746-02993c407bfb // indirect
 	github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415 // indirect
@@ -70,4 +71,4 @@ require (
 	sigs.k8s.io/yaml v1.4.0 // indirect
 )
 
-replace gopkg.in/yaml.v3 => github.com/timo-reymann/go-yaml v1.0.1
+replace gopkg.in/yaml.v3 => github.com/timo-reymann/go-yaml v1.1.0
