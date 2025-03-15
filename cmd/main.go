@@ -67,6 +67,8 @@ func Execute() {
 	handleErr(err)
 
 	checkInput, err := setupCheckInput(c, projectRoot)
+	handleErr(err)
+	logging.Debug("Check input setup done ", fmt.Sprintf("virtualCiYaml=%s", checkInput.VirtualCiYaml.Combined.FileContent))
 	runChecks(checkInput, c, severity, findingsFormatter)
 }
 
