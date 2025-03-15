@@ -1,7 +1,7 @@
 Include resolution
 ==================
 
-The include resolution is the process of finding the file that is referenced by the `include` keyword.
+The include resolution is the process of finding the file that is referenced by the [`include` keyword](https://docs.gitlab.com/ci/yaml/includes/).
 
 ## Terminology
 
@@ -51,7 +51,7 @@ This also means that gitlab-ci-verify could include files for checking that are 
 
 ## No deep merge
 
-Gitlab CI allows deep merging of included files. This is not supported by gitlab-ci-verify.
+Gitlab CI uses [deep merging for included files](https://docs.gitlab.com/ci/yaml/includes/#merge-method-for-include). This is not supported by gitlab-ci-verify.
 
 For example, the following configuration would result in `key` being `value` in Gitlab CI, but `other_value` in
 gitlab-ci-verify:
