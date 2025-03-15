@@ -1,7 +1,6 @@
 package checks
 
 import (
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/cli"
 	"path"
 	"testing"
 )
@@ -23,6 +22,7 @@ func TestShellScriptCheck_Run(t *testing.T) {
 					Line:     4,
 					Message:  "[build:script:1] Double quote to prevent globbing and word splitting.",
 					Link:     "https://www.shellcheck.net/wiki/SC2086",
+					File:     "withScriptInfoFinding.yml",
 				},
 			},
 		},
@@ -36,6 +36,7 @@ func TestShellScriptCheck_Run(t *testing.T) {
 					Line:     4,
 					Message:  "[build:script:1] You can't have | between this redirection and the command it should apply to.",
 					Link:     "https://www.shellcheck.net/wiki/SC2189",
+					File:     "withScriptErrorFinding.yml",
 				},
 			},
 		},
@@ -49,6 +50,7 @@ func TestShellScriptCheck_Run(t *testing.T) {
 					Line:     4,
 					Message:  "[build:script:1] Globs don't work as operands in [ ]. Use a loop.",
 					Link:     "https://www.shellcheck.net/wiki/SC2202",
+					File:     "withScriptWarningFinding.yml",
 				},
 			},
 		},
@@ -62,6 +64,7 @@ func TestShellScriptCheck_Run(t *testing.T) {
 					Line:     4,
 					Message:  "[build:script:1] Use $(...) notation instead of legacy backticks `...`.",
 					Link:     "https://www.shellcheck.net/wiki/SC2006",
+					File:     "withStyleWarningFinding.yml",
 				},
 			},
 		},
@@ -80,7 +83,7 @@ func TestShellScriptCheck_Run(t *testing.T) {
 					Line:     4,
 					Message:  `[build:script:1] Parsing stopped here. Mismatched keywords or invalid parentheses?`,
 					Link:     "https://www.shellcheck.net/wiki/SC1070",
-					File:     "",
+					File:     "withScriptListItemContinuation.yml",
 				},
 				{
 					Severity: SeverityError,
@@ -88,7 +91,21 @@ func TestShellScriptCheck_Run(t *testing.T) {
 					Line:     4,
 					Message:  `[build:script:1] Unexpected tokens after compound command. Bad redirection or missing ;/&&/||/|?`,
 					Link:     "https://www.shellcheck.net/wiki/SC1141",
-					File:     "",
+					File:     "withScriptListItemContinuation.yml",
+				},
+			},
+		},
+		{
+			name: "Nested includes with findings",
+			file: "withNestedIncludesAndFindings.yml",
+			expectedFindings: []CheckFinding{
+				{
+					Severity: SeverityInfo,
+					Code:     "SC-2086",
+					Line:     3,
+					Message:  "[.mod_download:before_script:1] Double quote to prevent globbing and word splitting.",
+					Link:     "https://www.shellcheck.net/wiki/SC2086",
+					File:     "test_data/ci_yamls/includes/ci/templates/.mod_download.gitlab-ci.yml",
 				},
 			},
 		},
@@ -96,10 +113,8 @@ func TestShellScriptCheck_Run(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			VerifyFindings(t, tc.expectedFindings, CheckMustSucceed(c.Run(&CheckInput{
-				CiYaml:        NewCiYamlFromFile(t, path.Join("test_data", "ci_yamls", tc.file)),
-				Configuration: &cli.Configuration{},
-			})))
+			checkInput := createCheckInput(t, NewCiYamlFromFile(t, path.Join("test_data", "ci_yamls", tc.file)), path.Join("test_data", "ci_yamls"), tc.file)
+			VerifyFindings(t, tc.expectedFindings, CheckMustSucceed(c.Run(checkInput)))
 		})
 	}
 }

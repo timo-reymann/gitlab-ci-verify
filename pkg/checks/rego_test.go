@@ -3,7 +3,8 @@ package checks
 import (
 	"encoding/json"
 	"github.com/timo-reymann/gitlab-ci-verify/internal/rego_policies"
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/cli"
+	ci_yaml "github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/ci-yaml"
+	"path"
 	"testing"
 
 	"github.com/open-policy-agent/opa/v1/rego"
@@ -182,7 +183,9 @@ func TestParseResults(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			checkFindings, err := parseResults("test.rego", tc.results)
+			checkFindings, err := parseResults(&CheckInput{
+				VirtualCiYaml: &ci_yaml.VirtualCiYamlFile{},
+			}, "test.rego", tc.results)
 			if (err != nil) != tc.expectError {
 				t.Fatalf("parseResults() error = %v, expectError %v", err, tc.expectError)
 			}
@@ -205,12 +208,7 @@ func TestQueryRegoForFindings(t *testing.T) {
 		t.Fatalf("failed to load rego bundle: %s", err)
 	}
 
-	input := &CheckInput{
-		CiYaml:        NewCiYamlFromFile(t, "test_data/ci_yamls/singleBuild.yml"),
-		MergedCiYaml:  NewCiYamlFromFile(t, "test_data/ci_yamls/singleBuild.yml"),
-		Configuration: &cli.Configuration{},
-	}
-
+	input := createCheckInput(t, NewCiYamlFromFile(t, path.Join("test_data", "ci_yamls", "singleBuild.yml")), ".", "singleBuild.yml")
 	results, err := queryManagerForFindings(rpm, input)
 	if err != nil {
 		t.Fatalf("queryManagerForFindings failed: %s", err)

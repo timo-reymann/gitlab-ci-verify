@@ -10,10 +10,6 @@ type RemoteBundleCheck struct {
 	BundleURL string
 }
 
-func (r RemoteBundleCheck) convertToCheckFinding(raw map[string]any) (*CheckFinding, error) {
-	return convertToCheckFinding(r.BundleURL, raw)
-}
-
 func (r RemoteBundleCheck) Run(i *CheckInput) ([]CheckFinding, error) {
 	rpm := rego_policies.NewRegoPolicyManager()
 
@@ -28,5 +24,5 @@ func (r RemoteBundleCheck) Run(i *CheckInput) ([]CheckFinding, error) {
 		return nil, err
 	}
 
-	return parseResults(r.BundleURL, results)
+	return parseResults(i, r.BundleURL, results)
 }

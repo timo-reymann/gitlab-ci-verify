@@ -36,7 +36,7 @@ func (s ShellScriptCheck) Run(i *CheckInput) ([]CheckFinding, error) {
 	defer shellChecker.Close()
 
 	var wg sync.WaitGroup
-	for jobWithScripts := range ci_yaml.ExtractScripts(i.CiYaml.ParsedYamlDoc) {
+	for jobWithScripts := range ci_yaml.ExtractScripts(i.VirtualCiYaml.Combined.ParsedYamlDoc) {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
@@ -56,13 +56,14 @@ func (s ShellScriptCheck) Run(i *CheckInput) ([]CheckFinding, error) {
 						lineNo = 0
 					}
 
+					loc := i.ResolveLocation(lines[lineNo].Node.Line)
 					findingsChan <- CheckFinding{
 						Severity: s.shellcheckLevelToSeverity(f.Level),
 						Code:     fmt.Sprintf("SC-%s", strconv.Itoa(f.Code)),
-						Line:     lines[lineNo].Node.Line,
+						Line:     loc.Line + 1,
 						Message:  fmt.Sprintf("[%s:%s:%d] %s", jobWithScripts.JobName, key, f.Line, f.Message),
 						Link:     fmt.Sprintf("https://www.shellcheck.net/wiki/SC%d", f.Code),
-						File:     i.Configuration.GitLabCiFile,
+						File:     loc.File,
 					}
 				}
 			}

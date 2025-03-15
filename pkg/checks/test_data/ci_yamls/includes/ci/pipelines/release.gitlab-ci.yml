@@ -1,0 +1,4 @@
+include:
+  - local: /includes/ci/components/retag-image.gitlab-ci.yml
+  - local: /includes/ci/components/publish-chart.gitlab-ci.yml
+  - local: /includes/ci/components/trigger-argoapps-renovate.gitlab-ci.yml

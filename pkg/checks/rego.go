@@ -21,7 +21,7 @@ func queryManagerForFindings(rpm *rego_policies.RegoPolicyManager, i *CheckInput
 			return nil, err
 		}
 
-		line := yamlpathutils.PathToFirstLineNumber(i.CiYaml.ParsedYamlDoc, yamlpathutils.MustPath(yamlpath.NewPath(yamlPathVal)))
+		line := yamlpathutils.PathToFirstLineNumber(i.VirtualCiYaml.Combined.ParsedYamlDoc, yamlpathutils.MustPath(yamlpath.NewPath(yamlPathVal)))
 		val, err := ast.InterfaceToValue(line)
 		if err != nil {
 			return nil, err
@@ -45,13 +45,13 @@ func queryManagerForFindings(rpm *rego_policies.RegoPolicyManager, i *CheckInput
 
 	return query.Eval(ctx, rego.EvalInput(
 		map[string]any{
-			"yaml":       &i.CiYaml.ParsedYamlMap,
+			"yaml":       &i.VirtualCiYaml.Combined.ParsedYamlMap,
 			"mergedYaml": mergedCiYaml,
 		},
 	))
 }
 
-func convertToCheckFinding(sourcePath string, raw map[string]any) (*CheckFinding, error) {
+func convertToCheckFinding(checkInput *CheckInput, sourcePath string, raw map[string]any) (*CheckFinding, error) {
 	convertErrs := make([]error, 0)
 
 	addErrIfNotOk := func(ok bool, field string, expectedType string) {
@@ -115,10 +115,18 @@ func convertToCheckFinding(sourcePath string, raw map[string]any) (*CheckFinding
 		convertErrs = append(convertErrs, errors.New("severity is required"))
 	}
 
+	if cf.File == "" && cf.Line != -1 {
+		loc := checkInput.ResolveLocation(cf.Line)
+		if loc != nil {
+			cf.File = loc.File
+			cf.Line = loc.Line
+		}
+	}
+
 	return &cf, errors.Join(convertErrs...)
 }
 
-func parseResults(regoPath string, results rego.ResultSet) ([]CheckFinding, error) {
+func parseResults(checkInput *CheckInput, regoPath string, results rego.ResultSet) ([]CheckFinding, error) {
 	parseErrs := make([]error, 0)
 	checkFindings := make([]CheckFinding, 0)
 
@@ -127,17 +135,11 @@ func parseResults(regoPath string, results rego.ResultSet) ([]CheckFinding, erro
 		for _, expression := range result.Expressions {
 			findings := expression.Value.([]any)
 			for _, finding := range findings {
-				fields, ok := finding.(map[string]interface{})
-				if !ok {
-					return nil, fmt.Errorf("finding is not of map type: %v", finding)
-				}
-
-				checkFinding, err := convertToCheckFinding(regoPath, fields)
-				if err != nil {
-					parseErrs = append(parseErrs, err)
-				}
-				if checkFinding != nil {
+				checkFinding, err := parseFinding(checkInput, regoPath, finding)
+				if err == nil {
 					checkFindings = append(checkFindings, *checkFinding)
+				} else {
+					parseErrs = append(parseErrs, err)
 				}
 			}
 		}
@@ -151,4 +153,13 @@ func parseResults(regoPath string, results rego.ResultSet) ([]CheckFinding, erro
 	}
 
 	return checkFindings, err
+}
+
+func parseFinding(checkInput *CheckInput, regoPath string, raw any) (*CheckFinding, error) {
+	fields, ok := raw.(map[string]interface{})
+	if !ok {
+		return nil, fmt.Errorf("finding is not of map type: %v", raw)
+	}
+
+	return convertToCheckFinding(checkInput, regoPath, fields)
 }

@@ -1,0 +1,7 @@
+include:
+  - project: 'my-group/my-project'
+    file: '/templates/.gitlab-ci-template.yml'
+  - project: 'my-group/my-subgroup/my-project-2'
+    file:
+      - '/templates/.builds.yml'
+      - '/templates/.tests.yml'
