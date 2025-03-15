@@ -68,7 +68,6 @@ func Execute() {
 
 	checkInput, err := setupCheckInput(c, projectRoot)
 	handleErr(err)
-	logging.Debug("Check input setup done ", fmt.Sprintf("virtualCiYaml=%s", checkInput.VirtualCiYaml.Combined.FileContent))
 	runChecks(checkInput, c, severity, findingsFormatter)
 }
 
@@ -129,6 +128,12 @@ func setupCheckInput(c *cli.Configuration, pwd string) (*checks.CheckInput, erro
 	var lintRes *ciyaml.VerificationResultWithRemoteInfo
 	var mergedCiYaml *ciyaml.CiYamlFile
 
+	virtual, err := ciyaml.CreateVirtualCiYamlFile(pwd, c.GitLabCiFile, ciYaml)
+	if err != nil {
+		return nil, err
+	}
+	logging.Debug("Created virtual ci YAML", fmt.Sprintf("\n%s", virtual.Combined.FileContent))
+
 	if c.IsCIEnv() && !c.NoLintAPICallInCi {
 		logging.Verbose("get remote urls")
 		remoteUrls, err := git.GetRemoteUrls(pwd)
@@ -138,15 +143,10 @@ func setupCheckInput(c *cli.Configuration, pwd string) (*checks.CheckInput, erro
 		remoteInfos := git.FilterGitlabRemoteUrls(remoteUrls)
 
 		logging.Verbose("validate ci file against gitlab api")
-		lintRes, err = ciyaml.GetFirstValidationResult(remoteInfos, c.GitlabToken, c.GitlabBaseUrlOverwrite(), ciYamlContent, 3*time.Second)
+		lintRes, err = ciyaml.GetFirstValidationResult(remoteInfos, c.GitlabToken, c.GitlabBaseUrlOverwrite(), virtual.Combined.FileContent, 3*time.Second)
 		handleErr(err)
 		mergedCiYaml, err = ciyaml.NewCiYamlFile([]byte(lintRes.LintResult.MergedYaml))
 		handleErr(err)
-	}
-
-	virtual, err := ciyaml.CreateVirtualCiYamlFile(pwd, c.GitLabCiFile, ciYaml)
-	if err != nil {
-		return nil, err
 	}
 
 	checkInput := &checks.CheckInput{
