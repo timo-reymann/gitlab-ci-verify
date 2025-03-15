@@ -30,7 +30,7 @@ gitlab-ci-verify
 - Support for *gitlab.com* and self-hosted instances
 - Support for [custom policies](#writing-custom-policies) written
   in [Rego](https://www.openpolicyagent.org/docs/latest/policy-language/)
-- Resolve and validate includes ([more information on how it works and limitations](./docs/limitations/Include_resolution.md))
+- Resolve and validate includes ([more information on how it works and limitations](docs/Include_resolution.md))
 
 ### Example output
 
