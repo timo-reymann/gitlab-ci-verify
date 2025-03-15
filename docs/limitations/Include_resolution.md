@@ -1,7 +1,8 @@
 Include resolution
 ==================
 
-The include resolution is the process of finding the file that is referenced by the [`include` keyword](https://docs.gitlab.com/ci/yaml/includes/).
+The include resolution is the process of finding the file that is referenced by the [
+`include` keyword](https://docs.gitlab.com/ci/yaml/includes/).
 
 ## Terminology
 
@@ -36,7 +37,8 @@ You can find more in-depth information about each of these limitations in the fo
 
 ## Conditional includes are always resolved
 
-Gitlab CI allows including files conditionally using `rules`. This is not supported by gitlab-ci-verify.
+Gitlab CI allows including files conditionally using [`rules`](https://docs.gitlab.com/ci/yaml/#rules). This is not
+supported by gitlab-ci-verify.
 
 ```yaml
 include:
@@ -51,7 +53,8 @@ This also means that gitlab-ci-verify could include files for checking that are 
 
 ## No deep merge
 
-Gitlab CI uses [deep merging for included files](https://docs.gitlab.com/ci/yaml/includes/#merge-method-for-include). This is not supported by gitlab-ci-verify.
+Gitlab CI uses [deep merging for included files](https://docs.gitlab.com/ci/yaml/includes/#merge-method-for-include).
+This is not supported by gitlab-ci-verify.
 
 For example, the following configuration would result in `key` being `value` in Gitlab CI, but `other_value` in
 gitlab-ci-verify:
@@ -99,4 +102,4 @@ GitLab CI allows you to load files from remote locations. This is not supported 
 - **Performance**: Fetching remote files can be slow
 - **Reliability**: Fetching remote files can fail, leading to flaky results
 
-Besides that gitlab-ci-verify assumes that any remote file is already linted by the user, ensuring its stability.
+Besides that, gitlab-ci-verify assumes that any remote file is already linted by the user, ensuring its stability.
