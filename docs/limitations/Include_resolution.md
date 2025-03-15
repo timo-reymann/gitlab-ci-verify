@@ -12,10 +12,10 @@ The include resolution is the process of finding the file that is referenced by 
 
 gitlab-ci-verify resolves includes by following these steps:
 
-- Collect all includes.
-- Make sure each include is unique, while keeping their order.
-- Resolve each local include by reading the file and adding it to the virtual CI YAML.
-- Add all includes to the virtual CI YAML end.
+1. Collect all includes.
+2. Make sure each include is unique, while keeping their order.
+3. Resolve each local include by reading the file and adding it to the virtual CI YAML.
+4. Add all includes to the virtual CI YAML end.
 
 Once this processing is done, the virtual CI YAML is used for checks, including validation by the Pipeline Lint API.
 
