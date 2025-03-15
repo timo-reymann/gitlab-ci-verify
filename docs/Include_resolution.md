@@ -20,7 +20,7 @@ gitlab-ci-verify resolves includes by following these steps:
 
 Once this processing is done, the virtual CI YAML is used for checks, including validation by the Pipeline Lint API.
 
-| ![Include resolve diagram](../assets/include_resolve.svg) |
+| ![Include resolve diagram](assets/include_resolve.svg) |
 |:---------------------------------------------------------:|
 |     *How includes are joined to the Virtual CI YAML*      |
 
