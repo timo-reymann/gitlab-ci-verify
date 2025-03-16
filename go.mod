@@ -70,4 +70,4 @@ require (
 	sigs.k8s.io/yaml v1.4.0 // indirect
 )
 
-replace gopkg.in/yaml.v3 => github.com/timo-reymann/go-yaml v1.0.1
+replace gopkg.in/yaml.v3 => github.com/timo-reymann/go-yaml v1.1.0
