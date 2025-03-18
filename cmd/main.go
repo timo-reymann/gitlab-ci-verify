@@ -140,8 +140,15 @@ func setupCheckInput(c *cli.Configuration, pwd string) (*checks.CheckInput, erro
 		remoteInfos := git.FilterGitlabRemoteUrls(remoteUrls)
 
 		logging.Verbose("validate ci file against gitlab api")
-		lintRes, err = ciyaml.GetFirstValidationResult(remoteInfos, c.GitlabToken, c.GitlabBaseUrlOverwrite(), virtual.Combined.FileContent, 3*time.Second)
+		lintRes, err = ciyaml.GetFirstValidationResult(&ciyaml.ValidationResultInput{
+			RemoteInfos:      remoteInfos,
+			Token:            c.GitlabToken,
+			BaseUrlOverwrite: c.GitlabBaseUrlOverwrite(),
+			CiYaml:           virtual.Combined.FileContent,
+			Timeout:          3 * time.Second,
+		})
 		handleErr(err)
+
 		mergedCiYaml, err = ciyaml.NewCiYamlFile([]byte(lintRes.LintResult.MergedYaml))
 		handleErr(err)
 	}
