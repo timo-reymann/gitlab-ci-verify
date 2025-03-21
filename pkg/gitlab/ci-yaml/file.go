@@ -16,7 +16,8 @@ type CiYamlFile struct {
 	// ParsedYamlDoc contains the parsed YAML as node structure
 	ParsedYamlDoc *yaml.Node
 	// Includes contains all includes in the entry file
-	Includes          []includes.Include
+	Includes []includes.Include
+	// LineNumberMapping contains the line number node mapping for the parsed YAML
 	LineNumberMapping *yaml.LineNumberMapping
 }
 

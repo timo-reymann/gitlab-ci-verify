@@ -2,6 +2,11 @@ package checks
 
 import "strings"
 
+var SeverityError = 0
+var SeverityWarning = 1
+var SeverityInfo = 2
+var SeverityStyle = 3
+
 func SeverityLevelToName(level int) string {
 	switch level {
 	case SeverityError:
