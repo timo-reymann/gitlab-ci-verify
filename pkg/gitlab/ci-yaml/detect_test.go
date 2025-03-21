@@ -22,23 +22,29 @@ func mockCiValidate(status int, duration time.Duration, valid bool) *httptest.Se
 func TestGetFirstValidationResult(t *testing.T) {
 	yamlContent, _ := os.ReadFile("test_data/valid.yml")
 
-	res, err := GetFirstValidationResult([]git.GitlabRemoteUrlInfo{
-		{
-			Hostname:       mockCiValidate(http.StatusOK, 500*time.Millisecond, true).URL,
-			ClonedViaHttps: true,
-			RepoSlug:       "project/foo",
+	res, err := GetFirstValidationResult(&ValidationResultInput{
+		RemoteInfos: []git.GitlabRemoteUrlInfo{
+			{
+				Hostname:       mockCiValidate(http.StatusOK, 500*time.Millisecond, true).URL,
+				ClonedViaHttps: true,
+				RepoSlug:       "project/foo",
+			},
+			{
+				Hostname:       mockCiValidate(http.StatusOK, 1*time.Second, true).URL,
+				ClonedViaHttps: true,
+				RepoSlug:       "project/foo",
+			},
+			{
+				Hostname:       mockCiValidate(http.StatusOK, 2*time.Second, true).URL,
+				ClonedViaHttps: true,
+				RepoSlug:       "project/foo",
+			},
 		},
-		{
-			Hostname:       mockCiValidate(http.StatusOK, 1*time.Second, true).URL,
-			ClonedViaHttps: true,
-			RepoSlug:       "project/foo",
-		},
-		{
-			Hostname:       mockCiValidate(http.StatusOK, 2*time.Second, true).URL,
-			ClonedViaHttps: true,
-			RepoSlug:       "project/foo",
-		},
-	}, "", "", yamlContent, 600*time.Millisecond)
+		Token:            "",
+		BaseUrlOverwrite: "",
+		CiYaml:           yamlContent,
+		Timeout:          600 * time.Millisecond,
+	})
 
 	if err != nil {
 		t.Fatal(err)
