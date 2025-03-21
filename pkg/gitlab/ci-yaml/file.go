@@ -16,7 +16,8 @@ type CiYamlFile struct {
 	// ParsedYamlDoc contains the parsed YAML as node structure
 	ParsedYamlDoc *yaml.Node
 	// Includes contains all includes in the entry file
-	Includes []includes.Include
+	Includes          []includes.Include
+	LineNumberMapping *yaml.LineNumberMapping
 }
 
 // NewCiYamlFile from byte contents
@@ -29,10 +30,12 @@ func NewCiYamlFile(content []byte) (*CiYamlFile, error) {
 	var parsed map[string]any
 	decoder := yaml.NewDecoder(bytes.NewBuffer(content))
 	decoder.UniqueKeys(false)
+	decoder.WithLineNumberMapping()
 
 	if err = decoder.Decode(&parsed); err != nil {
 		return nil, err
 	}
+	lineNummberMapping := decoder.LineNumberMapping()
 
 	parsedIncludes, err := includes.ParseIncludes(doc)
 	if err != nil {
@@ -40,9 +43,10 @@ func NewCiYamlFile(content []byte) (*CiYamlFile, error) {
 	}
 
 	return &CiYamlFile{
-		FileContent:   content,
-		ParsedYamlMap: parsed,
-		ParsedYamlDoc: doc,
-		Includes:      parsedIncludes,
+		FileContent:       content,
+		ParsedYamlMap:     parsed,
+		ParsedYamlDoc:     doc,
+		Includes:          parsedIncludes,
+		LineNumberMapping: &lineNummberMapping,
 	}, nil
 }
