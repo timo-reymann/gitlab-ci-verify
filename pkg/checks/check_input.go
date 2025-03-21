@@ -2,7 +2,7 @@ package checks
 
 import (
 	"github.com/timo-reymann/gitlab-ci-verify/internal/cli"
-	ciyaml "github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/ci-yaml"
+	"github.com/timo-reymann/gitlab-ci-verify/internal/gitlab/ci-yaml"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/location"
 )
 
@@ -11,11 +11,11 @@ type CheckInput struct {
 	Configuration *cli.Configuration
 	// LintAPIResult contains the API response from the GitLab CI Lint API. It might be not set when configuration
 	// disabled ci validation inside CI
-	LintAPIResult *ciyaml.VerificationResultWithRemoteInfo
+	LintAPIResult *ci_yaml.VerificationResultWithRemoteInfo
 	// MergedCiYaml contains the merged YAML when the lint api result is available
-	MergedCiYaml *ciyaml.CiYamlFile
+	MergedCiYaml *ci_yaml.CiYamlFile
 	// VirtualCiYaml contains the virtual CI YAML file
-	VirtualCiYaml *ciyaml.VirtualCiYamlFile
+	VirtualCiYaml *ci_yaml.VirtualCiYamlFile
 }
 
 func (c *CheckInput) HasLintAPIResult() bool {

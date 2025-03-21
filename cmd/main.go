@@ -4,11 +4,11 @@ import (
 	"errors"
 	"fmt"
 	"github.com/timo-reymann/gitlab-ci-verify/internal/cli"
+	git2 "github.com/timo-reymann/gitlab-ci-verify/internal/git"
+	"github.com/timo-reymann/gitlab-ci-verify/internal/gitlab/ci-yaml"
 	"github.com/timo-reymann/gitlab-ci-verify/internal/logging"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/checks"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/formatter"
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/git"
-	ciyaml "github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/ci-yaml"
 	"os"
 	"slices"
 	"time"
@@ -119,13 +119,13 @@ func setupCheckInput(c *cli.Configuration, pwd string) (*checks.CheckInput, erro
 	handleErr(err)
 
 	logging.Verbose("load and parse YAML")
-	ciYaml, err := ciyaml.NewCiYamlFile(ciYamlContent)
+	ciYaml, err := ci_yaml.NewCiYamlFile(ciYamlContent)
 	handleErr(err)
 
-	var lintRes *ciyaml.VerificationResultWithRemoteInfo
-	var mergedCiYaml *ciyaml.CiYamlFile
+	var lintRes *ci_yaml.VerificationResultWithRemoteInfo
+	var mergedCiYaml *ci_yaml.CiYamlFile
 
-	virtual, err := ciyaml.CreateVirtualCiYamlFile(pwd, c.GitLabCiFile, ciYaml)
+	virtual, err := ci_yaml.CreateVirtualCiYamlFile(pwd, c.GitLabCiFile, ciYaml)
 	if err != nil {
 		return nil, err
 	}
@@ -133,14 +133,14 @@ func setupCheckInput(c *cli.Configuration, pwd string) (*checks.CheckInput, erro
 
 	if c.IsCIEnv() && !c.NoLintAPICallInCi {
 		logging.Verbose("get remote urls")
-		remoteUrls, err := git.GetRemoteUrls(pwd)
+		remoteUrls, err := git2.GetRemoteUrls(pwd)
 		handleErr(err)
 
 		logging.Verbose("parse remote url contents")
-		remoteInfos := git.FilterGitlabRemoteUrls(remoteUrls)
+		remoteInfos := git2.FilterGitlabRemoteUrls(remoteUrls)
 
 		logging.Verbose("validate ci file against gitlab api")
-		lintRes, err = ciyaml.GetFirstValidationResult(&ciyaml.ValidationResultInput{
+		lintRes, err = ci_yaml.GetFirstValidationResult(&ci_yaml.ValidationResultInput{
 			RemoteInfos:      remoteInfos,
 			Token:            c.GitlabToken,
 			BaseUrlOverwrite: c.GitlabBaseUrlOverwrite(),
@@ -149,7 +149,7 @@ func setupCheckInput(c *cli.Configuration, pwd string) (*checks.CheckInput, erro
 		})
 		handleErr(err)
 
-		mergedCiYaml, err = ciyaml.NewCiYamlFile([]byte(lintRes.LintResult.MergedYaml))
+		mergedCiYaml, err = ci_yaml.NewCiYamlFile([]byte(lintRes.LintResult.MergedYaml))
 		handleErr(err)
 	}
 

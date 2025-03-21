@@ -3,9 +3,9 @@ package ci_yaml
 import (
 	"context"
 	"errors"
+	"github.com/timo-reymann/gitlab-ci-verify/internal/git"
+	api2 "github.com/timo-reymann/gitlab-ci-verify/internal/gitlab/api"
 	"github.com/timo-reymann/gitlab-ci-verify/internal/logging"
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/git"
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/api"
 	"time"
 )
 
@@ -18,7 +18,7 @@ var ErrNoResult = errors.New("no remote gitlab url could validate due to invalid
 // VerificationResultWithRemoteInfo contains both the remote that was used and the according lint result
 type VerificationResultWithRemoteInfo struct {
 	RemoteInfo *git.GitlabRemoteUrlInfo
-	LintResult *api.CiLintResult
+	LintResult *api2.CiLintResult
 }
 
 type validationResult struct {
@@ -50,7 +50,7 @@ func GetFirstValidationResult(vri *ValidationResultInput) (*VerificationResultWi
 			}
 
 			var occurredErrs []error
-			gl := api.NewClientWithMultiTokenSources(baseUrl, vri.Token)
+			gl := api2.NewClientWithMultiTokenSources(baseUrl, vri.Token)
 			lintRes, err := gl.LintCiYaml(ctx, r.RepoSlug, vri.CiYaml)
 			if err != nil {
 				occurredErrs = append(occurredErrs, err)

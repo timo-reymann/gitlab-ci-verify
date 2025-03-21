@@ -2,8 +2,8 @@ package checks
 
 import (
 	"fmt"
+	"github.com/timo-reymann/gitlab-ci-verify/internal/gitlab/api"
 	"github.com/timo-reymann/gitlab-ci-verify/internal/logging"
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/api"
 )
 
 type PipelineLintApiCheck struct {

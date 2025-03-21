@@ -2,7 +2,7 @@ package checks
 
 import (
 	"errors"
-	ciyaml "github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/ci-yaml"
+	ciyaml "github.com/timo-reymann/gitlab-ci-verify/internal/gitlab/ci-yaml"
 	"testing"
 )
 
