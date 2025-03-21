@@ -3,6 +3,7 @@ package ci_yaml
 import (
 	"bytes"
 	includes2 "github.com/timo-reymann/gitlab-ci-verify/internal/gitlab/ci-yaml/includes"
+	"github.com/timo-reymann/gitlab-ci-verify/pkg/filtering"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/location"
 	"gopkg.in/yaml.v3"
 	"os"
@@ -10,20 +11,32 @@ import (
 	"sort"
 )
 
+// VirtualCiYamlFilePart represents a part of a virtual CI YAML file
 type VirtualCiYamlFilePart struct {
+	// CiYamlFile contains the parsed CI YAML file
 	CiYamlFile *CiYamlFile
-	Path       string
-	StartLine  int
-	EndLine    int
+	// Path of the part relative to the project root
+	Path string
+	// StartLine of the part (1-based)
+	StartLine int
+	// EndLine of the part (1-based)
+	EndLine int
 }
 
+// VirtualCiYamlFile represents a virtual CI YAML file
 type VirtualCiYamlFile struct {
-	EntryFile     *CiYamlFile
+	// EntryFile is the entry file gitlab-ci-verify was initially executed for
+	EntryFile *CiYamlFile
+	// EntryFilePath is the path of the file gitlab-ci-verify was initially executed for
 	EntryFilePath string
-	Combined      *CiYamlFile
-	Parts         []*VirtualCiYamlFilePart
+	// Combined contains the concat CI YAML file
+	Combined *CiYamlFile
+	// Parts contains all parts of the virtual CI YAML file in the order they appear
+	Parts []*VirtualCiYamlFilePart
 }
 
+// Resolve the part and location of a line in the virtual CI YAML
+// Returns nil if the line is not in the virtual CI YAML
 func (v *VirtualCiYamlFile) Resolve(line int) (*VirtualCiYamlFilePart, *location.Location) {
 	idx := sort.Search(len(v.Parts), func(i int) bool {
 		return v.Parts[i].StartLine > line
@@ -40,6 +53,25 @@ func (v *VirtualCiYamlFile) Resolve(line int) (*VirtualCiYamlFilePart, *location
 	return nil, nil
 }
 
+// GetIgnoredCodes for a line in the virtual CI YAML
+// This takes into account the file level, and line level ignores
+func (v *VirtualCiYamlFile) GetIgnoredCodes(line int) []string {
+	ignored := make([]string, 0)
+
+	part, _ := v.Resolve(line)
+	if part == nil {
+		return ignored
+	}
+
+	partCiYaml := part.CiYamlFile
+
+	ignored = append(ignored, filtering.IgnoreCommentsToCodes(partCiYaml.GetFileLevelIgnores())...)
+	ignored = append(ignored, filtering.IgnoreCommentsToCodes(partCiYaml.GetLineLevelIgnores(line))...)
+
+	return ignored
+}
+
+// CreateVirtualCiYamlFile creates a virtual CI YAML file from a project root, entry file path, and parsed entry file
 func CreateVirtualCiYamlFile(projectRoot string, entryFilePath string, entryFile *CiYamlFile) (*VirtualCiYamlFile, error) {
 	virtualFile := &VirtualCiYamlFile{
 		EntryFile:     entryFile,

@@ -68,7 +68,7 @@ func Execute() {
 	runChecks(checkInput, c, severity, findingsFormatter)
 }
 
-func runChecks(checkInput *checks.CheckInput, c *cli.Configuration, severity int, findingsFormatter formatter.FindingsFormatter) {
+func runChecks(checkInput *checks.CheckInput, c *cli.Configuration, failSeverity int, findingsFormatter formatter.FindingsFormatter) {
 	checkResultChans := checks.RunChecksInParallel(checks.AllChecks(), checkInput, func(err error) {
 		handleErr(err)
 	})
@@ -86,11 +86,16 @@ func runChecks(checkInput *checks.CheckInput, c *cli.Configuration, severity int
 
 	shouldFail := false
 	for _, finding := range findings {
-		if slices.Contains(c.ExcludedChecks, finding.Code) {
+		if finding.HasCodeIn(c.ExcludedChecks) {
 			continue
 		}
 
-		if severity >= finding.Severity {
+		ignoredViaComments := checkInput.VirtualCiYaml.GetIgnoredCodes(finding.Line)
+		if finding.HasCodeIn(ignoredViaComments) {
+			continue
+		}
+
+		if !shouldFail && finding.HasEqualOrHigherSeverityThan(failSeverity) {
 			shouldFail = true
 		}
 
