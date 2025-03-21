@@ -4,6 +4,7 @@ import (
 	"bytes"
 	formatconversion "github.com/timo-reymann/gitlab-ci-verify/internal/format-conversion"
 	"github.com/timo-reymann/gitlab-ci-verify/internal/gitlab/ci-yaml/includes"
+	"github.com/timo-reymann/gitlab-ci-verify/pkg/filtering"
 	"gopkg.in/yaml.v3"
 )
 
@@ -18,7 +19,18 @@ type CiYamlFile struct {
 	// Includes contains all includes in the entry file
 	Includes []includes.Include
 	// LineNumberMapping contains the line number node mapping for the parsed YAML
-	LineNumberMapping *yaml.LineNumberMapping
+	lineNumberMapping yaml.LineNumberMapping
+}
+
+func (cyf *CiYamlFile) GetFileLevelIgnores() []filtering.IgnoreComment {
+	if len(cyf.ParsedYamlDoc.Content) == 0 || len(cyf.ParsedYamlDoc.Content[0].Content) == 0 {
+		return []filtering.IgnoreComment{}
+	}
+	return filtering.ParseIgnoreComment(cyf.ParsedYamlDoc.Content[0].Content[0].HeadComment)
+}
+
+func (cyf *CiYamlFile) GetLineLevelIgnores(line int) []filtering.IgnoreComment {
+	return filtering.ParseIgnoreForLine(cyf.lineNumberMapping, []int{line})
 }
 
 // NewCiYamlFile from byte contents
@@ -48,6 +60,6 @@ func NewCiYamlFile(content []byte) (*CiYamlFile, error) {
 		ParsedYamlMap:     parsed,
 		ParsedYamlDoc:     doc,
 		Includes:          parsedIncludes,
-		LineNumberMapping: &lineNummberMapping,
+		lineNumberMapping: lineNummberMapping,
 	}, nil
 }
