@@ -3,18 +3,18 @@ package checks
 import (
 	"github.com/google/go-cmp/cmp"
 	"github.com/timo-reymann/gitlab-ci-verify/internal/cli"
-	ciyaml "github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/ci-yaml"
+	"github.com/timo-reymann/gitlab-ci-verify/internal/gitlab/ci-yaml"
 	"os"
 	"path"
 	"testing"
 )
 
-func NewCiYamlFromFile(t *testing.T, fileName string) *ciyaml.CiYamlFile {
+func NewCiYamlFromFile(t *testing.T, fileName string) *ci_yaml.CiYamlFile {
 	content, err := os.ReadFile(path.Join(fileName))
 	if err != nil {
 		t.Fatal(err)
 	}
-	ciYaml, err := ciyaml.NewCiYamlFile(content)
+	ciYaml, err := ci_yaml.NewCiYamlFile(content)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -35,8 +35,8 @@ func VerifyFindings(t *testing.T, expected []CheckFinding, actual []CheckFinding
 	}
 }
 
-func createCheckInput(t *testing.T, ciYaml *ciyaml.CiYamlFile, projectRoot, ciFile string) *CheckInput {
-	virtualCiYaml, err := ciyaml.CreateVirtualCiYamlFile(projectRoot, ciFile, ciYaml)
+func createCheckInput(t *testing.T, ciYaml *ci_yaml.CiYamlFile, projectRoot, ciFile string) *CheckInput {
+	virtualCiYaml, err := ci_yaml.CreateVirtualCiYamlFile(projectRoot, ciFile, ciYaml)
 	if err != nil {
 		t.Fatal(err)
 	}

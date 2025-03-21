@@ -2,9 +2,9 @@ package checks
 
 import (
 	"fmt"
+	ci_yaml2 "github.com/timo-reymann/gitlab-ci-verify/internal/gitlab/ci-yaml"
 	"github.com/timo-reymann/gitlab-ci-verify/internal/logging"
 	"github.com/timo-reymann/gitlab-ci-verify/internal/shellcheck"
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/ci-yaml"
 	"strconv"
 	"sync"
 )
@@ -36,12 +36,12 @@ func (s ShellScriptCheck) Run(i *CheckInput) ([]CheckFinding, error) {
 	defer shellChecker.Close()
 
 	var wg sync.WaitGroup
-	for jobWithScripts := range ci_yaml.ExtractScripts(i.VirtualCiYaml.Combined.ParsedYamlDoc) {
+	for jobWithScripts := range ci_yaml2.ExtractScripts(i.VirtualCiYaml.Combined.ParsedYamlDoc) {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
 			for key, parts := range jobWithScripts.ScriptParts {
-				lines, joinedScript := ci_yaml.Concat(parts)
+				lines, joinedScript := ci_yaml2.Concat(parts)
 				result, err := shellChecker.AnalyzeSnippet(joinedScript, i.Configuration.ShellcheckFlags)
 				if err != nil {
 					logging.Warn("Failed to analyze snippet in job", jobWithScripts.JobName)

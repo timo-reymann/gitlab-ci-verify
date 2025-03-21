@@ -2,7 +2,7 @@ package ci_yaml
 
 import (
 	"bytes"
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/ci-yaml/includes"
+	includes2 "github.com/timo-reymann/gitlab-ci-verify/internal/gitlab/ci-yaml/includes"
 	"github.com/timo-reymann/gitlab-ci-verify/pkg/location"
 	"gopkg.in/yaml.v3"
 	"os"
@@ -47,8 +47,8 @@ func CreateVirtualCiYamlFile(projectRoot string, entryFilePath string, entryFile
 		Parts:         []*VirtualCiYamlFilePart{},
 	}
 
-	localIncludes := includes.FilterByTypes(virtualFile.EntryFile.Includes, "local")
-	uniqueLocalIncludes := includes.Unique(localIncludes)
+	localIncludes := includes2.FilterByTypes(virtualFile.EntryFile.Includes, "local")
+	uniqueLocalIncludes := includes2.Unique(localIncludes)
 
 	line := 0
 	entryLineCount := bytes.Count(entryFile.FileContent, []byte("\n"))
@@ -64,7 +64,7 @@ func CreateVirtualCiYamlFile(projectRoot string, entryFilePath string, entryFile
 
 	addedIncludePaths := make([]string, 0)
 	for _, uniqueLocalInclude := range uniqueLocalIncludes {
-		localInclude := uniqueLocalInclude.(*includes.LocalInclude)
+		localInclude := uniqueLocalInclude.(*includes2.LocalInclude)
 		includePath := localInclude.ResolvePath(projectRoot, entryFilePath)
 
 		if slices.Contains(addedIncludePaths, includePath) {
@@ -119,7 +119,7 @@ func createPart(includePath string, line int) (*VirtualCiYamlFilePart, error) {
 	return part, nil
 }
 
-func joinIncludes(uniqueLocalIncludes []includes.Include) ([]byte, error) {
+func joinIncludes(uniqueLocalIncludes []includes2.Include) ([]byte, error) {
 	includeNodes := make([]*yaml.Node, len(uniqueLocalIncludes))
 	for idx, i := range uniqueLocalIncludes {
 		includeNodes[idx] = i.Node()

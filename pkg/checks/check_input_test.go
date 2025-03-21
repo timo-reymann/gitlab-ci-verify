@@ -1,9 +1,8 @@
 package checks
 
 import (
+	ciyaml "github.com/timo-reymann/gitlab-ci-verify/internal/gitlab/ci-yaml"
 	"testing"
-
-	ciyaml "github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/ci-yaml"
 )
 
 func TestCheckInput_HasLintAPIResult(t *testing.T) {

@@ -3,9 +3,9 @@ package checks
 import (
 	"encoding/json"
 	"github.com/timo-reymann/gitlab-ci-verify/internal/cli"
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/git"
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/api"
-	ciyaml "github.com/timo-reymann/gitlab-ci-verify/pkg/gitlab/ci-yaml"
+	"github.com/timo-reymann/gitlab-ci-verify/internal/git"
+	"github.com/timo-reymann/gitlab-ci-verify/internal/gitlab/api"
+	"github.com/timo-reymann/gitlab-ci-verify/internal/gitlab/ci-yaml"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -106,13 +106,13 @@ func TestPipelineLintApiCheck_Run(t *testing.T) {
 			ciValidateMockServer := mockCiValidate(tc.lintResult)
 
 			_ = os.Chdir(projectRoot)
-			ciYaml, err := ciyaml.NewCiYamlFile([]byte(`{}`))
+			ciYaml, err := ci_yaml.NewCiYamlFile([]byte(`{}`))
 			if err != nil {
 				t.Fatal(err)
 			}
 
 			checkInput := createCheckInput(t, ciYaml, projectRoot, ".gitlab-ci.yml")
-			checkInput.LintAPIResult = &ciyaml.VerificationResultWithRemoteInfo{
+			checkInput.LintAPIResult = &ci_yaml.VerificationResultWithRemoteInfo{
 				RemoteInfo: &git.GitlabRemoteUrlInfo{
 					Hostname:       ciValidateMockServer.URL,
 					ClonedViaHttps: true,

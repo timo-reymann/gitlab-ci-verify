@@ -2,7 +2,7 @@ package ci_yaml
 
 import (
 	"fmt"
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/git"
+	"github.com/timo-reymann/gitlab-ci-verify/internal/git"
 	"net/http"
 	"net/http/httptest"
 	"os"
