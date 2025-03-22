@@ -29,7 +29,7 @@ func (cf *CheckFinding) SeverityName() string {
 
 // HasEqualOrHigherSeverityThan checks if the finding has severity equal or higher than the given severity
 func (cf *CheckFinding) HasEqualOrHigherSeverityThan(severity int) bool {
-	return cf.Severity >= severity
+	return cf.Severity <= severity
 }
 
 // HasCodeIn checks if the finding has a code in the given list of codes
