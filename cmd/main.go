@@ -136,7 +136,7 @@ func setupCheckInput(c *cli.Configuration, pwd string) (*checks.CheckInput, erro
 	}
 	logging.Debug("Created virtual ci YAML", fmt.Sprintf("\n%s", virtual.Combined.FileContent))
 
-	if c.IsCIEnv() && !c.NoLintAPICallInCi {
+	if !c.IsCIEnv() || c.IsCIEnv() && !c.NoLintAPICallInCi {
 		logging.Verbose("get remote urls")
 		remoteUrls, err := git2.GetRemoteUrls(pwd)
 		handleErr(err)
