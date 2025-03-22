@@ -177,6 +177,30 @@ response is used. In case you cloned via SSH it tries to convert it to the HTTPs
 differs from the HTTPs url you should specify it manually using the `--gitlab-base-url`, without protocol e.g.
 `--gitlab-base-url git.example.com`
 
+## Ignoring findings
+
+You can ignore findings by adding comments in the format `# gitlab-ci-verify: ignore=<check_id>` to your CI YAML files.
+
+This works in several places:
+
+- In the same line as the finding:
+  ```yaml
+  pages:
+    artifacts: {}# gitlab-ci-verify: ignore=GL-201
+  ```
+- In the line above the finding:
+  ```yaml
+  pages:
+    # gitlab-ci-verify: ignore=GL-201
+    artifacts: {}
+  ```
+- Globally for the file of the finding:
+  ```yaml
+  # gitlab-ci-verify: ignore=GL-201
+  pages:
+    artifacts: {}
+  ```
+
 ## Writing custom policies
 
 You can write custom policies for your projects
@@ -242,4 +266,5 @@ following libraries/tools:
 - [Shellcheck by koalaman](https://github.com/koalaman/shellcheck)
 - [go stdlib](https://github.com/golang/go)
 - [pflag by spf13](https://github.com/spf13/pflag)
-- [go-yaml](https://github.com/go-yaml/yaml), which I forked to [timo-reymann/go-yaml](https://github.com/timo-reymann/go-yaml)
+- [go-yaml](https://github.com/go-yaml/yaml), which I forked
+  to [timo-reymann/go-yaml](https://github.com/timo-reymann/go-yaml)
