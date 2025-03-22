@@ -1,3 +1,10 @@
+## [2.1.1](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.1.0...v2.1.1) (2025-03-22)
+
+
+### Bug Fixes
+
+* **python-wrapper:** Downgrade setuptools ([961f83c](https://github.com/timo-reymann/gitlab-ci-verify/commit/961f83c963523fcde0edbf140d952ccfee7f4ce7))
+
 ## [2.1.0](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.0.2...v2.1.0) (2025-03-22)
 
 
