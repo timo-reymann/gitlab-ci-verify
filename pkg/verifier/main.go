@@ -67,8 +67,8 @@ func (gcv *GitlabCIVerifier) SetupFormatter(writer io.Writer, formatterName stri
 }
 
 // RunChecks runs all checks and prints the results
-func (gcv *GitlabCIVerifier) RunChecks(checkInput *checks.CheckInput, failSeverity int, errorHandler func(err error)) {
-	checkResultChans := checks.RunChecksInParallel(checks.AllChecks(), checkInput, func(err error) {
+func (gcv *GitlabCIVerifier) RunChecks(checkInput *checks.CheckInput, checksToRun []checks.Check, failSeverity int, errorHandler func(err error)) bool {
+	checkResultChans := checks.RunChecksInParallel(checksToRun, checkInput, func(err error) {
 		errorHandler(err)
 	})
 	findings := make([]checks.CheckFinding, 0)
@@ -105,9 +105,7 @@ func (gcv *GitlabCIVerifier) RunChecks(checkInput *checks.CheckInput, failSeveri
 	err := gcv.formatter.End()
 	errorHandler(err)
 
-	if shouldFail {
-		os.Exit(1)
-	}
+	return shouldFail
 }
 
 // CreateCheckInput creates the check input for running the checks

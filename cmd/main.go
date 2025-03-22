@@ -47,5 +47,8 @@ func Execute() {
 	checkInput, err := gcv.CreateCheckInput()
 	handleErr(err)
 
-	gcv.RunChecks(checkInput, failSeverity, handleErr)
+	shouldFail := gcv.RunChecks(checkInput, checks.AllChecks(), failSeverity, handleErr)
+	if shouldFail {
+		os.Exit(1)
+	}
 }
