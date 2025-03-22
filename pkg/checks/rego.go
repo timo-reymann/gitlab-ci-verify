@@ -39,7 +39,7 @@ func queryManagerForFindings(rpm *rego_policies.RegoPolicyManager, i *CheckInput
 
 	var mergedCiYaml *map[string]any
 
-	if i.MergedCiYaml != nil {
+	if i.CanProvideMergedYaml() {
 		mergedCiYaml = &i.MergedCiYaml.ParsedYamlMap
 	}
 

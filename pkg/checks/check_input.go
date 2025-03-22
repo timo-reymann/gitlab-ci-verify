@@ -27,7 +27,7 @@ func (c *CheckInput) HasLintAPIResult() bool {
 // CanProvideMergedYaml checks if the input can provide a merged YAML
 // This is only the case when the lint API result is available
 func (c *CheckInput) CanProvideMergedYaml() bool {
-	return c.LintAPIResult != nil
+	return c.MergedCiYaml != nil
 }
 
 // ResolveLocation resolves the location of a line in the virtual CI YAML
