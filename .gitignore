@@ -2,3 +2,5 @@
 dist/
 *.zip
 .env
+/main
+report.xml

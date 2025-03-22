@@ -77,6 +77,8 @@ jobs:
             - run:
                 name: Run integration tests
                 command: make integration-test
+      - store_test_results:
+          path: report.xml
   build-cli:
     executor: go
     steps:
