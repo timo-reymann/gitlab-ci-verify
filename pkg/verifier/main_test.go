@@ -81,11 +81,9 @@ func TestSetupFormatter(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 
-			gcv := &GitlabCIVerifier{
-				configuration: &cli.Configuration{
-					FailSeverity: "error",
-				},
-			}
+			gcv := NewGitlabCIVerifier(&cli.Configuration{
+				FailSeverity: "error",
+			}, "/tmp")
 
 			writer := &bytes.Buffer{}
 			err := gcv.SetupFormatter(writer, tt.formatterName)
@@ -186,4 +184,9 @@ func TestRunChecks(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestSetupRegoNoPolicies(t *testing.T) {
+	gcv := NewGitlabCIVerifier(&cli.Configuration{}, "/tmp")
+	gcv.SetupRego()
 }
