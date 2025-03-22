@@ -1,3 +1,17 @@
+## [2.1.0](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.0.2...v2.1.0) (2025-03-22)
+
+
+### Features
+
+* [[#71](https://github.com/timo-reymann/gitlab-ci-verify/issues/71)] Add support for ignoring check findings with YAML comments ([a8a4916](https://github.com/timo-reymann/gitlab-ci-verify/commit/a8a49165ff8b97266caf5ed9030e3251473011e1))
+
+
+### Bug Fixes
+
+* **deps:** update dependency setuptools to v77 ([450592f](https://github.com/timo-reymann/gitlab-ci-verify/commit/450592f6d75fc50ee07421b3373b8545c7374cdf))
+* Fix CI lint not done in some cases ([6b56b58](https://github.com/timo-reymann/gitlab-ci-verify/commit/6b56b58f4e0bf8d99ce962c7fad0a8fdcf95588f))
+* Fix fail severity check ([b117d45](https://github.com/timo-reymann/gitlab-ci-verify/commit/b117d45b27ddfd85a82c8a2f0545f3f42d91f7bc))
+
 ## [2.0.2](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.0.1...v2.0.2) (2025-03-17)
 
 
