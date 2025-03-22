@@ -82,3 +82,53 @@ func TestCheckFinding_Compare(t *testing.T) {
 		})
 	}
 }
+
+func TestHasEqualOrHigherSeverityThan(t *testing.T) {
+	tests := []struct {
+		name                 string
+		findingSeverity      int
+		checkAgainstSeverity int
+		expected             bool
+	}{
+		{
+			name:                 "equal severities",
+			findingSeverity:      SeverityError,
+			checkAgainstSeverity: SeverityError,
+			expected:             true,
+		},
+		{
+			name:                 "higher severity",
+			findingSeverity:      SeverityError,
+			checkAgainstSeverity: SeverityWarning,
+			expected:             true,
+		},
+		{
+			name:                 "lower severity",
+			findingSeverity:      SeverityWarning,
+			checkAgainstSeverity: SeverityError,
+			expected:             false,
+		},
+		{
+			name:                 "equal lowest severities",
+			findingSeverity:      SeverityInfo,
+			checkAgainstSeverity: SeverityInfo,
+			expected:             true,
+		},
+		{
+			name:                 "higher than lowest severity",
+			findingSeverity:      SeverityWarning,
+			checkAgainstSeverity: SeverityInfo,
+			expected:             true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			f := CheckFinding{Severity: tt.findingSeverity}
+			result := f.HasEqualOrHigherSeverityThan(tt.checkAgainstSeverity)
+			if result != tt.expected {
+				t.Errorf("HasEqualOrHigherSeverityThan(%v, %v) = %v, want %v", tt.findingSeverity, tt.checkAgainstSeverity, result, tt.expected)
+			}
+		})
+	}
+}
