@@ -8,7 +8,7 @@
       "matchPackageNames": [
         "setuptools"
       ],
-      "allowedVersions": "<=76.0.0"
+      "allowedVersions": "<76.0.0"
     }
   ]
 }
