@@ -134,3 +134,41 @@ func TestParseIgnoreForLine(t *testing.T) {
 		})
 	}
 }
+
+func TestIgnoreCommentsToCodes(t *testing.T) {
+	tests := []struct {
+		name     string
+		comments []IgnoreComment
+		expected []string
+	}{
+		{
+			name: "single ignore code",
+			comments: []IgnoreComment{
+				{Comment: "gitlab-ci-verify ignore:CODE1", Code: "CODE1"},
+			},
+			expected: []string{"CODE1"},
+		},
+		{
+			name: "multiple ignore codes",
+			comments: []IgnoreComment{
+				{Comment: "gitlab-ci-verify ignore:CODE1", Code: "CODE1"},
+				{Comment: "gitlab-ci-verify ignore:CODE2", Code: "CODE2"},
+			},
+			expected: []string{"CODE1", "CODE2"},
+		},
+		{
+			name:     "no ignore codes",
+			comments: []IgnoreComment{},
+			expected: []string{},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result := IgnoreCommentsToCodes(tt.comments)
+			if !reflect.DeepEqual(result, tt.expected) {
+				t.Errorf("IgnoreCommentsToCodes() = %v, want %v", result, tt.expected)
+			}
+		})
+	}
+}
