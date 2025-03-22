@@ -5,3 +5,4 @@ coverage:
 ignore:
   - main.go
   - cmd/main.go
+  - tools/**
