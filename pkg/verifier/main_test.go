@@ -229,7 +229,10 @@ func TestCreateCheckInput(t *testing.T) {
 			os.Setenv("CI", "true")
 			defer func() {
 				os.Setenv("CI", ciOldVal)
-				os.RemoveAll("test_data/.git")
+				err := os.RemoveAll("test_data/.git")
+				if err != nil {
+					t.Fatal(err)
+				}
 			}()
 			gcv := &GitlabCIVerifier{
 				configuration: tt.configuration,
