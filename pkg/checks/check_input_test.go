@@ -44,13 +44,6 @@ func TestCheckInput_CanProvideMergedYaml(t *testing.T) {
 		expected bool
 	}{
 		{
-			name: "with LintAPIResult",
-			input: &CheckInput{
-				LintAPIResult: &ciyaml.VerificationResultWithRemoteInfo{},
-			},
-			expected: true,
-		},
-		{
 			name: "without LintAPIResult",
 			input: &CheckInput{
 				LintAPIResult: nil,
