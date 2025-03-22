@@ -186,6 +186,75 @@ func TestRunChecks(t *testing.T) {
 	}
 }
 
+func TestCreateCheckInput(t *testing.T) {
+	tests := []struct {
+		name           string
+		configuration  *cli.Configuration
+		gitlabCiFile   string
+		expectedError  bool
+		expectedResult *checks.CheckInput
+	}{
+		{
+			name: "valid configuration with file",
+			configuration: &cli.Configuration{
+				GitLabCiFile:      "test_data/.gitlab-ci.yml",
+				NoLintAPICallInCi: true,
+			},
+			gitlabCiFile:  "test_data/.gitlab-ci.yml",
+			expectedError: false,
+			expectedResult: &checks.CheckInput{
+				Configuration: &cli.Configuration{
+					GitLabCiFile: "test_data/.gitlab-ci.yml",
+				},
+			},
+		},
+		{
+			name: "invalid configuration with non-existent file",
+			configuration: &cli.Configuration{
+				GitLabCiFile:      "test_data/non-existent.yml",
+				NoLintAPICallInCi: true,
+			},
+			gitlabCiFile:  "test_data/non-existent.yml",
+			expectedError: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			err := os.CopyFS("test_data/.git", os.DirFS("test_data/.git_template"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			ciOldVal := os.Getenv("CI")
+			os.Setenv("CI", "true")
+			defer func() {
+				os.Setenv("CI", ciOldVal)
+				os.RemoveAll("test_data/.git")
+			}()
+			gcv := &GitlabCIVerifier{
+				configuration: tt.configuration,
+				projectRoot:   "/tmp",
+			}
+
+			if tt.gitlabCiFile != "" {
+				os.Setenv("GITLAB_CI_FILE", tt.gitlabCiFile)
+			} else {
+				os.Unsetenv("GITLAB_CI_FILE")
+			}
+
+			result, err := gcv.CreateCheckInput()
+			if (err != nil) != tt.expectedError {
+				t.Errorf("CreateCheckInput() error = %v, wantErr %v", err, tt.expectedError)
+				return
+			}
+
+			if !tt.expectedError && result.Configuration.GitLabCiFile != tt.expectedResult.Configuration.GitLabCiFile {
+				t.Errorf("CreateCheckInput() = %v, want %v", result, tt.expectedResult)
+			}
+		})
+	}
+}
+
 func TestSetupRegoNoPolicies(t *testing.T) {
 	gcv := NewGitlabCIVerifier(&cli.Configuration{}, "/tmp")
 	gcv.SetupRego()
