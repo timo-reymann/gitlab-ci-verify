@@ -1,3 +1,10 @@
+## [2.1.3](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.1.2...v2.1.3) (2025-04-01)
+
+
+### Bug Fixes
+
+* **deps:** update dependency coverage to ==7.8.* ([f1ba667](https://github.com/timo-reymann/gitlab-ci-verify/commit/f1ba667c0ff6c3c438891f98d6dcbcc533afeea7))
+
 ## [2.1.2](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.1.1...v2.1.2) (2025-03-27)
 
 
