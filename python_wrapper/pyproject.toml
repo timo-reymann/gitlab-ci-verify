@@ -29,7 +29,7 @@ dev = [
     "setuptools-scm==8.*",
     "twine==6.1.*",
     "wheel==0.45.*",
-    "pydoctor==24.11.*",
+    "pydoctor==25.4.*",
     "build==1.*"
 ]
 
