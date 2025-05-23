@@ -1,3 +1,10 @@
+## [2.1.7](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.1.6...v2.1.7) (2025-05-23)
+
+
+### Bug Fixes
+
+* **deps:** update dependency pydoctor to v25 ([4aec541](https://github.com/timo-reymann/gitlab-ci-verify/commit/4aec541de5d43d3d69c5bfb9a438edd42e0553df))
+
 ## [2.1.6](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.1.5...v2.1.6) (2025-05-05)
 
 
