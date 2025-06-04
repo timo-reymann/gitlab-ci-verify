@@ -1,3 +1,11 @@
+## [2.1.9](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.1.8...v2.1.9) (2025-06-04)
+
+
+### Bug Fixes
+
+* **deps:** update module github.com/go-git/go-git/v5 to v5.16.1 ([e645b33](https://github.com/timo-reymann/gitlab-ci-verify/commit/e645b331817920a37ac76fdb69826ff56acee1d1))
+* **deps:** update module github.com/open-policy-agent/opa to v1.5.1 ([850726f](https://github.com/timo-reymann/gitlab-ci-verify/commit/850726f05891c474dceaa070a50dc5d007e8b478))
+
 ## [2.1.8](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.1.7...v2.1.8) (2025-05-29)
 
 
