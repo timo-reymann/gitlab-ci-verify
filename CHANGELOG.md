@@ -1,3 +1,11 @@
+## [2.1.10](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.1.9...v2.1.10) (2025-06-12)
+
+
+### Bug Fixes
+
+* **deps:** update dependency coverage to ==7.9.* ([918779b](https://github.com/timo-reymann/gitlab-ci-verify/commit/918779b7c309aa2a9d633e27560d6270d48996c3))
+* **deps:** update module github.com/go-git/go-git/v5 to v5.16.2 ([e8d340e](https://github.com/timo-reymann/gitlab-ci-verify/commit/e8d340e7053b2a3951208eeab3a5f62dad4249be))
+
 ## [2.1.9](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.1.8...v2.1.9) (2025-06-04)
 
 
