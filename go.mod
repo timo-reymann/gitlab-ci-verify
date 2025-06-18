@@ -10,7 +10,7 @@ require (
 	github.com/go-git/go-git/v5 v5.16.2
 	github.com/google/go-cmp v0.7.0
 	github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510
-	github.com/hashicorp/go-retryablehttp v0.7.7
+	github.com/hashicorp/go-retryablehttp v0.7.8
 	github.com/open-policy-agent/opa v1.5.1
 	github.com/spf13/pflag v1.0.6
 	github.com/vmware-labs/yaml-jsonpath v0.3.2
