@@ -1,3 +1,10 @@
+## [2.1.11](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.1.10...v2.1.11) (2025-06-22)
+
+
+### Bug Fixes
+
+* **deps:** update module github.com/hashicorp/go-retryablehttp to v0.7.8 ([9e86eb0](https://github.com/timo-reymann/gitlab-ci-verify/commit/9e86eb06fa15461b1d62f349a75023f4515b69ba))
+
 ## [2.1.10](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.1.9...v2.1.10) (2025-06-12)
 
 
