@@ -3,8 +3,8 @@ package cli
 import (
 	"errors"
 	flag "github.com/spf13/pflag"
-	"github.com/timo-reymann/gitlab-ci-verify/internal/buildinfo"
-	"github.com/timo-reymann/gitlab-ci-verify/internal/logging"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/buildinfo"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/logging"
 	"os"
 )
 

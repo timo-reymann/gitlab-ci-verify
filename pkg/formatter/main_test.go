@@ -3,7 +3,7 @@ package formatter
 import (
 	"bytes"
 	"github.com/google/go-cmp/cmp"
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/checks"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/pkg/checks"
 	"testing"
 )
 

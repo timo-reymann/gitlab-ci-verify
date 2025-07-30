@@ -2,9 +2,9 @@ package checks
 
 import (
 	"fmt"
-	ci_yaml2 "github.com/timo-reymann/gitlab-ci-verify/internal/gitlab/ci-yaml"
-	"github.com/timo-reymann/gitlab-ci-verify/internal/logging"
-	"github.com/timo-reymann/gitlab-ci-verify/internal/shellcheck"
+	ci_yaml2 "github.com/timo-reymann/gitlab-ci-verify/v2/internal/gitlab/ci-yaml"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/logging"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/shellcheck"
 	"strconv"
 	"sync"
 )

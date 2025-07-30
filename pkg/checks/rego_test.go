@@ -2,8 +2,8 @@ package checks
 
 import (
 	"encoding/json"
-	"github.com/timo-reymann/gitlab-ci-verify/internal/gitlab/ci-yaml"
-	"github.com/timo-reymann/gitlab-ci-verify/internal/rego_policies"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/gitlab/ci-yaml"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/rego_policies"
 	"path"
 	"testing"
 

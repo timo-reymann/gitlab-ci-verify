@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/Ladicle/tabwriter"
 	"github.com/fatih/color"
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/checks"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/pkg/checks"
 	"io"
 )
 

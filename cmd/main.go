@@ -3,10 +3,10 @@ package cmd
 import (
 	"errors"
 	"fmt"
-	"github.com/timo-reymann/gitlab-ci-verify/internal/cli"
-	"github.com/timo-reymann/gitlab-ci-verify/internal/logging"
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/checks"
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/verifier"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/cli"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/logging"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/pkg/checks"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/pkg/verifier"
 	"os"
 )
 

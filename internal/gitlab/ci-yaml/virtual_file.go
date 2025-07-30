@@ -2,9 +2,9 @@ package ci_yaml
 
 import (
 	"bytes"
-	includes2 "github.com/timo-reymann/gitlab-ci-verify/internal/gitlab/ci-yaml/includes"
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/filtering"
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/location"
+	includes2 "github.com/timo-reymann/gitlab-ci-verify/v2/internal/gitlab/ci-yaml/includes"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/pkg/filtering"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/pkg/location"
 	"gopkg.in/yaml.v3"
 	"os"
 	"slices"

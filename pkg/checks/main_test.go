@@ -2,8 +2,8 @@ package checks
 
 import (
 	"github.com/google/go-cmp/cmp"
-	"github.com/timo-reymann/gitlab-ci-verify/internal/cli"
-	"github.com/timo-reymann/gitlab-ci-verify/internal/gitlab/ci-yaml"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/cli"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/gitlab/ci-yaml"
 	"os"
 	"path"
 	"testing"

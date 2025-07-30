@@ -2,7 +2,7 @@ package checks
 
 import (
 	"cmp"
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/location"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/pkg/location"
 	"slices"
 )
 

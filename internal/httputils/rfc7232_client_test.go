@@ -1,8 +1,8 @@
 package httputils
 
 import (
-	"github.com/timo-reymann/gitlab-ci-verify/internal/cache"
-	"github.com/timo-reymann/gitlab-ci-verify/internal/hashing"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/cache"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/hashing"
 	"io"
 	"net/http"
 	"net/http/httptest"

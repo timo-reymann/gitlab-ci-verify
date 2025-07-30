@@ -1,7 +1,7 @@
 package ci_yaml
 
 import (
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/filtering"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/pkg/filtering"
 	"os"
 	"testing"
 )

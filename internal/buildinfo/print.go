@@ -2,7 +2,7 @@ package buildinfo
 
 import (
 	"fmt"
-	"github.com/timo-reymann/gitlab-ci-verify/internal/shellcheck"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/shellcheck"
 	"io"
 	"runtime"
 	"text/tabwriter"

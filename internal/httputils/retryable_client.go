@@ -2,7 +2,7 @@ package httputils
 
 import (
 	"github.com/hashicorp/go-retryablehttp"
-	"github.com/timo-reymann/gitlab-ci-verify/internal/logging"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/logging"
 	"net/http"
 	"time"
 )

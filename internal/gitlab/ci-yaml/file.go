@@ -2,9 +2,9 @@ package ci_yaml
 
 import (
 	"bytes"
-	formatconversion "github.com/timo-reymann/gitlab-ci-verify/internal/format-conversion"
-	"github.com/timo-reymann/gitlab-ci-verify/internal/gitlab/ci-yaml/includes"
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/filtering"
+	formatconversion "github.com/timo-reymann/gitlab-ci-verify/v2/internal/format-conversion"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/gitlab/ci-yaml/includes"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/pkg/filtering"
 	"gopkg.in/yaml.v3"
 )
 

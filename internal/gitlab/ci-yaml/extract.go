@@ -2,7 +2,7 @@ package ci_yaml
 
 import (
 	"fmt"
-	"github.com/timo-reymann/gitlab-ci-verify/internal/yamlpathutils"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/yamlpathutils"
 	"github.com/vmware-labs/yaml-jsonpath/pkg/yamlpath"
 	"gopkg.in/yaml.v3"
 )

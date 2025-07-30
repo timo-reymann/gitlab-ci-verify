@@ -2,12 +2,12 @@ package verifier
 
 import (
 	"fmt"
-	"github.com/timo-reymann/gitlab-ci-verify/internal/cli"
-	"github.com/timo-reymann/gitlab-ci-verify/internal/git"
-	ci_yaml "github.com/timo-reymann/gitlab-ci-verify/internal/gitlab/ci-yaml"
-	"github.com/timo-reymann/gitlab-ci-verify/internal/logging"
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/checks"
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/formatter"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/cli"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/git"
+	ci_yaml "github.com/timo-reymann/gitlab-ci-verify/v2/internal/gitlab/ci-yaml"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/logging"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/pkg/checks"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/pkg/formatter"
 	"io"
 	"os"
 	"slices"

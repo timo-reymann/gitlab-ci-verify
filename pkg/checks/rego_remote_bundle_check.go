@@ -2,8 +2,8 @@ package checks
 
 import (
 	"fmt"
-	"github.com/timo-reymann/gitlab-ci-verify/internal/logging"
-	"github.com/timo-reymann/gitlab-ci-verify/internal/rego_policies"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/logging"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/rego_policies"
 )
 
 type RemoteBundleCheck struct {

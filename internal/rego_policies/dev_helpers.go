@@ -2,7 +2,7 @@ package rego_policies
 
 import (
 	"github.com/open-policy-agent/opa/topdown/print"
-	"github.com/timo-reymann/gitlab-ci-verify/internal/logging"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/logging"
 )
 
 type logPrinter struct {

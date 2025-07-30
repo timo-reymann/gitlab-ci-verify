@@ -2,7 +2,7 @@ package git
 
 import (
 	"github.com/chainguard-dev/git-urls"
-	"github.com/timo-reymann/gitlab-ci-verify/internal/logging"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/logging"
 	"strings"
 )
 

@@ -7,7 +7,7 @@ import (
 	"github.com/open-policy-agent/opa/v1/loader"
 	"github.com/open-policy-agent/opa/v1/rego"
 	"github.com/open-policy-agent/opa/v1/types"
-	"github.com/timo-reymann/gitlab-ci-verify/internal/httputils"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/httputils"
 	"io"
 	"os"
 	"strings"

@@ -8,9 +8,9 @@ import (
 	"github.com/open-policy-agent/opa/v1/ast"
 	"github.com/open-policy-agent/opa/v1/rego"
 	"github.com/open-policy-agent/opa/v1/types"
-	"github.com/timo-reymann/gitlab-ci-verify/internal/logging"
-	"github.com/timo-reymann/gitlab-ci-verify/internal/rego_policies"
-	"github.com/timo-reymann/gitlab-ci-verify/internal/yamlpathutils"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/logging"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/rego_policies"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/yamlpathutils"
 	"github.com/vmware-labs/yaml-jsonpath/pkg/yamlpath"
 )
 

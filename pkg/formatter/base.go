@@ -2,7 +2,7 @@ package formatter
 
 import (
 	"fmt"
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/checks"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/pkg/checks"
 	"io"
 )
 

@@ -3,7 +3,7 @@ package formatter
 import (
 	"testing"
 
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/checks"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/pkg/checks"
 )
 
 func TestTextFindingsFormatter(t *testing.T) {

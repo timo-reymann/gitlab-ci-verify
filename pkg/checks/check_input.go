@@ -1,9 +1,9 @@
 package checks
 
 import (
-	"github.com/timo-reymann/gitlab-ci-verify/internal/cli"
-	"github.com/timo-reymann/gitlab-ci-verify/internal/gitlab/ci-yaml"
-	"github.com/timo-reymann/gitlab-ci-verify/pkg/location"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/cli"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/gitlab/ci-yaml"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/pkg/location"
 )
 
 // CheckInput represents the input for a check
