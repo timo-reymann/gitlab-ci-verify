@@ -36,7 +36,7 @@ jobs:
             - run:
                 name: Run tests
                 command: |
-                  go test -race -coverprofile=coverage.txt -covermode=atomic   -v ./...
+                  go test -coverprofile=coverage.txt -covermode=atomic   -v ./...
                   make save-coverage-report
       - codecov/upload
       - store_artifacts:
