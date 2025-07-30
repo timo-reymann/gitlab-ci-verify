@@ -1,3 +1,10 @@
+## [2.1.14](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.1.13...v2.1.14) (2025-07-30)
+
+
+### Bug Fixes
+
+* Set package to v2 ([57f16bb](https://github.com/timo-reymann/gitlab-ci-verify/commit/57f16bb223f2e706523e892ae51fbc0b5337dc2c))
+
 ## [2.1.13](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.1.12...v2.1.13) (2025-07-30)
 
 
