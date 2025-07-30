@@ -105,12 +105,6 @@ sudo mv gitlab-ci-verify_darwin-amd64 /usr/local/bin/gitlab-ci-verify
 Download the latest [release](https://github.com/timo-reymann/gitlab-ci-verify/releases/latest) for Windows and put in
 your `PATH`.
 
-### Install with go
-
-```bash
-go install github.com/timo-reymann/gitlab-ci-verify@latest
-```
-
 ### Supported platforms
 
 The following platforms are supported (and have prebuilt binaries /
