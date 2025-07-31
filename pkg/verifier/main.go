@@ -145,10 +145,13 @@ func (gcv *GitlabCIVerifier) CreateCheckInput() (*checks.CheckInput, error) {
 			return nil, err
 		}
 
-		mergedCiYaml, err = ci_yaml.NewCiYamlFile([]byte(lintRes.LintResult.MergedYaml))
-		if err != nil {
-			return nil, err
+		if lintRes.LintResult.Valid {
+			mergedCiYaml, err = ci_yaml.NewCiYamlFile([]byte(lintRes.LintResult.MergedYaml))
+			if err != nil {
+				return nil, err
+			}
 		}
+
 	} else {
 		logging.Debug("Skipping lint API check")
 	}
