@@ -57,6 +57,11 @@ func (s ShellScriptCheck) Run(i *CheckInput) ([]CheckFinding, error) {
 					}
 
 					loc := i.ResolveLocation(lines[lineNo].Node.Line)
+
+					if loc == nil {
+						panic("Failed to map location for shellcheck finding in line " + strconv.Itoa(lineNo))
+					}
+
 					findingsChan <- CheckFinding{
 						Severity: s.shellcheckLevelToSeverity(f.Level),
 						Code:     fmt.Sprintf("SC-%s", strconv.Itoa(f.Code)),
