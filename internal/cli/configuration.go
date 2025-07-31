@@ -104,7 +104,8 @@ func (conf *Configuration) Parse() error {
 }
 
 func (conf *Configuration) IsCIEnv() bool {
-	return os.Getenv("CI") != ""
+	_, set := os.LookupEnv("CI")
+	return set
 }
 
 // NewConfiguration creates a new configuration
