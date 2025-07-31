@@ -138,7 +138,7 @@ func TestGetIgnoredCodes(t *testing.T) {
 								},
 							},
 						},
-						StartLine: 1,
+						StartLine: 0,
 						EndLine:   10,
 					},
 				},
