@@ -1,3 +1,16 @@
+## [2.2.0](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.1.15...v2.2.0) (2025-07-31)
+
+
+### Features
+
+* [[#104](https://github.com/timo-reymann/gitlab-ci-verify/issues/104)] Add panic when resolving location fails for shellcheck finding ([44daf92](https://github.com/timo-reymann/gitlab-ci-verify/commit/44daf92ee3816c5a22ed376d2d13425e5e8badba))
+
+
+### Bug Fixes
+
+* [[#104](https://github.com/timo-reymann/gitlab-ci-verify/issues/104)] Fix virtual file concat ([2fa95c3](https://github.com/timo-reymann/gitlab-ci-verify/commit/2fa95c39b2dcde5be4fe7d26e588c80822777080))
+* Only create merged ci yaml when gitlab ci yaml is valid ([9d46deb](https://github.com/timo-reymann/gitlab-ci-verify/commit/9d46deb835572944d8935682658de74857abe62a))
+
 ## [2.1.14](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.1.13...v2.1.14) (2025-07-30)
 
 
