@@ -39,7 +39,7 @@ type VirtualCiYamlFile struct {
 // Returns nil if the line is not in the virtual CI YAML
 func (v *VirtualCiYamlFile) Resolve(line int) (*VirtualCiYamlFilePart, *location.Location) {
 	idx := sort.Search(len(v.Parts), func(i int) bool {
-		return v.Parts[i].StartLine > line
+		return v.Parts[i].StartLine >= line
 	})
 	var part *VirtualCiYamlFilePart
 	if idx > 0 {
@@ -111,7 +111,7 @@ func CreateVirtualCiYamlFile(projectRoot string, entryFilePath string, entryFile
 		virtualFile.Parts = append(virtualFile.Parts, part)
 		combined.Write(part.CiYamlFile.FileContent)
 		combined.Write([]byte("\n"))
-		line += part.EndLine + 2
+		line = part.EndLine + 1
 	}
 
 	combined.Write([]byte("\n# Auto generated include block\n"))
