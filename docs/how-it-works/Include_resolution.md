@@ -1,4 +1,4 @@
-Include resolution
+How include resolution works
 ==================
 
 The include resolution is the process of finding the file that is referenced by the [
@@ -20,7 +20,7 @@ gitlab-ci-verify resolves includes by following these steps:
 
 Once this processing is done, the virtual CI YAML is used for checks, including validation by the Pipeline Lint API.
 
-| ![Include resolve diagram](assets/include_resolve.svg) |
+| ![Include resolve diagram](../assets/include_resolve.svg) |
 |:---------------------------------------------------------:|
 |     *How includes are joined to the Virtual CI YAML*      |
 
@@ -65,10 +65,10 @@ gitlab-ci-verify:
   ```
 - `.gitlab-ci.yml`:
   ```yaml
-    include:
-        - local: 'file.yml'
-    key: other_value
-    ```
+  include:
+    - local: 'file.yml'
+  key: other_value
+  ```
 
 While this is not relevant for most use cases, it is important to keep in mind when using gitlab-ci-verify.
 

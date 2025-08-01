@@ -139,6 +139,20 @@ jobs:
           key: python-wrapper-dependencies-{{ checksum "python_wrapper/pyproject.toml" }}
           paths:
             - "/tmp/pip-cache"
+      - run:
+          name: Clear cache for mkdocs build
+          command: rm -rf /tmp/pip-cache
+      - restore_cache:
+          key: mkdocs-dependencies-{{ checksum "requirements-docs.txt" }}
+      - run:
+          name: Build mkdocs documentation
+          command: |
+            mkdocs build
+            mv site/* gh-pages/
+      - save_cache:
+          key: mkdocs-dependencies-{{ checksum "requirements-docs.txt" }}
+          paths:
+            - "/tmp/pip-cache"
       - github-utils/publish_github_pages:
           folder: gh-pages/
           git_commit_author_email: "no-reply@timo-reymann.de"

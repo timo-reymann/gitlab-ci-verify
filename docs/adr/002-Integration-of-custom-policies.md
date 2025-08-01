@@ -1,7 +1,12 @@
+---
+id: 002
+status: accepted
+date: 2024-12-23
+deciders: 
+  - timo-reymann
+---
 # Integration of custom policies
 
-* Status: proposed
-* Date: 2024-12-23
 
 Technical Story: https://github.com/timo-reymann/gitlab-ci-verify/issues/34
 

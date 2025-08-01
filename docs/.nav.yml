@@ -1,0 +1,13 @@
+nav:
+  - index.md
+  - installation.md
+  - usage
+  - extending
+  - Development:
+      - add-builtin-check.md
+      - Architecture Decision Records:
+          - adr/*.md
+  - how-it-works
+
+ignore:
+  - adr/000-TEMPLATE.md

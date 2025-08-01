@@ -1,9 +1,11 @@
+---
+id: 000
+status: proposed | rejected | accepted | deprecated
+date: YYYY-MM-D
+ticket: id
+---
 # [short title of solved problem and solution]
 
-* Status: [proposed | rejected | accepted | deprecated | … | superseded by [ADR-0005](0005-example.md)] <!-- optional -->
-* Date: [YYYY-MM-DD when the decision was last updated] <!-- optional -->
-
-Technical Story: [description | ticket/issue URL] <!-- optional -->
 
 ## Context and Problem Statement
 

@@ -1,5 +1,9 @@
-Add a new check
+Add a new builtin check
 ===
+
+If you think a check could be valuable for other people, this is the right guide for you. If you just look for a way to
+add custom checks for your project, team or company
+check [the guide on writing custom policies](./extending/writing-custom-policies.md)
 
 There are two ways to add a new check:
 
@@ -64,7 +68,7 @@ You need to write a new [Rego] file for the check in `pkg/checks/rego/<your chec
 
 ## Go check
 
-Checks are implemented via the [`Check` interface](../../pkg/checks/check.go).
+Checks are implemented via the [`Check` interface](../pkg/checks/check.go).
 
 ## Step by step
 
@@ -120,5 +124,5 @@ Checks are implemented via the [`Check` interface](../../pkg/checks/check.go).
         RegisterCheck(MyCheck{})
     }
     ```
-   
+
 [Rego]: https://www.openpolicyagent.org/docs/latest/policy-language/#what-is-rego

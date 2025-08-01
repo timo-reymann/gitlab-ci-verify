@@ -1,4 +1,4 @@
-Writing custom policies
+Writing custom rego policies
 ===
 
 You can write custom policies for your projects

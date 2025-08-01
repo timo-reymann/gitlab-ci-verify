@@ -1,7 +1,11 @@
+---
+id: 001
+status: accepted
+date: 2024-08-29
+deciders:
+  - timo-reymann
+---
 # ShellCheck Integration
-
-* Status: accepted
-* Date: 2024-08-29
 
 ## Context and Problem Statement
 
