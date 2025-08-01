@@ -154,6 +154,10 @@ jobs:
           key: mkdocs-dependencies-{{ checksum "requirements-docs.txt" }}
           paths:
             - "/tmp/pip-cache"
+      - run:
+          name: Set up CNAME
+          command: |
+            echo "gitlab-ci-verify.timo-reymann.de" > gh-pages/CNAME
       - github-utils/publish_github_pages:
           folder: gh-pages/
           git_commit_author_email: "no-reply@timo-reymann.de"
