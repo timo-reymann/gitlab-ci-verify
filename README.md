@@ -23,15 +23,15 @@ gitlab-ci-verify
 
 - ShellCheck for scripts
 - Validation against Pipeline Lint API for project
-- Curated checks for common mistakes (feel free to [contribute new ones](./docs/checks/Add_check.md))
+- Curated checks for common mistakes (feel free to [contribute new ones](https://gitlab-ci-verify.timo-reymann.de/add-builtin-check.html))
 - Automatic detection of the current gitlab project with an option to overwrite
 - Available as pre-commit hook
-- Usable to valid dynamically generated pipelines using the [python wrapper](#install-as-library-using-pip)
+- Usable to valid dynamically generated pipelines using the [python wrapper](https://gitlab-ci-verify.timo-reymann.de/usage/python-library.html)
 - Support for *gitlab.com* and self-hosted instances
-- Support for [custom policies](#writing-custom-policies) written
+- Support for [custom policies](https://gitlab-ci-verify.timo-reymann.de/extending/writing-custom-policies.html) written
   in [Rego](https://www.openpolicyagent.org/docs/latest/policy-language/)
 - Resolve and validate
-  includes ([more information on how it works and limitations](docs/how-it-works/Include_resolution.md))
+  includes ([more information on how it works and limitations](https://gitlab-ci-verify.timo-reymann.de/how-it-works/Include_resolution.html))
 
 ## Installation
 
