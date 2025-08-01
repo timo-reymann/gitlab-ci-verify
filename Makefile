@@ -59,3 +59,7 @@ build: build-linux build-darwin build-windows ## Build binaries for all platform
 integration-test: ## Run bats tests on the host
 	@CGO_ENABLED=0 go build -o /tmp/gitlab-ci-verify
 	@BATS_BASE_DIR=$(PWD)/integration-tests/tests BATS_INTEGRATION_REPO_ROOT=$(PWD)/integration-tests BATS_REPO_ROOT=$(PWD) BATS_GITLAB_CI_VERIFY_BIN=/tmp/gitlab-ci-verify npx bats --report-formatter junit --print-output-on-failure integration-tests/tests/$(BATS_TEST_SUITE)
+
+preview-docs:
+	python3 -m venv .venv
+	./.venv/bin/python3 -m pip install -r requirements-docs.txt
