@@ -1,3 +1,11 @@
+## [2.3.0](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.2.1...v2.3.0) (2025-08-01)
+
+
+### Features
+
+* [[#105](https://github.com/timo-reymann/gitlab-ci-verify/issues/105)] Add fingerprint for check findings ([f811414](https://github.com/timo-reymann/gitlab-ci-verify/commit/f8114149131b9a6e90e4571f14ab2702fb1a26eb))
+* [[#105](https://github.com/timo-reymann/gitlab-ci-verify/issues/105)] Deduplicate findings for the same line ([9b8ce7d](https://github.com/timo-reymann/gitlab-ci-verify/commit/9b8ce7d6645a99f59744fcb0ed7ae81ed11ef641))
+
 ## [2.2.1](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.2.0...v2.2.1) (2025-08-01)
 
 
