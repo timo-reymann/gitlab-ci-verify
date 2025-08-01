@@ -9,8 +9,8 @@ nav:
       - Architecture Decision Records:
           - adr/*.md
   - how-it-works
-  - Check Reference:
-      - checks/*.md
+  - Findings Reference:
+      - findings/*.md
 
 ignore:
   - adr/000-TEMPLATE.md
