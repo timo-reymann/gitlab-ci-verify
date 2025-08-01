@@ -45,13 +45,13 @@
           {
             "countMatches": true,
             "files": [
-              "README.md"
+              "docs/installation.md"
             ],
             "from": "\\s{2}rev: [v0-9.]+",
             "to": "  rev: v${nextRelease.version}",
             "results": [
               {
-                "file": "README.md",
+                "file": "docs/installation.md",
                 "hasChanged": true,
                 "numMatches": 1,
                 "numReplacements": 1
@@ -66,7 +66,7 @@
       {
         "assets": [
           "CHANGELOG.md",
-          "README.md",
+          "docs/installation.md",
           "python_wrapper/pyproject.toml"
         ]
       }
