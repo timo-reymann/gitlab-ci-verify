@@ -13,9 +13,9 @@ findings contains finding if {
 
 	finding := gitlab_ci_verify.warning_with_link(
 	    "GL-201",
-	    "pages job does not contain artifacts with public path",
+	    "Pages job does not contain artifacts with a public path.",
 	     yamlPathToLineNumber(".pages.artifacts.paths"),
-	     "https://docs.gitlab.com/ee/user/project/pages"
+	     "https://gitlab-ci-verify.timo-reymann.de/findings/GL-202.html"
 	)
 }
 
@@ -24,8 +24,8 @@ findings contains finding if {
 
 	finding := gitlab_ci_verify.warning_with_link(
 	    "GL-202",
-	    "pages job does not define artifacts",
+	    "Pages job does not define artifacts.",
 	     yamlPathToLineNumber(".pages.artifacts"),
-	     "https://docs.gitlab.com/ee/user/project/pages"
+	     "https://gitlab-ci-verify.timo-reymann.de/findings/GL-202.html"
 	)
 }
