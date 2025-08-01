@@ -5,6 +5,7 @@ nav:
   - extending
   - Development:
       - add-builtin-check.md
+      - development/*.md
       - Architecture Decision Records:
           - adr/*.md
   - how-it-works
