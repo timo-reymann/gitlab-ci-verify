@@ -132,3 +132,49 @@ func TestHasEqualOrHigherSeverityThan(t *testing.T) {
 		})
 	}
 }
+
+func TestCheckFinding_Fingerprint(t *testing.T) {
+	tests := []struct {
+		name    string
+		finding CheckFinding
+		want    string
+	}{
+		{
+			name: "basic finding",
+			finding: CheckFinding{
+				Severity: 1,
+				Code:     "TEST-001",
+				Line:     10,
+				Message:  "Test message",
+				Link:     "https://example.com",
+				File:     "test.yml",
+			},
+			want: "ea9d9494671bbc9455169bd1c4c71eb2aab34689a41a6bbb9f908401aa8d3e9b",
+		},
+		{
+			name: "empty fields",
+			finding: CheckFinding{
+				Severity: 0,
+				Code:     "",
+				Line:     0,
+				Message:  "",
+				Link:     "",
+				File:     "",
+			},
+			want: "f1534392279bddbf9d43dde8701cb5be14b82f76ec6607bf8d6ad557f60f304e",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.finding.Fingerprint(); got != tt.want {
+				t.Errorf("CheckFinding.Fingerprint() = %v, want %v", got, tt.want)
+			}
+
+			// Test consistency - multiple calls should return the same fingerprint
+			if second := tt.finding.Fingerprint(); second != tt.want {
+				t.Errorf("CheckFinding.Fingerprint() second call = %v, want %v", second, tt.want)
+			}
+		})
+	}
+}
