@@ -84,6 +84,7 @@ func (gcv *GitlabCIVerifier) RunChecks(checkInput *checks.CheckInput, checksToRu
 	})
 
 	shouldFail := false
+	showedFindings := make([]string, 0)
 	for _, finding := range findings {
 		if finding.HasCodeIn(gcv.configuration.ExcludedChecks) {
 			continue
@@ -94,12 +95,17 @@ func (gcv *GitlabCIVerifier) RunChecks(checkInput *checks.CheckInput, checksToRu
 			continue
 		}
 
+		if slices.Contains(showedFindings, finding.Fingerprint()) {
+			continue
+		}
+
 		if !shouldFail && finding.HasEqualOrHigherSeverityThan(failSeverity) {
 			shouldFail = true
 		}
 
 		err := gcv.formatter.Print(&finding)
 		errorHandler(err)
+		showedFindings = append(showedFindings, finding.Fingerprint())
 	}
 
 	err := gcv.formatter.End()
