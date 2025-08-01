@@ -4,8 +4,9 @@ use_directory_urls: false
 
 theme:
   name: material
+  favicon: images/logo.png
+  logo: images/logo.png
   icon:
-    logo: material/file-check
     repo: material/github
   features:
     - navigation.instant

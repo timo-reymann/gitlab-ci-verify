@@ -2,7 +2,7 @@ Home
 ===
 
 <figure markdown="span">
-![Logo](https://raw.githubusercontent.com/timo-reymann/gitlab-ci-verify/main/.github/images/logo.png){ width="250" }
+![Logo](./images/logo.png){ width="250" }
 </figure>
 
 Validate and lint your gitlab ci files using ShellCheck, the Gitlab API, curated checks or even build your own checks
