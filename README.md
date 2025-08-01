@@ -37,6 +37,15 @@ gitlab-ci-verify
 
 See the [Installation section](https://gitlab-ci-verify.timo-reymann.de/installation.html) in the documentation.
 
+## Documentation
+
+You can find the full documentation on [GitHub Pages](https://gitlab-ci-verify.timo-reymann.de/), including:
+
+- How it works
+- How to add new checks
+- How to write custom policies using rego
+- How to authenticate with GitLab
+
 ## Motivation
 
 Unfortunately, GitLab didn't provide a tool to validate CI configuration for quite a while.
