@@ -2,6 +2,8 @@ package checks
 
 import (
 	"cmp"
+	"crypto/sha256"
+	"fmt"
 	"github.com/timo-reymann/gitlab-ci-verify/v2/pkg/location"
 	"slices"
 )
@@ -50,4 +52,10 @@ func (cf *CheckFinding) Compare(o CheckFinding) int {
 	}
 
 	return cmp.Compare(cf.Line, o.Line)
+}
+
+func (cf *CheckFinding) Fingerprint() string {
+	h := sha256.New()
+	h.Write([]byte(fmt.Sprintf("%d%s%d%s%s%s", cf.Severity, cf.Code, cf.Line, cf.Message, cf.Link, cf.File)))
+	return fmt.Sprintf("%x", h.Sum(nil))
 }
