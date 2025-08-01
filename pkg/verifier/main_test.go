@@ -7,6 +7,7 @@ import (
 	"github.com/timo-reymann/gitlab-ci-verify/v2/pkg/checks"
 	"github.com/timo-reymann/gitlab-ci-verify/v2/pkg/formatter"
 	"os"
+	"strings"
 	"testing"
 )
 
@@ -109,11 +110,12 @@ func (dc *DummyCheck) Run(input *checks.CheckInput) ([]checks.CheckFinding, erro
 
 func TestRunChecks(t *testing.T) {
 	tests := []struct {
-		name         string
-		checkInput   *checks.CheckInput
-		failSeverity int
-		expectedExit bool
-		checks       []checks.Check
+		name                              string
+		checkInput                        *checks.CheckInput
+		failSeverity                      int
+		expectedExit                      bool
+		expectedReportLineCountWithHeader int
+		checks                            []checks.Check
 	}{
 		{
 			name: "no findings",
@@ -121,8 +123,9 @@ func TestRunChecks(t *testing.T) {
 				VirtualCiYaml: &ci_yaml.VirtualCiYamlFile{},
 				Configuration: &cli.Configuration{},
 			},
-			failSeverity: checks.SeverityError,
-			expectedExit: false,
+			failSeverity:                      checks.SeverityError,
+			expectedExit:                      false,
+			expectedReportLineCountWithHeader: 1,
 			checks: []checks.Check{
 				&DummyCheck{name: "DummyCheck1", findings: []checks.CheckFinding{}},
 			},
@@ -133,8 +136,9 @@ func TestRunChecks(t *testing.T) {
 				VirtualCiYaml: &ci_yaml.VirtualCiYamlFile{},
 				Configuration: &cli.Configuration{},
 			},
-			failSeverity: checks.SeverityError,
-			expectedExit: false,
+			failSeverity:                      checks.SeverityError,
+			expectedExit:                      false,
+			expectedReportLineCountWithHeader: 2,
 			checks: []checks.Check{
 				&DummyCheck{name: "DummyCheck2", findings: []checks.CheckFinding{
 					{Severity: checks.SeverityWarning},
@@ -147,11 +151,29 @@ func TestRunChecks(t *testing.T) {
 				VirtualCiYaml: &ci_yaml.VirtualCiYamlFile{},
 				Configuration: &cli.Configuration{},
 			},
-			failSeverity: checks.SeverityWarning,
-			expectedExit: true,
+			failSeverity:                      checks.SeverityWarning,
+			expectedExit:                      true,
+			expectedReportLineCountWithHeader: 2,
 			checks: []checks.Check{
 				&DummyCheck{name: "DummyCheck3", findings: []checks.CheckFinding{
 					{Severity: checks.SeverityWarning},
+				}},
+			},
+		},
+		{
+			name: "multiple findings at the same line for the same reason",
+			checkInput: &checks.CheckInput{
+				VirtualCiYaml: &ci_yaml.VirtualCiYamlFile{},
+				Configuration: &cli.Configuration{},
+			},
+			failSeverity:                      checks.SeverityWarning,
+			expectedExit:                      true,
+			expectedReportLineCountWithHeader: 3,
+			checks: []checks.Check{
+				&DummyCheck{name: "DummyCheck3", findings: []checks.CheckFinding{
+					{Severity: checks.SeverityWarning},
+					{Severity: checks.SeverityWarning},
+					{Severity: checks.SeverityError},
 				}},
 			},
 		},
@@ -167,7 +189,7 @@ func TestRunChecks(t *testing.T) {
 			}
 
 			writer := &bytes.Buffer{}
-			err := gcv.SetupFormatter(writer, "text")
+			err := gcv.SetupFormatter(writer, "table")
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -181,6 +203,11 @@ func TestRunChecks(t *testing.T) {
 			isExit := gcv.RunChecks(tt.checkInput, tt.checks, tt.failSeverity, errorHandler)
 			if isExit != tt.expectedExit {
 				t.Errorf("RunChecks() = %v, want %v", isExit, tt.expectedExit)
+			}
+
+			lines := strings.Split(strings.TrimSpace(writer.String()), "\n")
+			if tt.expectedReportLineCountWithHeader != len(lines) {
+				t.Errorf("expected %d lines, got %d", tt.expectedReportLineCountWithHeader, len(lines))
 			}
 		})
 	}
