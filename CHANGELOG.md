@@ -1,3 +1,11 @@
+## [2.4.0](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.3.0...v2.4.0) (2025-08-01)
+
+
+### Features
+
+* **gitlab-packages-check:** Use dedicated finding reference ([22dc428](https://github.com/timo-reymann/gitlab-ci-verify/commit/22dc4284fecf972bdb787cd24bdc0ef43e80c621))
+* **pipeline-api-lint-check:** Use dedicated finding reference ([9bfe4a1](https://github.com/timo-reymann/gitlab-ci-verify/commit/9bfe4a1e145d9b254e191ee5994d183aa29cd39e))
+
 ## [2.3.0](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.2.1...v2.3.0) (2025-08-01)
 
 
