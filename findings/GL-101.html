@@ -12,7 +12,7 @@
         <link rel="prev" href="../how-it-works/Include_resolution.html">
       
       
-        <link rel="next" href="GL-202.html">
+        <link rel="next" href="GL-102.html">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>GL-201 - gitlab-ci-verify</title>
+        <title>GL-101 - gitlab-ci-verify</title>
       
     
     
@@ -72,7 +72,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#gl-201" class="md-skip">
+        <a href="#gl-101" class="md-skip">
           Skip to content
         </a>
       
@@ -106,7 +106,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              GL-201
+              GL-101
             
           </span>
         </div>
@@ -309,11 +309,11 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="GL-201.html" class="md-tabs__link">
+        <a href="GL-101.html" class="md-tabs__link">
           
   
   
-  Check Reference
+  Findings Reference
 
         </a>
       </li>
@@ -903,7 +903,7 @@
   
   
   <span class="md-ellipsis">
-    Check Reference
+    Findings Reference
     
   </span>
   
@@ -914,7 +914,7 @@
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
-            Check Reference
+            Findings Reference
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -934,7 +934,77 @@
         
       
       
-      <a href="GL-201.html" class="md-nav__link md-nav__link--active">
+      <a href="GL-101.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    GL-101
+    
+  </span>
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="GL-102.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GL-102
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="GL-103.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GL-103
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="GL-201.html" class="md-nav__link">
         
   
   
@@ -945,7 +1015,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -1018,22 +1087,15 @@
   
 
 
-<h1 id="gl-201">GL-201</h1>
-<p>Pages job does not contain artifacts with a public path.</p>
+<h1 id="gl-101">GL-101</h1>
+<p>Warning returned by CI Lint API</p>
 <h1 id="cause">Cause</h1>
-<p>The special job called <code>pages</code> is used to publish GitLab Pages, based on the assumption an artifact with files from
-<code>public/</code> exist.</p>
+<p>The <a href="https://docs.gitlab.com/api/lint/">CI Lint API</a> included a warning.</p>
 <h1 id="fix">Fix</h1>
-<p>Make sure your <code>pages</code> job <code>artifacts</code> contain files located in <code>public/</code>.</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">pages</span><span class="p">:</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="c1"># ... job config</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">artifacts</span><span class="p">:</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="nt">paths</span><span class="p">:</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">public/</span>
-</span></code></pre></div>
+<p>Adjust your CI configuration based on the provided warning message.</p>
 <h1 id="further-information">Further information</h1>
 <ul>
-<li><a href="https://docs.gitlab.com/ee/user/project/pages">GitLab Pages documentation</a></li>
+<li><a href="https://docs.gitlab.com/ci/yaml/">CI/CD YAML syntax reference</a></li>
 </ul>
 
 
