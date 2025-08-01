@@ -32,5 +32,5 @@ print(f"Findings: {findings}")
 
 ## API documentation
 
-See the [python wrapper documentation](https://timo-reymann.github.io/gitlab-ci-verify/python-wrapper/) for 
+See the [python wrapper documentation](https://gitlab-ci-verify.timo-reymann.de/python-wrapper/) for 
 comprehensive API documentation.
