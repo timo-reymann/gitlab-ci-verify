@@ -147,6 +147,7 @@ jobs:
       - run:
           name: Build mkdocs documentation
           command: |
+            pip install -r requirements-docs.txt
             mkdocs build
             mv site/* gh-pages/
       - save_cache:
