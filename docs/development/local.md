@@ -36,3 +36,10 @@ Build the binary.
 make build
 ```
 
+## Preview documentation
+
+Preview the mkdocs documentation locally with hot-reload for changes.
+
+```sh
+make preview-docs
+```
