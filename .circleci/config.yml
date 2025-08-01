@@ -228,6 +228,12 @@ workflows:
       - build-python-wrapper:
           requires:
             - unit-test-python-wrapper
+      - build-gh-pages:
+          filters:
+            branches:
+              only: main
+          requires:
+            - build-python-wrapper
       - integration-test:
           requires:
             - unit-test-python-wrapper
@@ -251,12 +257,6 @@ workflows:
           <<: *only_tags
       - build-python-wrapper:
           <<: *only_tags
-      - build-gh-pages:
-          filters:
-            branches:
-              only: main
-          requires:
-            - build-python-wrapper
       - publish-python-wrapper:
           <<: *only_tags
           requires:
