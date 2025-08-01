@@ -252,6 +252,9 @@ workflows:
       - build-python-wrapper:
           <<: *only_tags
       - build-gh-pages:
+          filters:
+            branches:
+              only: main
           requires:
             - build-python-wrapper
       - publish-python-wrapper:
