@@ -31,7 +31,7 @@ gitlab-ci-verify
 - Support for [custom policies](https://gitlab-ci-verify.timo-reymann.de/extending/writing-custom-policies.html) written
   in [Rego](https://www.openpolicyagent.org/docs/latest/policy-language/)
 - Resolve and validate
-  includes ([more information on how it works and limitations](https://gitlab-ci-verify.timo-reymann.de/how-it-works/Include_resolution.html))
+  includes ([how it works and limitations](https://gitlab-ci-verify.timo-reymann.de/how-it-works/include-resolution.html))
 
 ## Installation
 
