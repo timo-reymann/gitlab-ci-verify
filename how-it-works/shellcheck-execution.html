@@ -9,7 +9,7 @@
       
       
       
-        <link rel="prev" href="../adr/002-Integration-of-custom-policies.html">
+        <link rel="prev" href="include-resolution.html">
       
       
         <link rel="next" href="../findings/GL-101.html">
@@ -20,7 +20,7 @@
     
     
       
-        <title>How include resolution works - gitlab-ci-verify</title>
+        <title>How shellcheck is executed - gitlab-ci-verify</title>
       
     
     
@@ -72,7 +72,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#how-include-resolution-works" class="md-skip">
+        <a href="#how-shellcheck-is-executed" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              How include resolution works
+              How shellcheck is executed
             
           </span>
         </div>
@@ -288,7 +288,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="Include_resolution.html" class="md-tabs__link">
+        <a href="include-resolution.html" class="md-tabs__link">
           
   
   
@@ -849,6 +849,29 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="include-resolution.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    How include resolution works
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -866,7 +889,7 @@
   
   
   <span class="md-ellipsis">
-    How include resolution works
+    How shellcheck is executed
     
   </span>
   
@@ -874,12 +897,12 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <a href="Include_resolution.html" class="md-nav__link md-nav__link--active">
+      <a href="shellcheck-execution.html" class="md-nav__link md-nav__link--active">
         
   
   
   <span class="md-ellipsis">
-    How include resolution works
+    How shellcheck is executed
     
   </span>
   
@@ -902,71 +925,20 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#terminology" class="md-nav__link">
+  <a href="#distribution-of-shellcheck" class="md-nav__link">
     <span class="md-ellipsis">
-      Terminology
+      Distribution of shellcheck
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#how-gitlab-ci-verify-resolves-includes" class="md-nav__link">
+  <a href="#execution-of-the-binary" class="md-nav__link">
     <span class="md-ellipsis">
-      How gitlab-ci-verify resolves includes
+      Execution of the binary
     </span>
   </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#limitations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Limitations
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Limitations">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#conditional-includes-are-always-resolved" class="md-nav__link">
-    <span class="md-ellipsis">
-      Conditional includes are always resolved
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#no-deep-merge" class="md-nav__link">
-    <span class="md-ellipsis">
-      No deep merge
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#duplicated-keys-in-the-virtual-ci-yaml" class="md-nav__link">
-    <span class="md-ellipsis">
-      Duplicated keys in the virtual CI YAML
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#remote-includes-are-not-resolved" class="md-nav__link">
-    <span class="md-ellipsis">
-      Remote includes are not resolved
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1176,71 +1148,20 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#terminology" class="md-nav__link">
+  <a href="#distribution-of-shellcheck" class="md-nav__link">
     <span class="md-ellipsis">
-      Terminology
+      Distribution of shellcheck
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#how-gitlab-ci-verify-resolves-includes" class="md-nav__link">
+  <a href="#execution-of-the-binary" class="md-nav__link">
     <span class="md-ellipsis">
-      How gitlab-ci-verify resolves includes
+      Execution of the binary
     </span>
   </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#limitations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Limitations
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Limitations">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#conditional-includes-are-always-resolved" class="md-nav__link">
-    <span class="md-ellipsis">
-      Conditional includes are always resolved
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#no-deep-merge" class="md-nav__link">
-    <span class="md-ellipsis">
-      No deep merge
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#duplicated-keys-in-the-virtual-ci-yaml" class="md-nav__link">
-    <span class="md-ellipsis">
-      Duplicated keys in the virtual CI YAML
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#remote-includes-are-not-resolved" class="md-nav__link">
-    <span class="md-ellipsis">
-      Remote includes are not resolved
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1263,92 +1184,30 @@
   
 
 
-<h1 id="how-include-resolution-works">How include resolution works</h1>
-<p>The include resolution is the process of finding the file that is referenced by the <a href="https://docs.gitlab.com/ci/yaml/includes/">
-<code>include</code> keyword</a>.</p>
-<h2 id="terminology">Terminology</h2>
+<h1 id="how-shellcheck-is-executed">How shellcheck is executed</h1>
+<p><a href="https://www.shellcheck.net/">shellcheck</a> is a linter to find bugs in shell scripts.</p>
+<p>shellcheck is used to evaluate and validate <code>script</code> blocks in GitLab CI YAML files, including:</p>
 <ul>
-<li><strong>Virtual CI YAML</strong>: Is the GitLab CI YAML that is generated by gitlab-ci-verify to check the effective pipeline
-  configuration. It only exists in memory and is not written to disk.</li>
+<li><code>before_script</code></li>
+<li><code>script</code></li>
+<li><code>after_script</code></li>
 </ul>
-<h2 id="how-gitlab-ci-verify-resolves-includes">How gitlab-ci-verify resolves includes</h2>
-<p>gitlab-ci-verify resolves includes by following these steps:</p>
-<ol>
-<li>Collect all includes.</li>
-<li>Make sure each include is unique, while keeping their order.</li>
-<li>Resolve each local include by reading the file and adding it to the virtual CI YAML.</li>
-<li>Add all includes to the virtual CI YAML end.</li>
-</ol>
-<p>Once this processing is done, the virtual CI YAML is used for checks, including validation by the Pipeline Lint API.</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;"><img alt="Include resolve diagram" src="../assets/include_resolve.svg" /></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><em>How includes are joined to the Virtual CI YAML</em></td>
-</tr>
-</tbody>
-</table>
-<h2 id="limitations">Limitations</h2>
-<p>As gitlab-ci-verify cant apply the exact same logic as the Gitlab CI YAML resolver, it has some limitations:</p>
-<ul>
-<li><a href="#conditional-includes-are-always-resolved">Conditional includes are always resolved</a></li>
-<li><a href="#no-deep-merge">No deep merge</a></li>
-<li><a href="#duplicated-keys-in-the-virtual-ci-yaml">Duplicated keys in the virtual CI YAML</a></li>
-<li><a href="#remote-includes-are-not-resolved">Remote includes are not resolved</a></li>
-</ul>
-<p>You can find more in-depth information about each of these limitations in the following sections.</p>
-<h3 id="conditional-includes-are-always-resolved">Conditional includes are always resolved</h3>
-<p>Gitlab CI allows including files conditionally using <a href="https://docs.gitlab.com/ci/yaml/#rules"><code>rules</code></a>. This is not
-supported by gitlab-ci-verify.</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">include</span><span class="p">:</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">local</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;file.yml&#39;</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="nt">rules</span><span class="p">:</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$CI_COMMIT_REF_NAME == &#39;master&#39;</span>
+<h2 id="distribution-of-shellcheck">Distribution of shellcheck</h2>
+<p>To avoid you having to install shellcheck, it comes pre-bundled with gitlab-ci-verify.</p>
+<p>The version output also gives you information about the used shellcheck version:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>gitlab-ci-verify<span class="w"> </span>--version
 </span></code></pre></div>
-<p>Instead, includes are always resolved, regardless of the rules.</p>
-<p>This also means that gitlab-ci-verify could include files for checking that are not included by Gitlab CI.</p>
-<h3 id="no-deep-merge">No deep merge</h3>
-<p>Gitlab CI uses <a href="https://docs.gitlab.com/ci/yaml/includes/#merge-method-for-include">deep merging for included files</a>.
-This is not supported by gitlab-ci-verify.</p>
-<p>For example, the following configuration would result in <code>key</code> being <code>value</code> in Gitlab CI, but <code>other_value</code> in
-gitlab-ci-verify:</p>
+<p>In addition, you can find information about the latest version in the source tree
+at <a href="https://github.com/timo-reymann/gitlab-ci-verify/blob/main/internal/shellcheck/bin/README.txt">internal/shellcheck/bin/README.txt</a>.</p>
+<h2 id="execution-of-the-binary">Execution of the binary</h2>
+<p>Under the hood gitlab-ci-verify uses <a href="https://github.com/amenzhinsky/go-memexec">memexec</a>. Depending on the platform, the
+execution method differs:</p>
 <ul>
-<li><code>file.yml</code>:
-  <div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">value</span>
-</span></code></pre></div></li>
-<li><code>.gitlab-ci.yml</code>:
-  <div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">include</span><span class="p">:</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">local</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;file.yml&#39;</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">other_value</span>
-</span></code></pre></div></li>
+<li>macOS: copy to a temporary file and execute</li>
+<li>Windows: copy to a temporary file and execute</li>
+<li>Linux: Creates a memory file descriptor that loads the entire binary in the RAM and executes it</li>
 </ul>
-<p>While this is not relevant for most use cases, it is important to keep in mind when using gitlab-ci-verify.</p>
-<p>Especially the merged YAML for custom checks might differ from the actual Gitlab CI configuration.</p>
-<p>This can include but is not limited to:</p>
-<ul>
-<li>job order in the effective YAML</li>
-<li>variable and script overrides</li>
-</ul>
-<h3 id="duplicated-keys-in-the-virtual-ci-yaml">Duplicated keys in the virtual CI YAML</h3>
-<p>Gitlab CI allows duplicated keys in the CI YAML. This is not standard YAML behavior.</p>
-<p>The last key with the same name will overwrite the previous ones.</p>
-<p>For example, the following configuration would result in <code>key</code> being <code>value</code> in Gitlab CI, but <code>other_value</code> in
-gitlab-ci-verify:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">value</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">other_value</span>
-</span></code></pre></div>
-<p>This is also actively used as the virtual CI YAML is generated by joining all included files.</p>
-<h3 id="remote-includes-are-not-resolved">Remote includes are not resolved</h3>
-<p>GitLab CI allows you to load files from remote locations. This is not supported by gitlab-ci-verify for several reasons:</p>
-<ul>
-<li><strong>Performance</strong>: Fetching remote files can be slow</li>
-<li><strong>Reliability</strong>: Fetching remote files can fail, leading to flaky results</li>
-</ul>
-<p>Besides that, gitlab-ci-verify assumes that any remote file is already linted by the user, ensuring its stability.</p>
+<p>For efficiency reasons, the shellcheck instance is reused for all scripts discovered.</p>
 
 
 
