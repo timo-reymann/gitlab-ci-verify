@@ -35,7 +35,7 @@ gitlab-ci-verify
 
 ## Installation
 
-See the [Installation section](https://gitlab-ci-verify.timo-reymann.de/install.html) in the documentation.
+See the [Installation section](https://gitlab-ci-verify.timo-reymann.de/installation.html) in the documentation.
 
 ## Motivation
 
