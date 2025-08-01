@@ -10,12 +10,13 @@ type PipelineLintApiCheck struct {
 }
 
 func (p PipelineLintApiCheck) createFinding(path string, severity int, code int, line int, message string) CheckFinding {
+	findingId := fmt.Sprintf("GL-%d", code)
 	return CheckFinding{
 		Severity: severity,
-		Code:     fmt.Sprintf("GL-%d", code),
+		Code:     findingId,
 		Line:     line,
 		Message:  message,
-		Link:     "https://docs.gitlab.com/ee/ci/yaml",
+		Link:     fmt.Sprintf("https://gitlab-ci-verify.timo-reymann.de/findings/%s.html", findingId),
 		File:     path,
 	}
 }
