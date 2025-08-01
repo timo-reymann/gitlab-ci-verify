@@ -1,4 +1,4 @@
-gitlab-ci-verify - Validate and lint your Gitlab CI YAML
+Home
 ===
 
 <figure markdown="span">

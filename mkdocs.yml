@@ -11,7 +11,7 @@ theme:
     - navigation.instant
     - navigation.instant.prefetch
     - navigation.tracking
-    - navigation.sections
+    - navigation.tabs
     - navigation.path
     - navigation.collapse
   palette:
