@@ -252,7 +252,6 @@ workflows:
       - build-python-wrapper:
           <<: *only_tags
       - build-gh-pages:
-          <<: *only_tags
           requires:
             - build-python-wrapper
       - publish-python-wrapper:
