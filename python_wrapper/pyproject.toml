@@ -26,7 +26,7 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     "setuptools==75.*",
-    "setuptools-scm==8.*",
+    "setuptools-scm==9.*",
     "twine==6.1.*",
     "wheel==0.45.*",
     "pydoctor==25.4.*",
