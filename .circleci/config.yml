@@ -13,7 +13,7 @@ orbs:
   codecov: codecov/codecov@5.4.3
   go: circleci/go@3.0.3
   github-utils: trustedshops-public/github-utils@1.1.3
-  semantic-release: trustedshops-public/semantic-release@6.0.0
+  semantic-release: trustedshops-public/semantic-release@6.1.0
 
 executors:
   go:
