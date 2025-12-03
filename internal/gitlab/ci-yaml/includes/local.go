@@ -1,9 +1,9 @@
 package includes
 
 import (
+	"github.com/bmatcuk/doublestar/v4"
 	"gopkg.in/yaml.v3"
 	"path"
-	"path/filepath"
 	"sort"
 	"strings"
 )
@@ -48,7 +48,7 @@ func (l *LocalInclude) ResolvePath(projectDir, srcFile string) string {
 
 // IsGlobPattern returns true if the path contains glob pattern characters
 func (l *LocalInclude) IsGlobPattern() bool {
-	return strings.ContainsAny(l.Path, "*?[")
+	return strings.ContainsAny(l.Path, "*?[") || strings.Contains(l.Path, "**")
 }
 
 // ResolvePaths returns all matching paths, expanding globs if present
@@ -62,7 +62,7 @@ func (l *LocalInclude) ResolvePaths(projectDir, srcFile string) ([]string, error
 		return []string{basePath}, nil
 	}
 
-	matches, err := filepath.Glob(basePath)
+	matches, err := doublestar.FilepathGlob(basePath)
 	if err != nil {
 		return nil, err
 	}
