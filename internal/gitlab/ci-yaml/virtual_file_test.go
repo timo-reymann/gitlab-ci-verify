@@ -143,8 +143,9 @@ include:
 		t.Errorf("Expected code 101, got %d", virtualFile.Warnings[0].Code)
 	}
 
-	if virtualFile.Warnings[0].Message != "Glob pattern did not match any files" {
-		t.Errorf("Expected 'Glob pattern did not match any files', got '%s'", virtualFile.Warnings[0].Message)
+	expectedMessage := "Include pattern '.gitlab/ci/non-existent/*.yml' did not match any files"
+	if virtualFile.Warnings[0].Message != expectedMessage {
+		t.Errorf("Expected '%s', got '%s'", expectedMessage, virtualFile.Warnings[0].Message)
 	}
 }
 
@@ -176,8 +177,8 @@ include:
 	}
 
 	// Message should contain error details
-	if !strings.Contains(virtualFile.Warnings[0].Message, "Failed to load include file") {
-		t.Errorf("Expected error message to contain 'Failed to load include file', got '%s'", virtualFile.Warnings[0].Message)
+	if !strings.Contains(virtualFile.Warnings[0].Message, "Include file") || !strings.Contains(virtualFile.Warnings[0].Message, "could not be loaded") {
+		t.Errorf("Expected error message to contain file path and error details, got '%s'", virtualFile.Warnings[0].Message)
 	}
 }
 

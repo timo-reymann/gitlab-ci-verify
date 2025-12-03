@@ -153,7 +153,7 @@ func checkAndWarnEmptyGlobPattern(virtualFile *VirtualCiYamlFile, localInclude *
 	if localInclude.IsGlobPattern() && len(includePaths) == 0 {
 		virtualFile.Warnings = append(virtualFile.Warnings, VirtualFileWarning{
 			Code:        101,
-			Message:     "Glob pattern did not match any files",
+			Message:     "Include pattern '" + localInclude.Path + "' did not match any files",
 			IncludePath: localInclude.Path,
 		})
 	}
@@ -173,7 +173,7 @@ func addIncludeParts(virtualFile *VirtualCiYamlFile, includePaths []string, adde
 			// Add error as a warning to be converted to a finding later
 			virtualFile.Warnings = append(virtualFile.Warnings, VirtualFileWarning{
 				Code:        102,
-				Message:     "Failed to load include file: " + err.Error(),
+				Message:     "Include file '" + includePath + "' could not be loaded: " + err.Error(),
 				IncludePath: includePath,
 			})
 			continue
