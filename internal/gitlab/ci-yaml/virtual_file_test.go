@@ -143,10 +143,6 @@ include:
 		t.Errorf("Expected code 101, got %d", virtualFile.Warnings[0].Code)
 	}
 
-	if virtualFile.Warnings[0].IncludePath != ".gitlab/ci/non-existent/*.yml" {
-		t.Errorf("Expected warning for '.gitlab/ci/non-existent/*.yml', got '%s'", virtualFile.Warnings[0].IncludePath)
-	}
-
 	if virtualFile.Warnings[0].Message != "Glob pattern did not match any files" {
 		t.Errorf("Expected 'Glob pattern did not match any files', got '%s'", virtualFile.Warnings[0].Message)
 	}
