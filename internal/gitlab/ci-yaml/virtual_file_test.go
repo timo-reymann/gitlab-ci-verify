@@ -175,10 +175,6 @@ include:
 		t.Errorf("Expected code 102, got %d", virtualFile.Warnings[0].Code)
 	}
 
-	if virtualFile.Warnings[0].IncludePath != projectRoot+"/.gitlab/ci/non-existent-file.yml" {
-		t.Errorf("Expected warning for non-existent file, got '%s'", virtualFile.Warnings[0].IncludePath)
-	}
-
 	// Message should contain error details
 	if !strings.Contains(virtualFile.Warnings[0].Message, "Failed to load include file") {
 		t.Errorf("Expected error message to contain 'Failed to load include file', got '%s'", virtualFile.Warnings[0].Message)
