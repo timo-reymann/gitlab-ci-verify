@@ -115,6 +115,38 @@ func TestVirtualCiYamlFile_Resolve(t *testing.T) {
 	}
 }
 
+func TestCreateVirtualCiYamlFile_EmptyGlobWarning(t *testing.T) {
+	// Create a minimal test scenario
+	projectRoot := "test_data/virtual-file"
+	entryFileContent := []byte(`
+include:
+  - local: '.gitlab/ci/non-existent/*.yml'
+`)
+
+	entryFile, err := NewCiYamlFile(entryFileContent)
+	if err != nil {
+		t.Fatalf("Failed to create entry CiYamlFile: %v", err)
+	}
+
+	virtualFile, err := CreateVirtualCiYamlFile(projectRoot, projectRoot+"/.gitlab-ci.yml", entryFile)
+	if err != nil {
+		t.Fatalf("CreateVirtualCiYamlFile() error = %v", err)
+	}
+
+	// Check that we got a warning for the empty glob
+	if len(virtualFile.Warnings) != 1 {
+		t.Fatalf("Expected 1 warning, got %d", len(virtualFile.Warnings))
+	}
+
+	if virtualFile.Warnings[0].IncludePath != ".gitlab/ci/non-existent/*.yml" {
+		t.Errorf("Expected warning for '.gitlab/ci/non-existent/*.yml', got '%s'", virtualFile.Warnings[0].IncludePath)
+	}
+
+	if virtualFile.Warnings[0].Message != "Glob pattern did not match any files" {
+		t.Errorf("Expected 'Glob pattern did not match any files', got '%s'", virtualFile.Warnings[0].Message)
+	}
+}
+
 func TestGetIgnoredCodes(t *testing.T) {
 	tests := []struct {
 		name        string
