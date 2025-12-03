@@ -41,6 +41,8 @@ type VirtualCiYamlFile struct {
 type VirtualFileWarning struct {
 	// Code is the finding code (e.g., 101, 102)
 	Code int
+	// Severity is the severity level (0 = Error, 1 = Warning)
+	Severity int
 	// Message is the warning message
 	Message string
 	// IncludePath is the path of the include that generated the warning
@@ -153,6 +155,7 @@ func checkAndWarnEmptyGlobPattern(virtualFile *VirtualCiYamlFile, localInclude *
 	if localInclude.IsGlobPattern() && len(includePaths) == 0 {
 		virtualFile.Warnings = append(virtualFile.Warnings, VirtualFileWarning{
 			Code:        101,
+			Severity:    1, // Warning level
 			Message:     "Include pattern '" + localInclude.Path + "' did not match any files",
 			IncludePath: localInclude.Path,
 		})
@@ -173,6 +176,7 @@ func addIncludeParts(virtualFile *VirtualCiYamlFile, includePaths []string, adde
 			// Add error as a warning to be converted to a finding later
 			virtualFile.Warnings = append(virtualFile.Warnings, VirtualFileWarning{
 				Code:        102,
+				Severity:    0, // Error level
 				Message:     "Include file '" + includePath + "' could not be loaded: " + err.Error(),
 				IncludePath: includePath,
 			})

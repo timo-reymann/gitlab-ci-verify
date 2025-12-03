@@ -21,16 +21,9 @@ func (l LocalIncludeGlobCheck) Run(i *CheckInput) ([]CheckFinding, error) {
 	findings := make([]CheckFinding, 0)
 
 	for _, warning := range i.VirtualCiYaml.Warnings {
-		// Determine severity based on warning code
-		severity := SeverityWarning
-		if warning.Code == 102 {
-			// Failed to load include file - Error level
-			severity = SeverityError
-		}
-
 		finding := l.createFinding(
 			i.VirtualCiYaml.EntryFilePath,
-			severity,
+			warning.Severity,
 			warning.Code,
 			-1,
 			warning.Message,
