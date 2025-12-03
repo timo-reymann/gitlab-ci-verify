@@ -90,69 +90,112 @@ func CreateVirtualCiYamlFile(projectRoot string, entryFilePath string, entryFile
 		Warnings:      []VirtualFileWarning{},
 	}
 
-	localIncludes := includes2.FilterByTypes(virtualFile.EntryFile.Includes, "local")
-	uniqueLocalIncludes := includes2.Unique(localIncludes)
+	combined := bytes.NewBuffer(nil)
+	line := addEntryFilePart(virtualFile, entryFile, entryFilePath, combined)
 
-	line := 0
+	uniqueLocalIncludes := getUniqueLocalIncludes(entryFile)
+	line, err := processLocalIncludes(virtualFile, uniqueLocalIncludes, projectRoot, entryFilePath, combined, line)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := finalizeCombinedYaml(virtualFile, uniqueLocalIncludes, combined); err != nil {
+		return nil, err
+	}
+
+	return virtualFile, nil
+}
+
+// addEntryFilePart adds the entry file as the first part and returns the next line number
+func addEntryFilePart(virtualFile *VirtualCiYamlFile, entryFile *CiYamlFile, entryFilePath string, combined *bytes.Buffer) int {
 	entryLineCount := bytes.Count(entryFile.FileContent, []byte("\n"))
-	combined := bytes.NewBuffer(entryFile.FileContent)
 	virtualFile.Parts = append(virtualFile.Parts, &VirtualCiYamlFilePart{
 		CiYamlFile: entryFile,
 		Path:       entryFilePath,
 		StartLine:  1,
 		EndLine:    entryLineCount + 2,
 	})
+	combined.Write(entryFile.FileContent)
 	combined.Write([]byte("\n"))
-	line += entryLineCount + 2
+	return entryLineCount + 2
+}
 
+// getUniqueLocalIncludes extracts and deduplicates local includes from the entry file
+func getUniqueLocalIncludes(entryFile *CiYamlFile) []includes2.Include {
+	localIncludes := includes2.FilterByTypes(entryFile.Includes, "local")
+	return includes2.Unique(localIncludes)
+}
+
+// processLocalIncludes processes all local includes and adds them to the virtual file
+func processLocalIncludes(virtualFile *VirtualCiYamlFile, uniqueLocalIncludes []includes2.Include, projectRoot, entryFilePath string, combined *bytes.Buffer, startLine int) (int, error) {
 	addedIncludePaths := make([]string, 0)
+	line := startLine
+
 	for _, uniqueLocalInclude := range uniqueLocalIncludes {
 		localInclude := uniqueLocalInclude.(*includes2.LocalInclude)
 		includePaths, err := localInclude.ResolvePaths(projectRoot, entryFilePath)
 		if err != nil {
-			return nil, err
+			return line, err
 		}
 
-		// Warn if glob pattern resolves to no files
-		if localInclude.IsGlobPattern() && len(includePaths) == 0 {
-			virtualFile.Warnings = append(virtualFile.Warnings, VirtualFileWarning{
-				Message:     "Glob pattern did not match any files",
-				IncludePath: localInclude.Path,
-			})
-		}
+		checkAndWarnEmptyGlobPattern(virtualFile, localInclude, includePaths)
 
-		for _, includePath := range includePaths {
-			if slices.Contains(addedIncludePaths, includePath) {
-				continue
-			}
-
-			part, err := createPart(includePath, line)
-			if err != nil {
-				return nil, err
-			}
-
-			addedIncludePaths = append(addedIncludePaths, includePath)
-			virtualFile.Parts = append(virtualFile.Parts, part)
-			combined.Write(part.CiYamlFile.FileContent)
-			combined.Write([]byte("\n"))
-			line = part.EndLine + 1
-		}
+		line = addIncludeParts(virtualFile, includePaths, &addedIncludePaths, combined, line)
 	}
 
+	return line, nil
+}
+
+// checkAndWarnEmptyGlobPattern adds a warning if a glob pattern resolves to no files
+func checkAndWarnEmptyGlobPattern(virtualFile *VirtualCiYamlFile, localInclude *includes2.LocalInclude, includePaths []string) {
+	if localInclude.IsGlobPattern() && len(includePaths) == 0 {
+		virtualFile.Warnings = append(virtualFile.Warnings, VirtualFileWarning{
+			Message:     "Glob pattern did not match any files",
+			IncludePath: localInclude.Path,
+		})
+	}
+}
+
+// addIncludeParts adds parts for all resolved include paths
+func addIncludeParts(virtualFile *VirtualCiYamlFile, includePaths []string, addedIncludePaths *[]string, combined *bytes.Buffer, startLine int) int {
+	line := startLine
+
+	for _, includePath := range includePaths {
+		if slices.Contains(*addedIncludePaths, includePath) {
+			continue
+		}
+
+		part, err := createPart(includePath, line)
+		if err != nil {
+			continue
+		}
+
+		*addedIncludePaths = append(*addedIncludePaths, includePath)
+		virtualFile.Parts = append(virtualFile.Parts, part)
+		combined.Write(part.CiYamlFile.FileContent)
+		combined.Write([]byte("\n"))
+		line = part.EndLine + 1
+	}
+
+	return line
+}
+
+// finalizeCombinedYaml adds the include block and creates the combined YAML file
+func finalizeCombinedYaml(virtualFile *VirtualCiYamlFile, uniqueLocalIncludes []includes2.Include, combined *bytes.Buffer) error {
 	combined.Write([]byte("\n# Auto generated include block\n"))
 	includeBlockYaml, err := joinIncludes(uniqueLocalIncludes)
 	if err != nil {
-		return nil, err
+		return err
 	}
 	combined.Write(includeBlockYaml)
 
 	combinedCiYaml, err := NewCiYamlFile(combined.Bytes())
 	if err != nil {
-		return nil, err
+		return err
 	}
 	virtualFile.Combined = combinedCiYaml
 
-	return virtualFile, nil
+	return nil
 }
 
 func createPart(includePath string, line int) (*VirtualCiYamlFilePart, error) {
