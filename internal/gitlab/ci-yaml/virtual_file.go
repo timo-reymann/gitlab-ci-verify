@@ -97,21 +97,27 @@ func CreateVirtualCiYamlFile(projectRoot string, entryFilePath string, entryFile
 	addedIncludePaths := make([]string, 0)
 	for _, uniqueLocalInclude := range uniqueLocalIncludes {
 		localInclude := uniqueLocalInclude.(*includes2.LocalInclude)
-		includePath := localInclude.ResolvePath(projectRoot, entryFilePath)
-
-		if slices.Contains(addedIncludePaths, includePath) {
-			continue
-		}
-
-		part, err := createPart(includePath, line)
+		includePaths, err := localInclude.ResolvePaths(projectRoot, entryFilePath)
 		if err != nil {
 			return nil, err
 		}
 
-		virtualFile.Parts = append(virtualFile.Parts, part)
-		combined.Write(part.CiYamlFile.FileContent)
-		combined.Write([]byte("\n"))
-		line = part.EndLine + 1
+		for _, includePath := range includePaths {
+			if slices.Contains(addedIncludePaths, includePath) {
+				continue
+			}
+
+			part, err := createPart(includePath, line)
+			if err != nil {
+				return nil, err
+			}
+
+			addedIncludePaths = append(addedIncludePaths, includePath)
+			virtualFile.Parts = append(virtualFile.Parts, part)
+			combined.Write(part.CiYamlFile.FileContent)
+			combined.Write([]byte("\n"))
+			line = part.EndLine + 1
+		}
 	}
 
 	combined.Write([]byte("\n# Auto generated include block\n"))
