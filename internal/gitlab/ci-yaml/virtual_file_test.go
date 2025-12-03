@@ -5,6 +5,7 @@ import (
 	"gopkg.in/yaml.v3"
 	"os"
 	"reflect"
+	"strings"
 	"testing"
 )
 
@@ -138,12 +139,53 @@ include:
 		t.Fatalf("Expected 1 warning, got %d", len(virtualFile.Warnings))
 	}
 
+	if virtualFile.Warnings[0].Code != 101 {
+		t.Errorf("Expected code 101, got %d", virtualFile.Warnings[0].Code)
+	}
+
 	if virtualFile.Warnings[0].IncludePath != ".gitlab/ci/non-existent/*.yml" {
 		t.Errorf("Expected warning for '.gitlab/ci/non-existent/*.yml', got '%s'", virtualFile.Warnings[0].IncludePath)
 	}
 
 	if virtualFile.Warnings[0].Message != "Glob pattern did not match any files" {
 		t.Errorf("Expected 'Glob pattern did not match any files', got '%s'", virtualFile.Warnings[0].Message)
+	}
+}
+
+func TestCreateVirtualCiYamlFile_FileLoadError(t *testing.T) {
+	// Create a test scenario with a non-existent single file
+	projectRoot := "test_data/virtual-file"
+	entryFileContent := []byte(`
+include:
+  - local: '.gitlab/ci/non-existent-file.yml'
+`)
+
+	entryFile, err := NewCiYamlFile(entryFileContent)
+	if err != nil {
+		t.Fatalf("Failed to create entry CiYamlFile: %v", err)
+	}
+
+	virtualFile, err := CreateVirtualCiYamlFile(projectRoot, projectRoot+"/.gitlab-ci.yml", entryFile)
+	if err != nil {
+		t.Fatalf("CreateVirtualCiYamlFile() error = %v", err)
+	}
+
+	// Check that we got an error warning for the missing file
+	if len(virtualFile.Warnings) != 1 {
+		t.Fatalf("Expected 1 warning, got %d", len(virtualFile.Warnings))
+	}
+
+	if virtualFile.Warnings[0].Code != 102 {
+		t.Errorf("Expected code 102, got %d", virtualFile.Warnings[0].Code)
+	}
+
+	if virtualFile.Warnings[0].IncludePath != projectRoot+"/.gitlab/ci/non-existent-file.yml" {
+		t.Errorf("Expected warning for non-existent file, got '%s'", virtualFile.Warnings[0].IncludePath)
+	}
+
+	// Message should contain error details
+	if !strings.Contains(virtualFile.Warnings[0].Message, "Failed to load include file") {
+		t.Errorf("Expected error message to contain 'Failed to load include file', got '%s'", virtualFile.Warnings[0].Message)
 	}
 }
 

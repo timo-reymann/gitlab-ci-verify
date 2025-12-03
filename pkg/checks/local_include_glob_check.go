@@ -21,12 +21,26 @@ func (l LocalIncludeGlobCheck) Run(i *CheckInput) ([]CheckFinding, error) {
 	findings := make([]CheckFinding, 0)
 
 	for _, warning := range i.VirtualCiYaml.Warnings {
+		// Determine severity based on warning code
+		severity := SeverityWarning
+		message := warning.Message
+
+		switch warning.Code {
+		case 101:
+			// Glob pattern with no matches - Warning level
+			message = fmt.Sprintf("Include pattern '%s' did not match any files", warning.IncludePath)
+		case 102:
+			// Failed to load include file - Error level
+			severity = SeverityError
+			message = fmt.Sprintf("Include file '%s' could not be loaded: %s", warning.IncludePath, warning.Message)
+		}
+
 		finding := l.createFinding(
 			i.VirtualCiYaml.EntryFilePath,
-			SeverityWarning,
-			101,
+			severity,
+			warning.Code,
 			-1,
-			fmt.Sprintf("Include pattern '%s' did not match any files", warning.IncludePath),
+			message,
 		)
 		findings = append(findings, finding)
 	}
