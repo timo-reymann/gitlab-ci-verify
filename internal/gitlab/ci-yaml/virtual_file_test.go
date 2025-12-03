@@ -143,6 +143,10 @@ include:
 		t.Errorf("Expected code 101, got %d", virtualFile.Warnings[0].Code)
 	}
 
+	if virtualFile.Warnings[0].Severity != 1 {
+		t.Errorf("Expected severity 1 (Warning), got %d", virtualFile.Warnings[0].Severity)
+	}
+
 	expectedMessage := "Include pattern '.gitlab/ci/non-existent/*.yml' did not match any files"
 	if virtualFile.Warnings[0].Message != expectedMessage {
 		t.Errorf("Expected '%s', got '%s'", expectedMessage, virtualFile.Warnings[0].Message)
@@ -174,6 +178,10 @@ include:
 
 	if virtualFile.Warnings[0].Code != 102 {
 		t.Errorf("Expected code 102, got %d", virtualFile.Warnings[0].Code)
+	}
+
+	if virtualFile.Warnings[0].Severity != 0 {
+		t.Errorf("Expected severity 0 (Error), got %d", virtualFile.Warnings[0].Severity)
 	}
 
 	// Message should contain error details

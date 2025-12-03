@@ -32,11 +32,13 @@ func TestLocalIncludeGlobCheck_Run_WithWarnings(t *testing.T) {
 			Warnings: []ci_yaml.VirtualFileWarning{
 				{
 					Code:        101,
+					Severity:    1,
 					Message:     "Include pattern '.gitlab/ci/*.yml' did not match any files",
 					IncludePath: ".gitlab/ci/*.yml",
 				},
 				{
 					Code:        101,
+					Severity:    1,
 					Message:     "Include pattern 'includes/**/*.yaml' did not match any files",
 					IncludePath: "includes/**/*.yaml",
 				},
@@ -83,6 +85,7 @@ func TestLocalIncludeGlobCheck_Run_WithFileLoadErrors(t *testing.T) {
 			Warnings: []ci_yaml.VirtualFileWarning{
 				{
 					Code:        102,
+					Severity:    0,
 					Message:     "Include file 'missing.yml' could not be loaded: open test.yml: no such file or directory",
 					IncludePath: "missing.yml",
 				},
@@ -120,11 +123,13 @@ func TestLocalIncludeGlobCheck_Run_WithMixedWarningsAndErrors(t *testing.T) {
 			Warnings: []ci_yaml.VirtualFileWarning{
 				{
 					Code:        101,
+					Severity:    1,
 					Message:     "Include pattern '.gitlab/ci/*.yml' did not match any files",
 					IncludePath: ".gitlab/ci/*.yml",
 				},
 				{
 					Code:        102,
+					Severity:    0,
 					Message:     "Include file 'protected.yml' could not be loaded: permission denied",
 					IncludePath: "protected.yml",
 				},
