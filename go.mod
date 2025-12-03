@@ -7,6 +7,7 @@ toolchain go1.24.9
 require (
 	github.com/Ladicle/tabwriter v1.0.0
 	github.com/amenzhinsky/go-memexec v0.7.1
+	github.com/bmatcuk/doublestar/v4 v4.7.1
 	github.com/chainguard-dev/git-urls v1.0.2
 	github.com/fatih/color v1.18.0
 	github.com/go-git/go-git/v5 v5.16.4
