@@ -16,4 +16,5 @@ func init() {
 	register(ShellScriptCheck{})
 	register(PipelineLintApiCheck{})
 	register(NewGitlabPagesJobCheck())
+	register(LocalIncludeGlobCheck{})
 }

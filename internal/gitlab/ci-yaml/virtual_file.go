@@ -33,6 +33,16 @@ type VirtualCiYamlFile struct {
 	Combined *CiYamlFile
 	// Parts contains all parts of the virtual CI YAML file in the order they appear
 	Parts []*VirtualCiYamlFilePart
+	// Warnings contains warnings generated during virtual file creation (e.g., empty glob patterns)
+	Warnings []VirtualFileWarning
+}
+
+// VirtualFileWarning represents a warning generated during virtual file creation
+type VirtualFileWarning struct {
+	// Message is the warning message
+	Message string
+	// IncludePath is the path of the include that generated the warning
+	IncludePath string
 }
 
 // Resolve the part and location of a line in the virtual CI YAML
@@ -77,6 +87,7 @@ func CreateVirtualCiYamlFile(projectRoot string, entryFilePath string, entryFile
 		EntryFile:     entryFile,
 		EntryFilePath: entryFilePath,
 		Parts:         []*VirtualCiYamlFilePart{},
+		Warnings:      []VirtualFileWarning{},
 	}
 
 	localIncludes := includes2.FilterByTypes(virtualFile.EntryFile.Includes, "local")
@@ -100,6 +111,14 @@ func CreateVirtualCiYamlFile(projectRoot string, entryFilePath string, entryFile
 		includePaths, err := localInclude.ResolvePaths(projectRoot, entryFilePath)
 		if err != nil {
 			return nil, err
+		}
+
+		// Warn if glob pattern resolves to no files
+		if localInclude.IsGlobPattern() && len(includePaths) == 0 {
+			virtualFile.Warnings = append(virtualFile.Warnings, VirtualFileWarning{
+				Message:     "Glob pattern did not match any files",
+				IncludePath: localInclude.Path,
+			})
 		}
 
 		for _, includePath := range includePaths {
