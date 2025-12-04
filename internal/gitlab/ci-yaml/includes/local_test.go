@@ -101,13 +101,18 @@ func TestLocalInclude_IsGlobPattern(t *testing.T) {
 			expected: true,
 		},
 		{
-			name:     "question mark wildcard",
+			name:     "question mark is NOT a valid glob (GitLab only supports * and **)",
 			path:     "test?.yml",
-			expected: true,
+			expected: false,
 		},
 		{
-			name:     "bracket wildcard",
+			name:     "bracket is NOT a valid glob (GitLab only supports * and **)",
 			path:     "test[0-9].yml",
+			expected: false,
+		},
+		{
+			name:     "double asterisk glob pattern",
+			path:     ".gitlab/ci/**/*.yml",
 			expected: true,
 		},
 		{
@@ -123,6 +128,60 @@ func TestLocalInclude_IsGlobPattern(t *testing.T) {
 			result := localInclude.IsGlobPattern()
 			if result != tt.expected {
 				t.Fatalf("IsGlobPattern() = %v, want %v", result, tt.expected)
+			}
+		})
+	}
+}
+
+func TestLocalInclude_HasUnsupportedGlobChars(t *testing.T) {
+	tests := []struct {
+		name     string
+		path     string
+		expected bool
+	}{
+		{
+			name:     "simple path - no unsupported chars",
+			path:     "test.yml",
+			expected: false,
+		},
+		{
+			name:     "asterisk wildcard - supported",
+			path:     "*.yml",
+			expected: false,
+		},
+		{
+			name:     "double asterisk - supported",
+			path:     ".gitlab/ci/**/*.yml",
+			expected: false,
+		},
+		{
+			name:     "question mark - unsupported",
+			path:     "test?.yml",
+			expected: true,
+		},
+		{
+			name:     "bracket - unsupported",
+			path:     "test[0-9].yml",
+			expected: true,
+		},
+		{
+			name:     "bracket range - unsupported",
+			path:     "file[a-z].yml",
+			expected: true,
+		},
+		{
+			name:     "mixed supported and unsupported",
+			path:     ".gitlab/ci/*.yml?",
+			expected: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			localInclude := &LocalInclude{Path: tt.path}
+			result := localInclude.HasUnsupportedGlobChars()
+			if result != tt.expected {
+				t.Fatalf("HasUnsupportedGlobChars() = %v, want %v", result, tt.expected)
 			}
 		})
 	}
@@ -176,10 +235,10 @@ func TestLocalInclude_ResolvePaths(t *testing.T) {
 			expectError:   false,
 		},
 		{
-			name:          "glob pattern with question mark",
+			name:          "question mark treated as literal (not glob)",
 			path:          ".gitlab/ci/?.yml",
 			srcFile:       ".gitlab-ci.yml",
-			expectedCount: 3,
+			expectedCount: 1, // Returns single path since ? is not a glob in GitLab
 			expectError:   false,
 		},
 	}
