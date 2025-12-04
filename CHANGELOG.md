@@ -1,3 +1,16 @@
+## [2.5.0](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.4.6...v2.5.0) (2025-12-04)
+
+### Features
+
+* Add severity field to VirtualFileWarning ([26116bc](https://github.com/timo-reymann/gitlab-ci-verify/commit/26116bc16e47987d4afb893c7cf5f3abfa624813))
+* Add support for wildcard includes in local includes ([9d619f8](https://github.com/timo-reymann/gitlab-ci-verify/commit/9d619f8f32dd4a10a89112b307a182dc7eb95c43)), closes [#142](https://github.com/timo-reymann/gitlab-ci-verify/issues/142)
+* Add warning for glob patterns that match no files ([8738529](https://github.com/timo-reymann/gitlab-ci-verify/commit/8738529e813b99ca8a273bbfa5d9900c3632e6a4))
+
+### Bug Fixes
+
+* **deps:** update module github.com/bmatcuk/doublestar/v4 to v4.9.1 ([d2aa7e2](https://github.com/timo-reymann/gitlab-ci-verify/commit/d2aa7e2898c99bf98a468dc2c862ec1efe26a3c1))
+* Fix supported glob patterns ([a4ef1f7](https://github.com/timo-reymann/gitlab-ci-verify/commit/a4ef1f7fb8c749716bb88baf57f15d20b1e9c784))
+
 ## [2.4.6](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.4.5...v2.4.6) (2025-11-26)
 
 ### Bug Fixes
