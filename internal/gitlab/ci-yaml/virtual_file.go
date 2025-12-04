@@ -33,19 +33,19 @@ type VirtualCiYamlFile struct {
 	Combined *CiYamlFile
 	// Parts contains all parts of the virtual CI YAML file in the order they appear
 	Parts []*VirtualCiYamlFilePart
-	// Warnings contains warnings generated during virtual file creation (e.g., empty glob patterns)
-	Warnings []VirtualFileWarning
+	// ResolveFindings contains findings generated during virtual file resolution (e.g., empty glob patterns)
+	ResolveFindings []VirtualFileResolveFinding
 }
 
-// VirtualFileWarning represents a warning generated during virtual file creation
-type VirtualFileWarning struct {
+// VirtualFileResolveFinding represents a finding generated during virtual file resolution
+type VirtualFileResolveFinding struct {
 	// Code is the finding code (e.g., 101, 102)
 	Code int
 	// Severity is the severity level (0 = Error, 1 = Warning)
 	Severity int
-	// Message is the warning message
+	// Message is the finding message
 	Message string
-	// IncludePath is the path of the include that generated the warning
+	// IncludePath is the path of the include that generated the finding
 	IncludePath string
 }
 
@@ -88,10 +88,10 @@ func (v *VirtualCiYamlFile) GetIgnoredCodes(line int) []string {
 // CreateVirtualCiYamlFile creates a virtual CI YAML file from a project root, entry file path, and parsed entry file
 func CreateVirtualCiYamlFile(projectRoot string, entryFilePath string, entryFile *CiYamlFile) (*VirtualCiYamlFile, error) {
 	virtualFile := &VirtualCiYamlFile{
-		EntryFile:     entryFile,
-		EntryFilePath: entryFilePath,
-		Parts:         []*VirtualCiYamlFilePart{},
-		Warnings:      []VirtualFileWarning{},
+		EntryFile:       entryFile,
+		EntryFilePath:   entryFilePath,
+		Parts:           []*VirtualCiYamlFilePart{},
+		ResolveFindings: []VirtualFileResolveFinding{},
 	}
 
 	combined := bytes.NewBuffer(nil)
@@ -137,6 +137,18 @@ func processLocalIncludes(virtualFile *VirtualCiYamlFile, uniqueLocalIncludes []
 
 	for _, uniqueLocalInclude := range uniqueLocalIncludes {
 		localInclude := uniqueLocalInclude.(*includes2.LocalInclude)
+
+		// Check for unsupported glob characters first
+		if localInclude.HasUnsupportedGlobChars() {
+			virtualFile.ResolveFindings = append(virtualFile.ResolveFindings, VirtualFileResolveFinding{
+				Code:        103,
+				Severity:    0, // Error level
+				Message:     "Include pattern '" + localInclude.Path + "' uses unsupported glob syntax: GitLab only supports * and ** wildcards",
+				IncludePath: localInclude.Path,
+			})
+			continue
+		}
+
 		includePaths, err := localInclude.ResolvePaths(projectRoot, entryFilePath)
 		if err != nil {
 			return line, err
@@ -150,10 +162,10 @@ func processLocalIncludes(virtualFile *VirtualCiYamlFile, uniqueLocalIncludes []
 	return line, nil
 }
 
-// checkAndWarnEmptyGlobPattern adds a warning if a glob pattern resolves to no files
+// checkAndWarnEmptyGlobPattern adds a finding if a glob pattern resolves to no files
 func checkAndWarnEmptyGlobPattern(virtualFile *VirtualCiYamlFile, localInclude *includes2.LocalInclude, includePaths []string) {
 	if localInclude.IsGlobPattern() && len(includePaths) == 0 {
-		virtualFile.Warnings = append(virtualFile.Warnings, VirtualFileWarning{
+		virtualFile.ResolveFindings = append(virtualFile.ResolveFindings, VirtualFileResolveFinding{
 			Code:        101,
 			Severity:    1, // Warning level
 			Message:     "Include pattern '" + localInclude.Path + "' did not match any files",
@@ -173,8 +185,8 @@ func addIncludeParts(virtualFile *VirtualCiYamlFile, includePaths []string, adde
 
 		part, err := createPart(includePath, line)
 		if err != nil {
-			// Add error as a warning to be converted to a finding later
-			virtualFile.Warnings = append(virtualFile.Warnings, VirtualFileWarning{
+			// Add error as a finding to be reported later
+			virtualFile.ResolveFindings = append(virtualFile.ResolveFindings, VirtualFileResolveFinding{
 				Code:        102,
 				Severity:    0, // Error level
 				Message:     "Include file '" + includePath + "' could not be loaded: " + err.Error(),

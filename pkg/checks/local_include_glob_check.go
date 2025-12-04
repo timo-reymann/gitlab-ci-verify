@@ -20,13 +20,13 @@ func (l LocalIncludeGlobCheck) createFinding(path string, severity int, code int
 func (l LocalIncludeGlobCheck) Run(i *CheckInput) ([]CheckFinding, error) {
 	findings := make([]CheckFinding, 0)
 
-	for _, warning := range i.VirtualCiYaml.Warnings {
+	for _, resolveFinding := range i.VirtualCiYaml.ResolveFindings {
 		finding := l.createFinding(
 			i.VirtualCiYaml.EntryFilePath,
-			warning.Severity,
-			warning.Code,
+			resolveFinding.Severity,
+			resolveFinding.Code,
 			-1,
-			warning.Message,
+			resolveFinding.Message,
 		)
 		findings = append(findings, finding)
 	}
