@@ -5,12 +5,12 @@ import (
 	"testing"
 )
 
-func TestLocalIncludeGlobCheck_Run_NoWarnings(t *testing.T) {
+func TestLocalIncludeGlobCheck_Run_NoResolveFindings(t *testing.T) {
 	check := LocalIncludeGlobCheck{}
 	input := &CheckInput{
 		VirtualCiYaml: &ci_yaml.VirtualCiYamlFile{
 			EntryFilePath: "test.yml",
-			Warnings:      []ci_yaml.VirtualFileWarning{},
+			ResolveFindings:      []ci_yaml.VirtualFileResolveFinding{},
 		},
 	}
 
@@ -24,12 +24,12 @@ func TestLocalIncludeGlobCheck_Run_NoWarnings(t *testing.T) {
 	}
 }
 
-func TestLocalIncludeGlobCheck_Run_WithWarnings(t *testing.T) {
+func TestLocalIncludeGlobCheck_Run_WithResolveFindings(t *testing.T) {
 	check := LocalIncludeGlobCheck{}
 	input := &CheckInput{
 		VirtualCiYaml: &ci_yaml.VirtualCiYamlFile{
 			EntryFilePath: "test.yml",
-			Warnings: []ci_yaml.VirtualFileWarning{
+			ResolveFindings: []ci_yaml.VirtualFileResolveFinding{
 				{
 					Code:        101,
 					Severity:    1,
@@ -82,7 +82,7 @@ func TestLocalIncludeGlobCheck_Run_WithFileLoadErrors(t *testing.T) {
 	input := &CheckInput{
 		VirtualCiYaml: &ci_yaml.VirtualCiYamlFile{
 			EntryFilePath: "test.yml",
-			Warnings: []ci_yaml.VirtualFileWarning{
+			ResolveFindings: []ci_yaml.VirtualFileResolveFinding{
 				{
 					Code:        102,
 					Severity:    0,
@@ -115,12 +115,12 @@ func TestLocalIncludeGlobCheck_Run_WithFileLoadErrors(t *testing.T) {
 	}
 }
 
-func TestLocalIncludeGlobCheck_Run_WithMixedWarningsAndErrors(t *testing.T) {
+func TestLocalIncludeGlobCheck_Run_WithMixedResolveFindingsAndErrors(t *testing.T) {
 	check := LocalIncludeGlobCheck{}
 	input := &CheckInput{
 		VirtualCiYaml: &ci_yaml.VirtualCiYamlFile{
 			EntryFilePath: "test.yml",
-			Warnings: []ci_yaml.VirtualFileWarning{
+			ResolveFindings: []ci_yaml.VirtualFileResolveFinding{
 				{
 					Code:        101,
 					Severity:    1,

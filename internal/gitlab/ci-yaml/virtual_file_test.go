@@ -135,21 +135,21 @@ include:
 	}
 
 	// Check that we got a warning for the empty glob
-	if len(virtualFile.Warnings) != 1 {
-		t.Fatalf("Expected 1 warning, got %d", len(virtualFile.Warnings))
+	if len(virtualFile.ResolveFindings) != 1 {
+		t.Fatalf("Expected 1 warning, got %d", len(virtualFile.ResolveFindings))
 	}
 
-	if virtualFile.Warnings[0].Code != 101 {
-		t.Errorf("Expected code 101, got %d", virtualFile.Warnings[0].Code)
+	if virtualFile.ResolveFindings[0].Code != 101 {
+		t.Errorf("Expected code 101, got %d", virtualFile.ResolveFindings[0].Code)
 	}
 
-	if virtualFile.Warnings[0].Severity != 1 {
-		t.Errorf("Expected severity 1 (Warning), got %d", virtualFile.Warnings[0].Severity)
+	if virtualFile.ResolveFindings[0].Severity != 1 {
+		t.Errorf("Expected severity 1 (Warning), got %d", virtualFile.ResolveFindings[0].Severity)
 	}
 
 	expectedMessage := "Include pattern '.gitlab/ci/non-existent/*.yml' did not match any files"
-	if virtualFile.Warnings[0].Message != expectedMessage {
-		t.Errorf("Expected '%s', got '%s'", expectedMessage, virtualFile.Warnings[0].Message)
+	if virtualFile.ResolveFindings[0].Message != expectedMessage {
+		t.Errorf("Expected '%s', got '%s'", expectedMessage, virtualFile.ResolveFindings[0].Message)
 	}
 }
 
@@ -172,21 +172,58 @@ include:
 	}
 
 	// Check that we got an error warning for the missing file
-	if len(virtualFile.Warnings) != 1 {
-		t.Fatalf("Expected 1 warning, got %d", len(virtualFile.Warnings))
+	if len(virtualFile.ResolveFindings) != 1 {
+		t.Fatalf("Expected 1 warning, got %d", len(virtualFile.ResolveFindings))
 	}
 
-	if virtualFile.Warnings[0].Code != 102 {
-		t.Errorf("Expected code 102, got %d", virtualFile.Warnings[0].Code)
+	if virtualFile.ResolveFindings[0].Code != 102 {
+		t.Errorf("Expected code 102, got %d", virtualFile.ResolveFindings[0].Code)
 	}
 
-	if virtualFile.Warnings[0].Severity != 0 {
-		t.Errorf("Expected severity 0 (Error), got %d", virtualFile.Warnings[0].Severity)
+	if virtualFile.ResolveFindings[0].Severity != 0 {
+		t.Errorf("Expected severity 0 (Error), got %d", virtualFile.ResolveFindings[0].Severity)
 	}
 
 	// Message should contain error details
-	if !strings.Contains(virtualFile.Warnings[0].Message, "Include file") || !strings.Contains(virtualFile.Warnings[0].Message, "could not be loaded") {
-		t.Errorf("Expected error message to contain file path and error details, got '%s'", virtualFile.Warnings[0].Message)
+	if !strings.Contains(virtualFile.ResolveFindings[0].Message, "Include file") || !strings.Contains(virtualFile.ResolveFindings[0].Message, "could not be loaded") {
+		t.Errorf("Expected error message to contain file path and error details, got '%s'", virtualFile.ResolveFindings[0].Message)
+	}
+}
+
+func TestCreateVirtualCiYamlFile_UnsupportedGlobChars(t *testing.T) {
+	// Create a test scenario with unsupported glob chars (? and [])
+	projectRoot := "test_data/virtual-file"
+	entryFileContent := []byte(`
+include:
+  - local: '.gitlab/ci/pipelines/?.yml'
+`)
+
+	entryFile, err := NewCiYamlFile(entryFileContent)
+	if err != nil {
+		t.Fatalf("Failed to create entry CiYamlFile: %v", err)
+	}
+
+	virtualFile, err := CreateVirtualCiYamlFile(projectRoot, projectRoot+"/.gitlab-ci.yml", entryFile)
+	if err != nil {
+		t.Fatalf("CreateVirtualCiYamlFile() error = %v", err)
+	}
+
+	// Check that we got an error for unsupported glob chars
+	if len(virtualFile.ResolveFindings) != 1 {
+		t.Fatalf("Expected 1 finding, got %d", len(virtualFile.ResolveFindings))
+	}
+
+	if virtualFile.ResolveFindings[0].Code != 103 {
+		t.Errorf("Expected code 103, got %d", virtualFile.ResolveFindings[0].Code)
+	}
+
+	if virtualFile.ResolveFindings[0].Severity != 0 {
+		t.Errorf("Expected severity 0 (Error), got %d", virtualFile.ResolveFindings[0].Severity)
+	}
+
+	expectedMessage := "Include pattern '.gitlab/ci/pipelines/?.yml' uses unsupported glob syntax: GitLab only supports * and ** wildcards"
+	if virtualFile.ResolveFindings[0].Message != expectedMessage {
+		t.Errorf("Expected '%s', got '%s'", expectedMessage, virtualFile.ResolveFindings[0].Message)
 	}
 }
 
