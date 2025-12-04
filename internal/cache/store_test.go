@@ -54,6 +54,12 @@ func TestOpenFile(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			// Write the test file first
+			err := WriteFile(tt.path, bytes.NewReader(tt.data))
+			if err != nil {
+				t.Fatalf("WriteFile() failed: %v", err)
+			}
+
 			f, err := OpenFile(tt.path)
 			if err != nil {
 				t.Fatalf("OpenFile() failed: %v", err)
