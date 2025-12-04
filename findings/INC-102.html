@@ -9,10 +9,8 @@
       
       
       
-        <link rel="prev" href="../how-it-works/shellcheck-execution.html">
+        <link rel="prev" href="INC-101.html">
       
-      
-        <link rel="next" href="GL-102.html">
       
       
         
@@ -23,7 +21,7 @@
     
     
       
-        <title>GL-101 - gitlab-ci-verify</title>
+        <title>INC-102 - gitlab-ci-verify</title>
       
     
     
@@ -74,7 +72,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#gl-101" class="md-skip">
+        <a href="#inc-102" class="md-skip">
           Skip to content
         </a>
       
@@ -107,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              GL-101
+              INC-102
             
           </span>
         </div>
@@ -1059,19 +1057,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="GL-101.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="GL-101.html" class="md-nav__link">
         
   
   
@@ -1087,7 +1076,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -1237,10 +1225,19 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="INC-102.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="INC-102.html" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1256,6 +1253,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -1354,15 +1352,36 @@
   
 
 
-<h1 id="gl-101">GL-101</h1>
-<p>Warning returned by CI Lint API</p>
+<h1 id="inc-102">INC-102</h1>
+<p>Include file could not be loaded</p>
 <h1 id="cause">Cause</h1>
-<p>The <a href="https://docs.gitlab.com/api/lint/">CI Lint API</a> included a warning.</p>
+<p>A local include file could not be read from the filesystem. This can happen when:</p>
+<ul>
+<li>The file doesn't exist at the specified path</li>
+<li>The file exists but cannot be read (permission issues)</li>
+<li>The file path is malformed</li>
+<li>The file is not accessible in the current context</li>
+</ul>
 <h1 id="fix">Fix</h1>
-<p>Adjust your CI configuration based on the provided warning message.</p>
+<p>Check that:</p>
+<ul>
+<li>The include file exists at the specified path</li>
+<li>The path is correctly spelled (check for typos)</li>
+<li>The file has appropriate read permissions</li>
+<li>For relative paths, verify they are resolved correctly from the including file's directory</li>
+<li>For absolute paths, verify they are resolved correctly from the project root</li>
+</ul>
+<p>Common issues:</p>
+<ul>
+<li>File not committed to the repository</li>
+<li>Incorrect file path or typo in the include statement</li>
+<li>File exists in a different branch but not in the current one</li>
+<li>Insufficient file system permissions</li>
+</ul>
 <h1 id="further-information">Further information</h1>
 <ul>
-<li><a href="https://docs.gitlab.com/ci/yaml/">CI/CD YAML syntax reference</a></li>
+<li><a href="https://docs.gitlab.com/ci/yaml/#include">GitLab CI/CD include keyword documentation</a></li>
+<li><a href="https://docs.gitlab.com/ci/yaml/#includelocal">Local include documentation</a></li>
 </ul>
 
 
