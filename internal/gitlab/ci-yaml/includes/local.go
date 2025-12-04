@@ -46,9 +46,16 @@ func (l *LocalInclude) ResolvePath(projectDir, srcFile string) string {
 	return path.Join(projectDir, srcDir, l.Path)
 }
 
-// IsGlobPattern returns true if the path contains glob pattern characters
+// IsGlobPattern returns true if the path contains glob pattern characters supported by GitLab
+// GitLab only supports * and ** wildcards
 func (l *LocalInclude) IsGlobPattern() bool {
-	return strings.ContainsAny(l.Path, "*?[") || strings.Contains(l.Path, "**")
+	return strings.Contains(l.Path, "*")
+}
+
+// HasUnsupportedGlobChars returns true if the path contains glob characters not supported by GitLab
+// GitLab only supports * and ** wildcards, not ? or []
+func (l *LocalInclude) HasUnsupportedGlobChars() bool {
+	return strings.ContainsAny(l.Path, "?[")
 }
 
 // ResolvePaths returns all matching paths, expanding globs if present
