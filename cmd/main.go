@@ -3,11 +3,13 @@ package cmd
 import (
 	"errors"
 	"fmt"
+	"io"
+	"os"
+
 	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/cli"
 	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/logging"
 	"github.com/timo-reymann/gitlab-ci-verify/v2/pkg/checks"
 	"github.com/timo-reymann/gitlab-ci-verify/v2/pkg/verifier"
-	"os"
 )
 
 func handleErr(err error) {
@@ -19,6 +21,21 @@ func handleErr(err error) {
 		println("ERR: " + err.Error())
 		os.Exit(2)
 	}
+}
+
+func getOutputWriter(outputFile string) (io.Writer, func(), error) {
+	if outputFile == "" {
+		return os.Stdout, func() {}, nil
+	}
+
+	file, err := os.Create(outputFile)
+	if err != nil {
+		return nil, nil, fmt.Errorf("failed to create output file: %w", err)
+	}
+
+	return file, func() {
+		file.Close()
+	}, nil
 }
 
 // Execute runs the verifier with the given configuration
@@ -39,7 +56,14 @@ func Execute() {
 		handleErr(fmt.Errorf("invalid severity level %s", c.FailSeverity))
 	}
 
-	err = gcv.SetupFormatter(os.Stdout, os.Getenv("GITLAB_CI_VERIFY_OUTPUT_FORMAT"))
+	// Get output writer (file or stdout)
+	writer, cleanup, err := getOutputWriter(c.OutputFile)
+	if err != nil {
+		handleErr(err)
+	}
+	defer cleanup()
+
+	err = gcv.SetupFormatter(writer, os.Getenv("GITLAB_CI_VERIFY_OUTPUT_FORMAT"))
 	if err != nil {
 		handleErr(err)
 	}
