@@ -52,7 +52,7 @@ func (conf *Configuration) defineFlags() {
 	conf.addBoolFlag(&conf.Debug, "debug", "", false, "Enable debug output")
 	conf.addBoolFlag(&conf.Verbose, "verbose", "", false, "Enable verbose output")
 	conf.addStringFlag(&conf.ShellcheckFlags, "shellcheck-flags", "", "", "Pass custom flags to shellcheck")
-	conf.addStringFlag(&conf.OutputFormat, "format", "f", "text", "Format for the output, valid options are json, table and text. If GITLAB_CI_VERIFY_OUTPUT_FORMAT this parameter is ignored")
+	conf.addStringFlag(&conf.OutputFormat, "format", "f", "text", "Format for the output, valid options are json, table, text and gitlab. If GITLAB_CI_VERIFY_OUTPUT_FORMAT this parameter is ignored")
 	conf.addStringFlag(&conf.FailSeverity, "severity", "S", "style", "Set the severity level on which to consider findings as errors and exiting with non zero exit code.")
 	conf.addStringsFlag(&conf.ExcludedChecks, "exclude", "E", []string{}, "Exclude the given check codes")
 	conf.addBoolFlag(&conf.NoLintAPICallInCi, "no-lint-api-in-ci", "", false, "Add this flag to avoid validating against Pipeline Check API, as its assumed that running in CI is proof enough the syntax is valid. Please note that checks relying on the merged YAML will also not be executed in that case.")

@@ -21,6 +21,8 @@ func Get(format string) (FindingsFormatter, error) {
 		return &TextFindingsFormatter{}, nil
 	case "json":
 		return &JsonFindingsFormatter{}, nil
+	case "gitlab":
+		return &GitLabCodeQualityFormatter{}, nil
 	}
 	return nil, fmt.Errorf("unsupported format %s", format)
 }
