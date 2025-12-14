@@ -36,7 +36,7 @@ lint-ci:
     GITLAB_CI_VERIFY_GITLAB_TOKEN: $GITLAB_TOKEN
     
     # Version of gitlab-ci-verify to use
-    GITLAB_CI_VERIFY_VERSION: v2.5.0
+    GITLAB_CI_VERIFY_VERSION: v2.6.1
     
     # Path to the GitLab CI file to verify
     # Default: .gitlab-ci.yml
