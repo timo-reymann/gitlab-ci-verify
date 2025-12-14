@@ -57,6 +57,22 @@
                 "numReplacements": 1
               }
             ]
+          },
+          {
+            "countMatches": true,
+            "files": [
+              "ci-templates/v2.gitlab-ci.yml"
+            ],
+            "from": "\\s{4}GITLAB_CI_VERIFY_VERSION: [v0-9.]+",
+            "to": "    GITLAB_CI_VERIFY_VERSION: v${nextRelease.version}",
+            "results": [
+              {
+                "file": "ci-templates/v2.gitlab-ci.yml",
+                "hasChanged": true,
+                "numMatches": 1,
+                "numReplacements": 1
+              }
+            ]
           }
         ]
       }
@@ -67,7 +83,8 @@
         "assets": [
           "CHANGELOG.md",
           "docs/installation.md",
-          "python_wrapper/pyproject.toml"
+          "python_wrapper/pyproject.toml",
+          "ci-templates/v2.gitlab-ci.yml"
         ]
       }
     ],
