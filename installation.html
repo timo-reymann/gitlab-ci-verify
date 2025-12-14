@@ -1733,18 +1733,20 @@
 <p>For easy integration into your GitLab CI/CD pipelines, you can use the provided CI template. This template includes a pre-configured job that runs gitlab-ci-verify and generates code quality reports.</p>
 <h3 id="basic-usage">Basic Usage</h3>
 <ol>
-<li>Include the template in your <code>.gitlab-ci.yml</code>:</li>
-</ol>
+<li>
+<p>Include the template in your <code>.gitlab-ci.yml</code>:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">include</span><span class="p">:</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;ci-templates/v2.gitlab-ci.yml&#39;</span>
 </span></code></pre></div>
-<ol>
-<li>Set the required GitLab token variable:</li>
-</ol>
+</li>
+<li>
+<p>Set the required GitLab token variable:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">lint-ci</span><span class="p">:</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">variables</span><span class="p">:</span>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">GITLAB_CI_VERIFY_GITLAB_TOKEN</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;$YOUR_GITLAB_ACCESS_TOKEN&quot;</span>
 </span></code></pre></div>
+</li>
+</ol>
 <h3 id="advanced-configuration">Advanced Configuration</h3>
 <p>You can customize the template by overriding variables:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">include</span><span class="p">:</span>
