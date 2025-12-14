@@ -92,7 +92,8 @@
       "@semantic-release/github",
       {
         "path": "semantic-release",
-        "name": "timo-reymann/gitlab-ci-verify"
+        "name": "timo-reymann/gitlab-ci-verify",
+        "message": "chore(release): ${nextRelease.version}\n\n${nextRelease.notes}"
       }
     ]
   ],
