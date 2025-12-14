@@ -1,0 +1,91 @@
+# GitLab CI Template for gitlab-ci-verify
+# This template runs gitlab-ci-verify to lint and validate GitLab CI configuration files
+# and generates code quality reports that integrate with GitLab's Code Quality feature.
+#
+# Usage:
+# 1. Include this template in your .gitlab-ci.yml:
+#    include:
+#      - remote: 'https://gitlab-ci-verify.timo-reymann.de/ci-templates/v2.gitlab-ci.yml'
+#
+# 2. Set the required variables (see Variables section below)
+#
+# 3. The job will run on merge request events and provide code quality feedback
+#
+# Common Use Cases:
+# - Validate CI configuration syntax and best practices
+# - Check for common mistakes like using 'latest' tags
+# - Enforce project-specific policies using custom Rego rules
+# - Integrate with GitLab's Code Quality feature for MR feedback
+#
+# Troubleshooting:
+# - If the job fails with authentication errors, check your GITLAB_TOKEN
+# - For self-hosted GitLab instances, ensure CI_SERVER_HOST is correct
+# - Use GITLAB_CI_VERIFY_EXTRA_ARGS to exclude specific checks if needed
+# - Check the gl-code-quality.json artifact for detailed findings
+lint-ci:
+  stage: test
+  # Use the official gitlab-ci-verify Docker image
+  # Available tags: https://hub.docker.com/r/timoreymann/gitlab-ci-verify/tags
+  image:
+    name: timoreymann/gitlab-ci-verify:$GITLAB_CI_VERIFY_VERSION
+    entrypoint: [""]
+  variables:
+    # GitLab API token for authentication
+    # Required: Must have API access to the project
+    # Recommended: Use a instance level access token with 'api' scope
+    GITLAB_CI_VERIFY_GITLAB_TOKEN: $GITLAB_TOKEN
+    
+    # Version of gitlab-ci-verify to use
+    GITLAB_CI_VERIFY_VERSION: v2.5.0
+    
+    # Path to the GitLab CI file to verify
+    # Default: .gitlab-ci.yml
+    # Can be changed to verify other CI files
+    GITLAB_CI_VERIFY_CI_YAML: .gitlab-ci.yml
+    
+    # Minimum severity level to report
+    # Options: "style", "info", "warning", "error"
+    # Only findings at or above this level will cause job failure
+    # Severity levels explained:
+    # - style: Code style issues (e.g., formatting)
+    # - info: Informational findings (e.g., best practices)
+    # - warning: Potential issues that should be addressed
+    # - error: Critical issues that must be fixed
+    GITLAB_CI_VERIFY_SEVERITY: "error"
+    
+    # GitLab instance base URL
+    # Default: Uses $CI_SERVER_HOST (current GitLab instance)
+    # For self-hosted instances, this should be set automatically
+    GITLAB_CI_VERIFY_GITLAB_BASE_URL: $CI_SERVER_HOST
+    
+    # Additional command line arguments for gitlab-ci-verify
+    # Example: "--exclude PROJ-1001 --exclude PROJ-1002"
+    # Use this to customize the verification behavior
+    # Common options:
+    # --exclude CODE: Exclude specific finding codes
+    # --include-opa-bundle URL: Include custom Rego policy bundles
+    # --no-lint-api-in-ci: Skip GitLab API validation (faster, but less thorough)
+    # --debug: Enable debug output for troubleshooting
+    GITLAB_CI_VERIFY_EXTRA_ARGS: ""
+  script:
+    - |
+      # Run gitlab-ci-verify with verbose output
+      # This will validate the CI configuration and generate a code quality report
+      set -x
+      gitlab-ci-verify \
+        --verbose \
+        --severity "${GITLAB_CI_VERIFY_SEVERITY}" \
+        --gitlab-ci-file "${GITLAB_CI_VERIFY_CI_YAML}" \
+        --format gitlab --output gl-code-quality.json \
+        --gitlab-base-url "${GITLAB_CI_VERIFY_GITLAB_BASE_URL}" --gitlab-token "${GITLAB_CI_VERIFY_GITLAB_TOKEN}" \
+        ${GITLAB_CI_VERIFY_EXTRA_ARGS}
+  artifacts:
+    when: always  # Always upload artifacts, especially if lint fails
+    paths:
+      - gl-code-quality.json
+    reports:
+      codequality: gl-code-quality.json
+  rules:
+    # Only run this job on merge request events
+    # This prevents unnecessary runs on push events
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"

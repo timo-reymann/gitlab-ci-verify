@@ -35,6 +35,7 @@ ready-to-use integration):
     - 64-bit
 - pre-commit (x86 & ARM)
 - Docker (x86 & ARM)
+- GitLab CI Template (for easy integration in GitLab CI/CD)
 
 !!! info
 

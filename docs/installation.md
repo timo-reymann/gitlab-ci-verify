@@ -13,6 +13,52 @@ To check your Gitlab CI YAML before pushing or even as part of CI itself.
     - id: gitlab-ci-verify
 ```
 
+## GitLab CI Template
+
+For easy integration into your GitLab CI/CD pipelines, you can use the provided CI template. This template includes a pre-configured job that runs gitlab-ci-verify and generates code quality reports.
+
+### Basic Usage
+
+1. Include the template in your `.gitlab-ci.yml`:
+
+```yaml
+include:
+  - template: 'ci-templates/v2.gitlab-ci.yml'
+```
+
+2. Set the required GitLab token variable:
+
+```yaml
+lint-ci:
+  variables:
+    GITLAB_CI_VERIFY_GITLAB_TOKEN: "$YOUR_GITLAB_ACCESS_TOKEN"
+```
+
+### Advanced Configuration
+
+You can customize the template by overriding variables:
+
+```yaml
+include:
+  - remote: 'https://gitlab-ci-verify.timo-reymann.de/ci-templates/v2.gitlab-ci.yml'
+
+lint-ci:
+  variables:
+    GITLAB_TOKEN: "$YOUR_GITLAB_ACCESS_TOKEN"
+    GITLAB_CI_VERIFY_SEVERITY: "warning"  # Change severity level
+    GITLAB_CI_VERIFY_CI_YAML: "custom-ci.yml"  # Verify different CI file
+    GITLAB_CI_VERIFY_EXTRA_ARGS: "--exclude PROJ-1001"  # Exclude specific checks
+```
+
+### Features
+
+- **Automatic Validation**: Runs on every merge request
+- **Code Quality Integration**: Shows findings directly in GitLab's MR interface
+- **Customizable**: Adjust severity levels, exclude checks, and more
+- **Debugging**: Provides raw JSON output for troubleshooting
+
+For more details, see the [inline documentation in the template](https://github.com/timo-reymann/gitlab-ci-verify/blob/main/ci-templates/v2.gitlab-ci.yml).
+
 ## Containerized
 
 If you prefer to use containerized workflows, use the provided OCI image.
