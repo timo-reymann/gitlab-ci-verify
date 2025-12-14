@@ -1,3 +1,9 @@
+## [2.7.0](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.6.1...v2.7.0) (2025-12-14)
+
+### Features
+
+* Release v2 template with each new semantic version ([31b5cd0](https://github.com/timo-reymann/gitlab-ci-verify/commit/31b5cd090c7be19a1a686f6cb1a3c3f0c8ab7cd8))
+
 ## [2.6.1](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.6.0...v2.6.1) (2025-12-14)
 
 ### Bug Fixes
