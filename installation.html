@@ -471,6 +471,56 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#gitlab-ci-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GitLab CI Template
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GitLab CI Template">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#containerized" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1471,6 +1521,56 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#gitlab-ci-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GitLab CI Template
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GitLab CI Template">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#containerized" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1625,34 +1725,70 @@
 <h2 id="pre-commit">pre-commit</h2>
 <p>To check your Gitlab CI YAML before pushing or even as part of CI itself.</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/timo-reymann/gitlab-ci-verify</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">rev</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v2.6.0</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">rev</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v2.6.1</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">hooks</span><span class="p">:</span>
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gitlab-ci-verify</span>
 </span></code></pre></div>
+<h2 id="gitlab-ci-template">GitLab CI Template</h2>
+<p>For easy integration into your GitLab CI/CD pipelines, you can use the provided CI template. This template includes a pre-configured job that runs gitlab-ci-verify and generates code quality reports.</p>
+<h3 id="basic-usage">Basic Usage</h3>
+<ol>
+<li>Include the template in your <code>.gitlab-ci.yml</code>:</li>
+</ol>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">include</span><span class="p">:</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">template</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;ci-templates/v2.gitlab-ci.yml&#39;</span>
+</span></code></pre></div>
+<ol>
+<li>Set the required GitLab token variable:</li>
+</ol>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">lint-ci</span><span class="p">:</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">variables</span><span class="p">:</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">GITLAB_CI_VERIFY_GITLAB_TOKEN</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;$YOUR_GITLAB_ACCESS_TOKEN&quot;</span>
+</span></code></pre></div>
+<h3 id="advanced-configuration">Advanced Configuration</h3>
+<p>You can customize the template by overriding variables:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">include</span><span class="p">:</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">remote</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;https://gitlab-ci-verify.timo-reymann.de/ci-templates/v2.gitlab-ci.yml&#39;</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nt">lint-ci</span><span class="p">:</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span><span class="nt">variables</span><span class="p">:</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="nt">GITLAB_TOKEN</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;$YOUR_GITLAB_ACCESS_TOKEN&quot;</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">    </span><span class="nt">GITLAB_CI_VERIFY_SEVERITY</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;warning&quot;</span><span class="w">  </span><span class="c1"># Change severity level</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">    </span><span class="nt">GITLAB_CI_VERIFY_CI_YAML</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;custom-ci.yml&quot;</span><span class="w">  </span><span class="c1"># Verify different CI file</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">    </span><span class="nt">GITLAB_CI_VERIFY_EXTRA_ARGS</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;--exclude</span><span class="nv"> </span><span class="s">PROJ-1001&quot;</span><span class="w">  </span><span class="c1"># Exclude specific checks</span>
+</span></code></pre></div>
+<h3 id="features">Features</h3>
+<ul>
+<li><strong>Automatic Validation</strong>: Runs on every merge request</li>
+<li><strong>Code Quality Integration</strong>: Shows findings directly in GitLab's MR interface</li>
+<li><strong>Customizable</strong>: Adjust severity levels, exclude checks, and more</li>
+<li><strong>Debugging</strong>: Provides raw JSON output for troubleshooting</li>
+</ul>
+<p>For more details, see the <a href="https://github.com/timo-reymann/gitlab-ci-verify/blob/main/ci-templates/v2.gitlab-ci.yml">inline documentation in the template</a>.</p>
 <h2 id="containerized">Containerized</h2>
 <p>If you prefer to use containerized workflows, use the provided OCI image.</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>-v<span class="w"> </span><span class="nv">$PWD</span>:/workspace<span class="w"> </span>-e<span class="w"> </span><span class="nv">GITLAB_TOKEN</span><span class="o">=</span><span class="s2">&quot;your token&quot;</span><span class="w"> </span>timoreymann/gitlab-ci-verify
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>-v<span class="w"> </span><span class="nv">$PWD</span>:/workspace<span class="w"> </span>-e<span class="w"> </span><span class="nv">GITLAB_TOKEN</span><span class="o">=</span><span class="s2">&quot;your token&quot;</span><span class="w"> </span>timoreymann/gitlab-ci-verify
 </span></code></pre></div>
 <h2 id="install-with-pipx">Install with pipx</h2>
 <p>Using pipx you can just use the following command use gitlab-ci-verify as it is:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pipx<span class="w"> </span>install<span class="w"> </span>gitlab-ci-verify-bin
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>pipx<span class="w"> </span>install<span class="w"> </span>gitlab-ci-verify-bin
 </span></code></pre></div>
 <h2 id="install-as-library-using-pip">Install as library using pip</h2>
 <p>If you want to automate validation of pipelines using pipelines, you can use
 the <a href="https://pypi.org/project/gitlab-ci-verify/">gitlab-ci-verify python package</a>.</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>pip<span class="w"> </span>install<span class="w"> </span>gitlab-ci-verify
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>pip<span class="w"> </span>install<span class="w"> </span>gitlab-ci-verify
 </span></code></pre></div>
 <p>For more details check the <a href="usage/python-library.html">Use with python guide</a></p>
 <h2 id="manual">Manual</h2>
 <h3 id="linux-64-bit">Linux (64-bit)</h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>curl<span class="w"> </span>-LO<span class="w"> </span>https://github.com/timo-reymann/gitlab-ci-verify/releases/download/<span class="k">$(</span>curl<span class="w"> </span>-Lso<span class="w"> </span>/dev/null<span class="w"> </span>-w<span class="w"> </span>%<span class="o">{</span>url_effective<span class="o">}</span><span class="w"> </span>https://github.com/timo-reymann/gitlab-ci-verify/releases/latest<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-o<span class="w"> </span><span class="s1">&#39;[^/]*$&#39;</span><span class="k">)</span>/gitlab-ci-verify_linux-amd64<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>chmod<span class="w"> </span>+x<span class="w"> </span>gitlab-ci-verify_linux-amd64<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>sudo<span class="w"> </span>mv<span class="w"> </span>gitlab-ci-verify_linux-amd64<span class="w"> </span>/usr/local/bin/gitlab-ci-verify
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>curl<span class="w"> </span>-LO<span class="w"> </span>https://github.com/timo-reymann/gitlab-ci-verify/releases/download/<span class="k">$(</span>curl<span class="w"> </span>-Lso<span class="w"> </span>/dev/null<span class="w"> </span>-w<span class="w"> </span>%<span class="o">{</span>url_effective<span class="o">}</span><span class="w"> </span>https://github.com/timo-reymann/gitlab-ci-verify/releases/latest<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-o<span class="w"> </span><span class="s1">&#39;[^/]*$&#39;</span><span class="k">)</span>/gitlab-ci-verify_linux-amd64<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>chmod<span class="w"> </span>+x<span class="w"> </span>gitlab-ci-verify_linux-amd64<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>sudo<span class="w"> </span>mv<span class="w"> </span>gitlab-ci-verify_linux-amd64<span class="w"> </span>/usr/local/bin/gitlab-ci-verify
 </span></code></pre></div>
 <h3 id="darwin-intel">Darwin (Intel)</h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>curl<span class="w"> </span>-LO<span class="w"> </span>https://github.com/timo-reymann/gitlab-ci-verify/releases/download/<span class="k">$(</span>curl<span class="w"> </span>-Lso<span class="w"> </span>/dev/null<span class="w"> </span>-w<span class="w"> </span>%<span class="o">{</span>url_effective<span class="o">}</span><span class="w"> </span>https://github.com/timo-reymann/gitlab-ci-verify/releases/latest<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-o<span class="w"> </span><span class="s1">&#39;[^/]*$&#39;</span><span class="k">)</span>/gitlab-ci-verify_darwin-amd64<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>chmod<span class="w"> </span>+x<span class="w"> </span>gitlab-ci-verify_darwin-amd64<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>sudo<span class="w"> </span>mv<span class="w"> </span>gitlab-ci-verify_darwin-amd64<span class="w"> </span>/usr/local/bin/gitlab-ci-verify
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>curl<span class="w"> </span>-LO<span class="w"> </span>https://github.com/timo-reymann/gitlab-ci-verify/releases/download/<span class="k">$(</span>curl<span class="w"> </span>-Lso<span class="w"> </span>/dev/null<span class="w"> </span>-w<span class="w"> </span>%<span class="o">{</span>url_effective<span class="o">}</span><span class="w"> </span>https://github.com/timo-reymann/gitlab-ci-verify/releases/latest<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-o<span class="w"> </span><span class="s1">&#39;[^/]*$&#39;</span><span class="k">)</span>/gitlab-ci-verify_darwin-amd64<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>chmod<span class="w"> </span>+x<span class="w"> </span>gitlab-ci-verify_darwin-amd64<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>sudo<span class="w"> </span>mv<span class="w"> </span>gitlab-ci-verify_darwin-amd64<span class="w"> </span>/usr/local/bin/gitlab-ci-verify
 </span></code></pre></div>
 <h3 id="windows">Windows</h3>
 <p>Download the latest <a href="https://github.com/timo-reymann/gitlab-ci-verify/releases/latest">release</a> for Windows and put in
