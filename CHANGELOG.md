@@ -1,3 +1,10 @@
+## [2.6.0](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.5.0...v2.6.0) (2025-12-14)
+
+### Features
+
+* Add support for gitlab code quality format ([9144df6](https://github.com/timo-reymann/gitlab-ci-verify/commit/9144df63b46e20c2576f1b4697f553e43ab31b4b))
+* Add support to write report to file ([65605d1](https://github.com/timo-reymann/gitlab-ci-verify/commit/65605d1361568e674ecf56ccd6936782c815c4ee))
+
 ## [2.5.0](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.4.6...v2.5.0) (2025-12-04)
 
 ### Features
