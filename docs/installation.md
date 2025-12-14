@@ -21,18 +21,18 @@ For easy integration into your GitLab CI/CD pipelines, you can use the provided 
 
 1. Include the template in your `.gitlab-ci.yml`:
 
-```yaml
-include:
-  - template: 'ci-templates/v2.gitlab-ci.yml'
-```
+    ```yaml
+    include:
+      - template: 'ci-templates/v2.gitlab-ci.yml'
+    ```
 
 2. Set the required GitLab token variable:
 
-```yaml
-lint-ci:
-  variables:
-    GITLAB_CI_VERIFY_GITLAB_TOKEN: "$YOUR_GITLAB_ACCESS_TOKEN"
-```
+    ```yaml
+    lint-ci:
+      variables:
+        GITLAB_CI_VERIFY_GITLAB_TOKEN: "$YOUR_GITLAB_ACCESS_TOKEN"
+    ```
 
 ### Advanced Configuration
 
