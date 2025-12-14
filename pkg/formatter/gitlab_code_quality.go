@@ -3,6 +3,8 @@ package formatter
 import (
 	"encoding/json"
 	"io"
+	"os"
+	"path/filepath"
 
 	"github.com/timo-reymann/gitlab-ci-verify/v2/pkg/checks"
 )
@@ -10,6 +12,7 @@ import (
 type GitLabCodeQualityFormatter struct {
 	writer           io.Writer
 	firstItemWritten bool
+	baseDir          string
 }
 
 type gitlabCodeQualityFinding struct {
@@ -28,10 +31,17 @@ type gitlabCodeQualityLines struct {
 	Begin int `json:"begin"`
 }
 
-func newGitLabCodeQualityFinding(f *checks.CheckFinding) (gitlabCodeQualityFinding, error) {
+func newGitLabCodeQualityFinding(f *checks.CheckFinding, baseDir string) (gitlabCodeQualityFinding, error) {
 	loc, err := f.Location()
 	if err != nil {
 		return gitlabCodeQualityFinding{}, err
+	}
+
+	// Make path relative to base directory
+	relPath, err := filepath.Rel(baseDir, loc.File)
+	if err != nil {
+		// If we can't make it relative (e.g., different drives on Windows), use absolute path
+		relPath = loc.File
 	}
 
 	return gitlabCodeQualityFinding{
@@ -39,7 +49,7 @@ func newGitLabCodeQualityFinding(f *checks.CheckFinding) (gitlabCodeQualityFindi
 		Fingerprint: f.Fingerprint(),
 		Severity:    mapSeverity(f.SeverityName()),
 		Location: gitlabCodeQualityLocation{
-			Path: loc.File,
+			Path: relPath,
 			Lines: gitlabCodeQualityLines{
 				Begin: f.Line,
 			},
@@ -70,6 +80,13 @@ func (g *GitLabCodeQualityFormatter) writeString(val string) error {
 func (g *GitLabCodeQualityFormatter) Init(w io.Writer) error {
 	g.writer = w
 	g.firstItemWritten = false
+
+	// Get current working directory to make paths relative
+	var err error
+	g.baseDir, err = os.Getwd()
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -78,7 +95,7 @@ func (g *GitLabCodeQualityFormatter) Start() error {
 }
 
 func (g *GitLabCodeQualityFormatter) Print(f *checks.CheckFinding) error {
-	finding, err := newGitLabCodeQualityFinding(f)
+	finding, err := newGitLabCodeQualityFinding(f, g.baseDir)
 	if err != nil {
 		return err
 	}
