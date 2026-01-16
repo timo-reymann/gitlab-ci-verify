@@ -5,4 +5,5 @@ coverage:
 ignore:
   - main.go
   - cmd/main.go
+  - cmd/gitlab-ci-lint-api-proxy/main.go
   - tools/**
