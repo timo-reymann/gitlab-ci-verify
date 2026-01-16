@@ -62,7 +62,7 @@ func (conf *Configuration) defineFlags() {
 }
 
 func (conf *Configuration) Help() {
-	buildinfo.PrintCompactInfo(os.Stdout)
+	buildinfo.PrintCompactInfo("gitlab-ci-verify", os.Stdout)
 	println("gitlab-ci-verify [-options]")
 	flag.PrintDefaults()
 }
@@ -98,7 +98,7 @@ func (conf *Configuration) Parse() error {
 		conf.Help()
 		return ErrAbort
 	} else if *isVersion {
-		buildinfo.PrintVersionInfo(os.Stderr)
+		buildinfo.PrintVersionInfo("gitlab-ci-verify", os.Stderr)
 		return ErrAbort
 	}
 

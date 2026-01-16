@@ -18,13 +18,13 @@ func addLine(w *tabwriter.Writer, heading string, val string) {
 }
 
 // PrintCompactInfo with minimal build information
-func PrintCompactInfo(w io.Writer) {
-	_, _ = fmt.Fprintf(w, "gitlab-ci-verify %s (%s) by Timo Reymann\n", Version, BuildTime)
+func PrintCompactInfo(binary string, w io.Writer) {
+	_, _ = fmt.Fprintf(w, "%s %s (%s) by Timo Reymann\n", binary, Version, BuildTime)
 }
 
 // PrintVersionInfo prints a tabular list with build info
-func PrintVersionInfo(w io.Writer) {
-	PrintCompactInfo(w)
+func PrintVersionInfo(binary string, w io.Writer) {
+	PrintCompactInfo(binary, w)
 	_, _ = fmt.Fprint(w, "\nBuild information\n")
 	tw := tabwriter.NewWriter(w, 10, 1, 10, byte(' '), tabwriter.TabIndent)
 	addLine(tw, "GitSha", GitSha)
