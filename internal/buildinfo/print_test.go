@@ -8,7 +8,7 @@ import (
 
 func TestPrintVersionInfo(t *testing.T) {
 	buf := bytes.NewBuffer([]byte{})
-	PrintVersionInfo(buf)
+	PrintVersionInfo("gitlab-ci-verify", buf)
 	lines := strings.Split(buf.String(), "\n")
 	linesLen := len(lines)
 	expectedLinesLen := 10
