@@ -2,10 +2,11 @@ package cli
 
 import (
 	"errors"
+	"os"
+
 	flag "github.com/spf13/pflag"
 	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/buildinfo"
 	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/logging"
-	"os"
 )
 
 // AutoDetectValue indicates that the value should be detected automatically from a set of sources
