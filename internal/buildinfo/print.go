@@ -11,6 +11,11 @@ import (
 
 func shellCheckInfo() string {
 	sc, _ := shellcheck.NewShellChecker()
+	defer func() {
+		if sc != nil {
+			_ = sc.Close()
+		}
+	}()
 	return sc.Version()
 }
 
