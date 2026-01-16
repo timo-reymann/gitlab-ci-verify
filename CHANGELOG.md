@@ -1,3 +1,15 @@
+## [2.8.0](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.7.3...v2.8.0) (2026-01-16)
+
+### Features
+
+* Add docker image for CI lint API proxy ([2fba0b5](https://github.com/timo-reymann/gitlab-ci-verify/commit/2fba0b582c37f132ec6d7daadf0f9efe2ff89330))
+* Add error logging support to console logger ([fbaeae4](https://github.com/timo-reymann/gitlab-ci-verify/commit/fbaeae493c3f8b5d6c341819e526ff7201f1468a))
+* Implement GitLab CI Lint API proxy with routing, error handling, and test coverage ([d72aa58](https://github.com/timo-reymann/gitlab-ci-verify/commit/d72aa585d0106a2d8b9bd8449c45e4368af7b70a))
+
+### Bug Fixes
+
+* Ensure shell checker is properly closed to avoid resource leaks ([38c18fd](https://github.com/timo-reymann/gitlab-ci-verify/commit/38c18fde97307b591edb3745b66ea963543f2706))
+
 ## [2.7.3](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.7.2...v2.7.3) (2025-12-19)
 
 ### Bug Fixes
