@@ -235,13 +235,17 @@ jobs:
       - setup_remote_docker:
           version: default
       - run:
-          name: Build and publish image
+          name: Build and publish images
           command: |
             echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
             docker buildx create --use
             make build-docker
       - docker/update-description:
           image: timoreymann/gitlab-ci-verify
+          docker-username: DOCKER_USERNAME
+          docker-password: DOCKER_TOKEN
+      - docker/update-description:
+          image: timoreymann/gitlab-ci-lint-api-proxy
           docker-username: DOCKER_USERNAME
           docker-password: DOCKER_TOKEN
 
