@@ -38,5 +38,5 @@ func projectLintHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	io.Copy(w, result.Body)
+	_, _ = io.Copy(w, result.Body)
 }

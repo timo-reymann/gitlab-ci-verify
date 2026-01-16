@@ -52,7 +52,7 @@ func TestProjectLintHandler_Success(t *testing.T) {
 
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(gitlabResponse))
+		_, _ = w.Write([]byte(gitlabResponse))
 	}))
 	defer gitlabServer.Close()
 
@@ -114,7 +114,7 @@ func TestProjectLintHandler_WithPathParameter(t *testing.T) {
 		receivedPath = r.URL.Path
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`{"valid":true}`))
+		_, _ = w.Write([]byte(`{"valid":true}`))
 	}))
 	defer gitlabServer.Close()
 
@@ -167,7 +167,7 @@ func TestProjectLintHandler_RequestBodyForwarded(t *testing.T) {
 		}
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`{"valid":true}`))
+		_, _ = w.Write([]byte(`{"valid":true}`))
 	}))
 	defer gitlabServer.Close()
 
