@@ -16,6 +16,7 @@ type consoleLogger struct {
 	verbose *log.Logger
 	debug   *log.Logger
 	warn    *log.Logger
+	error   *log.Logger
 }
 
 func newConsoleLogger(w io.Writer) *consoleLogger {
@@ -23,6 +24,7 @@ func newConsoleLogger(w io.Writer) *consoleLogger {
 		debug:   log.New(w, "debug   - ", log.Lmsgprefix),
 		verbose: log.New(w, "verbose - ", log.Lmsgprefix),
 		warn:    log.New(w, "warning - ", log.Lmsgprefix),
+		error:   log.New(w, "error -", log.Lmsgprefix),
 	}
 }
 
@@ -57,6 +59,14 @@ func (l *consoleLogger) Warn(v ...any) {
 	l.warn.Println(v...)
 }
 
+func (l *consoleLogger) Error(v ...any) {
+	l.error.Println(v...)
+}
+
 func Warn(v ...any) {
 	DefaultLogger.Warn(v...)
+}
+
+func Error(v ...any) {
+	DefaultLogger.Error(v...)
 }

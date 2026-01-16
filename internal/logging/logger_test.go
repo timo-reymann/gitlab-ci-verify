@@ -67,6 +67,24 @@ func TestConsoleLogger(t *testing.T) {
 			message:        "This is a verbose message",
 			expectedOutput: "verbose - This is a verbose message\n",
 		},
+		{
+			logLevel:       LevelSilent,
+			typ:            "error",
+			message:        "This is an error message",
+			expectedOutput: "error -This is an error message\n",
+		},
+		{
+			logLevel:       LevelDebug,
+			typ:            "error",
+			message:        "This is an error message",
+			expectedOutput: "error -This is an error message\n",
+		},
+		{
+			logLevel:       LevelVerbose,
+			typ:            "error",
+			message:        "This is an error message",
+			expectedOutput: "error -This is an error message\n",
+		},
 	}
 
 	for _, tc := range testCases {
@@ -82,6 +100,8 @@ func TestConsoleLogger(t *testing.T) {
 				logger.Verbose(tc.message)
 			case "warn":
 				logger.Warn(tc.message)
+			case "error":
+				logger.Error(tc.message)
 			}
 
 			if tc.expectedOutput != buffer.String() {
