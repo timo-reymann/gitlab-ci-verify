@@ -4,14 +4,15 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/format-conversion"
-	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/httputils"
-	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/logging"
 	"io"
 	"net/http"
 	"net/url"
 	"reflect"
 	"strings"
+
+	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/format-conversion"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/httputils"
+	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/logging"
 )
 
 // Client to access the gitlab api
@@ -115,12 +116,12 @@ func NewClientWithMultiTokenSources(baseUrl string, token string) *Client {
 	for _, src := range tokenSources {
 		token, err := src.Lookup(hints)
 		if err != nil {
-			logging.Debug(fmt.Sprintf("Failed to lookup token for token source %v: %s", reflect.TypeOf(tokenSources), err.Error()))
+			logging.Debug(fmt.Sprintf("Failed to lookup token for token source %v: %s", reflect.TypeOf(src), err.Error()))
 			continue
 		}
 
 		if token == "" {
-			logging.Debug(fmt.Sprintf("Token for token source %v is empty", reflect.TypeOf(tokenSources)))
+			logging.Debug(fmt.Sprintf("Token for token source %v is empty", reflect.TypeOf(src)))
 			continue
 		}
 
