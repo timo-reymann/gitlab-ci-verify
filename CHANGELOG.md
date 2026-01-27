@@ -1,3 +1,9 @@
+## [2.8.1](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.8.0...v2.8.1) (2026-01-27)
+
+### Bug Fixes
+
+* **deps:** update module github.com/bmatcuk/doublestar/v4 to v4.10.0 ([d8becfa](https://github.com/timo-reymann/gitlab-ci-verify/commit/d8becface5816cefc8ea72f1eb3549d8da134809))
+
 ## [2.8.0](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.7.3...v2.8.0) (2026-01-16)
 
 ### Features
