@@ -34,6 +34,16 @@ machine foo.com login bar password baz
 			expectedErr: nil,
 		},
 		{
+			name: "netrc file with valid entries without login",
+			netrcContent: `
+machine foo.com password token
+`,
+			expectedLines: []Line{
+				{machine: "foo.com", login: "", password: "token"},
+			},
+			expectedErr: nil,
+		},
+		{
 			name: "netrc file with invalid entries",
 			netrcContent: `
 machine foo.com login bar
@@ -131,6 +141,13 @@ func TestGetCredentials(t *testing.T) {
 			lines:         []Line{{machine: "example.com", login: "user", password: "password"}},
 			host:          "www.example.com",
 			expectedCreds: &Credentials{Login: "user", Password: "password"},
+			expectedErr:   nil,
+		},
+		{
+			name:          "match without login prefix",
+			lines:         []Line{{machine: "example.com", login: "", password: "token"}},
+			host:          "example.com",
+			expectedCreds: &Credentials{Login: "", Password: "token"},
 			expectedErr:   nil,
 		},
 		{
