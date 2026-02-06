@@ -2,13 +2,14 @@ package verifier
 
 import (
 	"bytes"
+	"os"
+	"strings"
+	"testing"
+
 	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/cli"
 	ci_yaml "github.com/timo-reymann/gitlab-ci-verify/v2/internal/gitlab/ci-yaml"
 	"github.com/timo-reymann/gitlab-ci-verify/v2/pkg/checks"
 	"github.com/timo-reymann/gitlab-ci-verify/v2/pkg/formatter"
-	"os"
-	"strings"
-	"testing"
 )
 
 func TestShouldCheckAgainstLintAPI(t *testing.T) {
@@ -19,7 +20,7 @@ func TestShouldCheckAgainstLintAPI(t *testing.T) {
 		ci            bool
 	}{
 		{
-			name: "CI environment with no lint API call",
+			name: "Online CI environment with no lint API call",
 			configuration: &cli.Configuration{
 				NoLintAPICallInCi: true,
 			},
@@ -27,7 +28,7 @@ func TestShouldCheckAgainstLintAPI(t *testing.T) {
 			expected: false,
 		},
 		{
-			name: "CI environment with lint API call",
+			name: "Online CI environment with lint API call",
 			configuration: &cli.Configuration{
 				NoLintAPICallInCi: false,
 			},
@@ -35,10 +36,36 @@ func TestShouldCheckAgainstLintAPI(t *testing.T) {
 			expected: true,
 		},
 		{
-			name:          "Non-CI environment",
+			name:          "Online Non-CI environment",
 			configuration: &cli.Configuration{},
 			ci:            false,
 			expected:      true,
+		},
+		{
+			name: "Offline CI environment with no lint API call",
+			configuration: &cli.Configuration{
+				NoLintAPICallInCi: true,
+				Offline:           true,
+			},
+			ci:       true,
+			expected: false,
+		},
+		{
+			name: "Offline CI environment with lint API call",
+			configuration: &cli.Configuration{
+				NoLintAPICallInCi: false,
+				Offline:           true,
+			},
+			ci:       true,
+			expected: false,
+		},
+		{
+			name: "Offline Non-CI environment",
+			configuration: &cli.Configuration{
+				Offline: true,
+			},
+			ci:       false,
+			expected: false,
 		},
 	}
 
