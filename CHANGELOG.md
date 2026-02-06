@@ -1,3 +1,9 @@
+## [2.8.4](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.8.3...v2.8.4) (2026-02-06)
+
+### Bug Fixes
+
+* Dont require login token in netrc line  ([#168](https://github.com/timo-reymann/gitlab-ci-verify/issues/168)) ([fd55bed](https://github.com/timo-reymann/gitlab-ci-verify/commit/fd55bedd40af6cbbfa4cf36585590dc17452f095))
+
 ## [2.8.3](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.8.2...v2.8.3) (2026-01-30)
 
 ### Bug Fixes
