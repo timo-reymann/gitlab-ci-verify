@@ -2,16 +2,17 @@ package verifier
 
 import (
 	"fmt"
+	"io"
+	"os"
+	"slices"
+	"time"
+
 	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/cli"
 	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/git"
 	ci_yaml "github.com/timo-reymann/gitlab-ci-verify/v2/internal/gitlab/ci-yaml"
 	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/logging"
 	"github.com/timo-reymann/gitlab-ci-verify/v2/pkg/checks"
 	"github.com/timo-reymann/gitlab-ci-verify/v2/pkg/formatter"
-	"io"
-	"os"
-	"slices"
-	"time"
 )
 
 type GitlabCIVerifier struct {
@@ -171,7 +172,7 @@ func (gcv *GitlabCIVerifier) CreateCheckInput() (*checks.CheckInput, error) {
 }
 
 func (gcv *GitlabCIVerifier) shouldCheckAgainstLintAPI() bool {
-	return !gcv.configuration.IsCIEnv() || gcv.configuration.IsCIEnv() && !gcv.configuration.NoLintAPICallInCi
+	return !gcv.configuration.Offline && (!gcv.configuration.IsCIEnv() || gcv.configuration.IsCIEnv() && !gcv.configuration.NoLintAPICallInCi)
 }
 
 func (gcv *GitlabCIVerifier) checkAgainstLintAPI(lintRes *ci_yaml.VerificationResultWithRemoteInfo, virtual *ci_yaml.VirtualCiYamlFile, mergedCiYaml *ci_yaml.CiYamlFile) (*ci_yaml.VerificationResultWithRemoteInfo, error) {

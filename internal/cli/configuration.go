@@ -28,6 +28,7 @@ type Configuration struct {
 	FailSeverity       string
 	ExcludedChecks     []string
 	NoLintAPICallInCi  bool
+	Offline            bool
 	IncludedOPABundles []string
 }
 
@@ -58,6 +59,7 @@ func (conf *Configuration) defineFlags() {
 	conf.addStringFlag(&conf.OutputFile, "output", "o", "", "Write the report to a file instead of stdout")
 	conf.addStringFlag(&conf.FailSeverity, "severity", "S", "style", "Set the severity level on which to consider findings as errors and exiting with non zero exit code.")
 	conf.addStringsFlag(&conf.ExcludedChecks, "exclude", "E", []string{}, "Exclude the given check codes")
+	conf.addBoolFlag(&conf.Offline, "offline", "", false, "Add this flag to skip validating against Pipeline Check API and only perform offline checks. Please note that checks relying on the merged YAML will also not be executed in that case.")
 	conf.addBoolFlag(&conf.NoLintAPICallInCi, "no-lint-api-in-ci", "", false, "Add this flag to avoid validating against Pipeline Check API, as its assumed that running in CI is proof enough the syntax is valid. Please note that checks relying on the merged YAML will also not be executed in that case.")
 	conf.addStringsFlag(&conf.IncludedOPABundles, "include-opa-bundle", "I", []string{}, "Include remote OPA bundles for checks")
 }
