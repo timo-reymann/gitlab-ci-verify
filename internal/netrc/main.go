@@ -6,11 +6,12 @@ package netrc
 
 import (
 	"errors"
-	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/logging"
 	"os"
 	"path/filepath"
 	"runtime"
 	"strings"
+
+	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/logging"
 )
 
 // ErrNoEntry represents the case that there is no entry for a given hostname in the netrc
@@ -60,7 +61,7 @@ func parseNetrc(data string) []Line {
 				// new-line characters) is encountered.”
 				inMacro = true
 			}
-			if l.machine != "" && l.login != "" && l.password != "" {
+			if l.machine != "" && l.password != "" {
 				nrc = append(nrc, l)
 				l = Line{}
 			}
