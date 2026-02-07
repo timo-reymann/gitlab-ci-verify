@@ -1,3 +1,9 @@
+## [2.9.0](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.8.4...v2.9.0) (2026-02-07)
+
+### Features
+
+* Add `--no-lint-api` flag to allow skipping CI lint locally  ([#169](https://github.com/timo-reymann/gitlab-ci-verify/issues/169)) ([a528957](https://github.com/timo-reymann/gitlab-ci-verify/commit/a528957ec2b4a398d83386427e16eb3dfe0aa04c))
+
 ## [2.8.4](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.8.3...v2.8.4) (2026-02-06)
 
 ### Bug Fixes

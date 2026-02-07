@@ -8,7 +8,7 @@ To check your Gitlab CI YAML before pushing or even as part of CI itself.
 
 ```yaml
 - repo: https://github.com/timo-reymann/gitlab-ci-verify
-  rev: v2.8.4
+  rev: v2.9.0
   hooks:
     - id: gitlab-ci-verify
 ```
