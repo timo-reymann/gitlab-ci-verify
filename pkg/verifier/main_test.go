@@ -42,27 +42,27 @@ func TestShouldCheckAgainstLintAPI(t *testing.T) {
 			expected:      true,
 		},
 		{
-			name: "Offline CI environment with no lint API call",
+			name: "CI environment with no lint API call in CI and no general lint API call",
 			configuration: &cli.Configuration{
 				NoLintAPICallInCi: true,
-				Offline:           true,
+				NoLintAPICall:     true,
 			},
 			ci:       true,
 			expected: false,
 		},
 		{
-			name: "Offline CI environment with lint API call",
+			name: "CI environment with lint API call in CI and no general lint API call",
 			configuration: &cli.Configuration{
 				NoLintAPICallInCi: false,
-				Offline:           true,
+				NoLintAPICall:     true,
 			},
 			ci:       true,
 			expected: false,
 		},
 		{
-			name: "Offline Non-CI environment",
+			name: "Non-CI environment and no general lint API call",
 			configuration: &cli.Configuration{
-				Offline: true,
+				NoLintAPICall: true,
 			},
 			ci:       false,
 			expected: false,

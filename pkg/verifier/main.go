@@ -172,7 +172,7 @@ func (gcv *GitlabCIVerifier) CreateCheckInput() (*checks.CheckInput, error) {
 }
 
 func (gcv *GitlabCIVerifier) shouldCheckAgainstLintAPI() bool {
-	return !gcv.configuration.Offline && (!gcv.configuration.IsCIEnv() || gcv.configuration.IsCIEnv() && !gcv.configuration.NoLintAPICallInCi)
+	return !gcv.configuration.NoLintAPICall && (!gcv.configuration.IsCIEnv() || gcv.configuration.IsCIEnv() && !gcv.configuration.NoLintAPICallInCi)
 }
 
 func (gcv *GitlabCIVerifier) checkAgainstLintAPI(lintRes *ci_yaml.VerificationResultWithRemoteInfo, virtual *ci_yaml.VirtualCiYamlFile, mergedCiYaml *ci_yaml.CiYamlFile) (*ci_yaml.VerificationResultWithRemoteInfo, error) {
