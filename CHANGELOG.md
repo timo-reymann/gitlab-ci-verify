@@ -1,3 +1,9 @@
+## [2.9.1](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.9.0...v2.9.1) (2026-02-09)
+
+### Bug Fixes
+
+* **pre-commit:** Run pre-commit on changes in included files ([#171](https://github.com/timo-reymann/gitlab-ci-verify/issues/171)) ([3b77540](https://github.com/timo-reymann/gitlab-ci-verify/commit/3b775408038f3df9e7b18623648f7591a1223d0a))
+
 ## [2.9.0](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.8.4...v2.9.0) (2026-02-07)
 
 ### Features
