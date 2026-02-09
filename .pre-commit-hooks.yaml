@@ -3,4 +3,5 @@
   description: Verify your gitlab ci YML configuration
   entry: gitlab-ci-verify
   language: golang
-  files: ^.gitlab-ci\.yml$
+  files: .gitlab-ci.*?\.ya?ml$
+  pass_filenames: false
