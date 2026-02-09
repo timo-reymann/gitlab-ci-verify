@@ -1,3 +1,9 @@
+## [2.9.2](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.9.1...v2.9.2) (2026-02-09)
+
+### Bug Fixes
+
+* **deps:** update module github.com/go-git/go-git/v5 to v5.16.5 ([#172](https://github.com/timo-reymann/gitlab-ci-verify/issues/172)) ([38451da](https://github.com/timo-reymann/gitlab-ci-verify/commit/38451daf506bf0a8e12927603c6e59b038033c50))
+
 ## [2.9.1](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.9.0...v2.9.1) (2026-02-09)
 
 ### Bug Fixes
