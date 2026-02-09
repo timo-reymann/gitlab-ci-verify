@@ -4,3 +4,4 @@
   entry: gitlab-ci-verify
   language: golang
   files: .gitlab-ci.*?\.ya?ml$
+  pass_filenames: false
