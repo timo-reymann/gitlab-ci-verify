@@ -1,3 +1,9 @@
+## [2.9.3](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.9.2...v2.9.3) (2026-02-12)
+
+### Bug Fixes
+
+* **deps:** update dependency pydoctor to ==25.10.* ([#175](https://github.com/timo-reymann/gitlab-ci-verify/issues/175)) ([5924e31](https://github.com/timo-reymann/gitlab-ci-verify/commit/5924e31fde52925238831b75a2305a9b66c688f9))
+
 ## [2.9.2](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.9.1...v2.9.2) (2026-02-09)
 
 ### Bug Fixes
