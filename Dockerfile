@@ -10,7 +10,8 @@ RUN if [[ "$(arch)" == "x86_64" ]]; then \
     chown 1000:1000 /bin/gitlab-ci-verify
 
 FROM chainguard/wolfi-base
-LABEL org.opencontainers.image.title="gitlab-ci-verify"
+LABEL 
+LABEL org.opencontainers.image.licenses="gpl-3.0"org.opencontainers.image.title="gitlab-ci-verify"
 LABEL org.opencontainers.image.description="Validate and lint your gitlab ci files using ShellCheck, the Gitlab API and curated checks"
 LABEL org.opencontainers.image.ref.name="main"
 LABEL org.opencontainers.image.licenses='GPLv3'
