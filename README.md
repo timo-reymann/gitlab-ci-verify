@@ -12,6 +12,7 @@ gitlab-ci-verify
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=timo-reymann_gitlab-ci-verify&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=timo-reymann_gitlab-ci-verify)
 [![Go Report Card](https://goreportcard.com/badge/github.com/timo-reymann/gitlab-ci-verify)](https://goreportcard.com/report/github.com/timo-reymann/gitlab-ci-verify)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=timo-reymann_gitlab-ci-verify&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=timo-reymann_gitlab-ci-verify)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftimo-reymann%2Fgitlab-ci-verify.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftimo-reymann%2Fgitlab-ci-verify?ref=badge_shield)
 
 <p align="center">
 	<img width="300" src="https://raw.githubusercontent.com/timo-reymann/gitlab-ci-verify/main/.github/images/logo.png">
