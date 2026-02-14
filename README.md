@@ -86,7 +86,3 @@ following libraries/tools:
 - [pflag by spf13](https://github.com/spf13/pflag)
 - [go-yaml](https://github.com/go-yaml/yaml), which I forked
   to [timo-reymann/go-yaml](https://github.com/timo-reymann/go-yaml)
-
-
-## License
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftimo-reymann%2Fgitlab-ci-verify.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftimo-reymann%2Fgitlab-ci-verify?ref=badge_large)
