@@ -12,4 +12,3 @@ permissions:
 jobs:
   license-check:
     uses: timo-reymann/.github/.github/workflows/ort.yml@main
-    
