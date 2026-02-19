@@ -15,3 +15,8 @@ curations:
       reason: "INCORRECT"
       comment: "False positive - the text clearly states GPL-3.0 license."
       concluded_license: "GPL-3.0-only"
+    - path: "internal/netrc/*"
+      detected_license: "BSD-3-Clause"
+      reason: "INCORRECT"
+      comment: "Part of project and compatible with the root license"
+      concluded_license: "GPL-3.0-only"      
