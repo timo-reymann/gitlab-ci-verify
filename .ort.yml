@@ -1,0 +1,9 @@
+excludes:
+  paths:
+  - pattern: "docs/**"
+    reason: "Documentation"
+    comment: "Only used for documentation, not provided as source"
+  - pattern: "requirements-docs.txt"
+    reason: "Documentation dependencies"
+    comment: "Only used for documentation, not provided as source"
+
