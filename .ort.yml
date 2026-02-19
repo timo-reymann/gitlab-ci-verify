@@ -7,3 +7,11 @@ excludes:
     reason: "DOCUMENTATION_OF"
     comment: "Only used for documentation, not provided as source"
 
+curations:
+  license_findings:
+    - path: "CONTRIBUTING.md"
+      start_lines: "48"
+      detected_license: "NOASSERTION"
+      reason: "INCORRECT"
+      comment: "False positive - the text clearly states GPL-3.0 license."
+      concluded_license: "GPL-3.0-only"
