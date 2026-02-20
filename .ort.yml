@@ -6,6 +6,9 @@ excludes:
   - pattern: "requirements-docs.txt"
     reason: "DOCUMENTATION_OF"
     comment: "Only used for documentation, not provided as source"
+  - pattern: "python_wrapper/pydoctor-theme/**"
+    reason: "DOCUMENTATION_OF"
+    comment: "Only used for python package reference docs"
 
 curations:
   license_findings:
