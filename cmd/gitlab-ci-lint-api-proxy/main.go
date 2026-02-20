@@ -1,7 +1,11 @@
+//go:generate sh -c "cp ../../NOTICE NOTICE"
+
 package main
 
 import (
+	_ "embed"
 	"errors"
+	"fmt"
 	"net/http"
 	"os"
 
@@ -12,6 +16,9 @@ import (
 
 	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/ci_lint_api_proxy"
 )
+
+//go:embed NOTICE
+var noticeContent string
 
 func setLogLevelFromEnv() {
 	logLevel := os.Getenv("LOG_LEVEL")
@@ -37,11 +44,15 @@ const endpoint = ":8080"
 
 func main() {
 	isVersion := flag.Bool("version", false, "Show version info")
+	isLicense := flag.Bool("license", false, "Show license info")
 	gitlabBaseUrl := flag.String("gitlab-base-url", "", "Base URL of GitLab instance")
 	flag.Parse()
 
 	if *isVersion {
 		buildinfo.PrintVersionInfo("gitlab-ci-lint-api-proxy", os.Stdout)
+		return
+	} else if *isLicense {
+		fmt.Println(noticeContent)
 		return
 	}
 

@@ -2,6 +2,7 @@ package cli
 
 import (
 	"errors"
+	"fmt"
 	"os"
 
 	flag "github.com/spf13/pflag"
@@ -89,11 +90,12 @@ func (conf *Configuration) configureLogLevel() {
 }
 
 // Parse the configuration from cli args
-func (conf *Configuration) Parse() error {
+func (conf *Configuration) Parse(notice string) error {
 	conf.defineFlags()
 
 	isHelp := flag.BoolP("help", "h", false, "Show available commands")
 	isVersion := flag.Bool("version", false, "Show version info")
+	isLicnese := flag.Bool("license", false, "Show license info")
 	flag.Parse()
 	conf.configureLogLevel()
 
@@ -102,6 +104,9 @@ func (conf *Configuration) Parse() error {
 		return ErrAbort
 	} else if *isVersion {
 		buildinfo.PrintVersionInfo("gitlab-ci-verify", os.Stderr)
+		return ErrAbort
+	} else if *isLicnese {
+		fmt.Println(notice)
 		return ErrAbort
 	}
 
