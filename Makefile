@@ -18,7 +18,7 @@ coverage: ## Run tests and measure coverage
 	@CGO_ENABLED=0 go test -covermode=count -coverprofile=/tmp/count.out -v ./...
 
 test-coverage-report: coverage ## Run test and display coverage report in browser
-	@go tool cover -html=/tmp/count.out
+	@go generate cmd/gitlab-ci-lint-api-proxy/main.go && go tool cover -html=/tmp/count.out
 
 save-coverage-report: coverage ## Save coverage report to coverage.html
 	@go tool cover -html=/tmp/count.out -o coverage.html
@@ -29,8 +29,8 @@ create-dist: ## Create dist folder if not already existent
 build-linux: create-dist ## Build binaries for linux
 	@CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o $(BIN_PREFIX)linux-amd64 $(BUILD_ARGS)
 	@CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -o $(BIN_PREFIX)linux-arm64 $(BUILD_ARGS)
-	@CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o $(BIN_PREFIX_API_PROXY)linux-amd64 $(BUILD_ARGS)
-	@CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -o $(BIN_PREFIX_API_PROXY)linux-arm64 $(BUILD_ARGS)
+	@go generate cmd/gitlab-ci-lint-api-proxy/main.go && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -tags embed_notice -o $(BIN_PREFIX_API_PROXY)linux-amd64 $(BUILD_ARGS) ./cmd/gitlab-ci-lint-api-proxy
+	@go generate cmd/gitlab-ci-lint-api-proxy/main.go && CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -tags embed_notice -o $(BIN_PREFIX_API_PROXY)linux-arm64 $(BUILD_ARGS) ./cmd/gitlab-ci-lint-api-proxy
 
 build-windows: create-dist ## Build binaries for windows
 	@CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -o $(BIN_PREFIX)windows-amd64.exe $(BUILD_ARGS)
@@ -73,7 +73,7 @@ build-docker: ## Build docker image based on the built linux builds in the dist 
 build: build-linux build-darwin build-windows ## Build binaries for all platform
 
 integration-test: ## Run bats tests on the host
-	@CGO_ENABLED=0 go build -o /tmp/gitlab-ci-verify
+	@go generate cmd/gitlab-ci-lint-api-proxy/main.go && CGO_ENABLED=0 go build -o /tmp/gitlab-ci-verify
 	@BATS_BASE_DIR=$(PWD)/integration-tests/tests BATS_INTEGRATION_REPO_ROOT=$(PWD)/integration-tests BATS_REPO_ROOT=$(PWD) BATS_GITLAB_CI_VERIFY_BIN=/tmp/gitlab-ci-verify npx bats --report-formatter junit --print-output-on-failure integration-tests/tests/$(BATS_TEST_SUITE)
 
 preview-docs:

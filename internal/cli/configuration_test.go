@@ -84,7 +84,7 @@ func TestParse(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			os.Args = append([]string{"cmd"}, tt.args...)
 			conf := NewConfiguration()
-			err := conf.Parse()
+			err := conf.Parse("")
 			if err != tt.expectedErr {
 				t.Errorf("Parse() error = %v, wantErr %v", err, tt.expectedErr)
 			}

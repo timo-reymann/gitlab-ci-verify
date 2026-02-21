@@ -1,7 +1,10 @@
+//go:generate sh -c "cp ../../NOTICE NOTICE"
+
 package main
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
 	"os"
 
@@ -37,11 +40,15 @@ const endpoint = ":8080"
 
 func main() {
 	isVersion := flag.Bool("version", false, "Show version info")
+	isLicense := flag.Bool("license", false, "Show license info")
 	gitlabBaseUrl := flag.String("gitlab-base-url", "", "Base URL of GitLab instance")
 	flag.Parse()
 
 	if *isVersion {
 		buildinfo.PrintVersionInfo("gitlab-ci-lint-api-proxy", os.Stdout)
+		return
+	} else if *isLicense {
+		fmt.Println(noticeContent)
 		return
 	}
 

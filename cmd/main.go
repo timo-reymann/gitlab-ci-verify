@@ -39,10 +39,10 @@ func getOutputWriter(outputFile string) (io.Writer, func(), error) {
 }
 
 // Execute runs the verifier with the given configuration
-func Execute() {
+func Execute(noticeInfo string) {
 	logging.Verbose("create and parse configuration")
 	c := cli.NewConfiguration()
-	handleErr(c.Parse())
+	handleErr(c.Parse(noticeInfo))
 
 	logging.Verbose("get current working directory")
 	projectRoot, err := os.Getwd()
