@@ -18,7 +18,7 @@ coverage: ## Run tests and measure coverage
 	@CGO_ENABLED=0 go test -covermode=count -coverprofile=/tmp/count.out -v ./...
 
 test-coverage-report: coverage ## Run test and display coverage report in browser
-	@go tool cover -html=/tmp/count.out
+	@go generate cmd/gitlab-ci-lint-api-proxy/main.go && go tool cover -html=/tmp/count.out
 
 save-coverage-report: coverage ## Save coverage report to coverage.html
 	@go tool cover -html=/tmp/count.out -o coverage.html
