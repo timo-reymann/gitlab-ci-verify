@@ -109,7 +109,7 @@ jobs:
             - run:
                 name: Build binaries
                 command: |
-                  make build -j4
+                  make build
                   make create-checksums
             - persist_to_workspace:
                 root: ./
