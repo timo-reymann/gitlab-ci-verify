@@ -3,7 +3,6 @@
 package main
 
 import (
-	_ "embed"
 	"errors"
 	"fmt"
 	"net/http"
@@ -16,9 +15,6 @@ import (
 
 	"github.com/timo-reymann/gitlab-ci-verify/v2/internal/ci_lint_api_proxy"
 )
-
-//go:embed NOTICE
-var noticeContent string
 
 func setLogLevelFromEnv() {
 	logLevel := os.Getenv("LOG_LEVEL")
