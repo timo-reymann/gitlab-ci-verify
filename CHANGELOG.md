@@ -1,3 +1,9 @@
+## [2.10.0](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.9.3...v2.10.0) (2026-02-21)
+
+### Features
+
+* Add ORT workflow and license parameter to provide license in released bundle ([aff1f17](https://github.com/timo-reymann/gitlab-ci-verify/commit/aff1f177be40b5ab0a3a5ba7623fbc3c033558d1))
+
 ## [2.9.3](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.9.2...v2.9.3) (2026-02-12)
 
 ### Bug Fixes
