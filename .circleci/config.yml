@@ -36,6 +36,7 @@ jobs:
             - run:
                 name: Run tests
                 command: |
+                  go generate cmd/gitlab-ci-lint-api-proxy/main.go
                   go test -coverprofile=coverage.txt -covermode=atomic   -v ./...
                   make save-coverage-report
       - codecov/upload
