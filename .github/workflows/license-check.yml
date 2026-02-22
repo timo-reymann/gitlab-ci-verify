@@ -31,7 +31,14 @@ jobs:
           curl -sSfL https://raw.githubusercontent.com/anchore/grant/main/install.sh | sh -s -- -b /usr/local/bin
 
       - name: Generate NOTICE file
-        run: syft dir:. -o template -t ./notice.tmpl > NOTICE.generated
+        run: ./generate-notice.sh dir:. > NOTICE.generated
+
+      - name: Upload NOTICE artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: NOTICE
+          path: NOTICE.generated
 
       - name: Check NOTICE file is up to date
         id: notice-check
@@ -65,7 +72,7 @@ jobs:
             }
 
             if (noticeChanged) {
-              body += '⚠️ **NOTICE file is out of date** — please regenerate it with:\n```\nsyft dir:. -o template -t ./notice.tmpl > NOTICE\n```\n\n';
+              body += '⚠️ **NOTICE file is out of date** — please regenerate it with:\n```\n./generate-notice.sh dir:. > NOTICE\n```\n\n';
             } else {
               body += '✅ **NOTICE file is up to date**\n\n';
             }
