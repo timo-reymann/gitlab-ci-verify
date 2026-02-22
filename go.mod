@@ -94,3 +94,4 @@ require (
 )
 
 replace gopkg.in/yaml.v3 => github.com/timo-reymann/go-yaml v1.1.0
+
