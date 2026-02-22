@@ -1,0 +1,101 @@
+name: License Compliance
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+
+jobs:
+  license-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+
+      - name: Download dependencies
+        run: go mod download
+
+      - name: Install syft
+        uses: anchore/sbom-action/download-syft@v0
+
+      - name: Install grant
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/anchore/grant/main/install.sh | sh -s -- -b /usr/local/bin
+
+      - name: Generate NOTICE file
+        run: syft dir:. -o template -t ./notice.tmpl > NOTICE.generated
+
+      - name: Check NOTICE file is up to date
+        id: notice-check
+        run: |
+          if ! diff -q NOTICE NOTICE.generated > /dev/null 2>&1; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "::warning::NOTICE file is out of date"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Check license policy
+        id: policy-check
+        run: grant check dir:.
+        continue-on-error: true
+
+      - name: Comment on PR
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const noticeChanged = '${{ steps.notice-check.outputs.changed }}' === 'true';
+            const policyFailed = '${{ steps.policy-check.outcome }}' === 'failure';
+
+            let body = '## License Compliance Report\n\n';
+
+            if (policyFailed) {
+              body += '❌ **License policy check failed** — some dependencies use licenses not in the allow list.\n\n';
+            } else {
+              body += '✅ **License policy check passed**\n\n';
+            }
+
+            if (noticeChanged) {
+              body += '⚠️ **NOTICE file is out of date** — please regenerate it with:\n```\nsyft dir:. -o template -t ./notice.tmpl > NOTICE\n```\n\n';
+            } else {
+              body += '✅ **NOTICE file is up to date**\n\n';
+            }
+
+            // Find and update existing comment or create new one
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            const marker = '<!-- license-compliance-report -->';
+            body = marker + '\n' + body;
+            const existing = comments.find(c => c.body.includes(marker));
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+            }
+
+      - name: Fail if policy violated
+        if: steps.policy-check.outcome == 'failure'
+        run: exit 1
