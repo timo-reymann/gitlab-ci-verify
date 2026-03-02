@@ -1,3 +1,9 @@
+## [2.11.0](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.10.0...v2.11.0) (2026-03-02)
+
+### Features
+
+* [[#186](https://github.com/timo-reymann/gitlab-ci-verify/issues/186)] Add musl wheel ([3b9d1d7](https://github.com/timo-reymann/gitlab-ci-verify/commit/3b9d1d7aac44c18229a77cc8541843ad783a0c5e))
+
 ## [2.10.0](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.9.3...v2.10.0) (2026-02-21)
 
 ### Features
