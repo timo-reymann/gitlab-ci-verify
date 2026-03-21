@@ -33,6 +33,7 @@ jobs:
       - checkout
       - go/with-cache:
           steps:
+            - go/mod-download-cached
             - run:
                 name: Run tests
                 command: |
@@ -75,6 +76,7 @@ jobs:
             git submodule update --init --recursive
       - go/with-cache:
           steps:
+            - go/mod-download-cached
             - run:
                 name: Run integration tests
                 command: |
@@ -106,6 +108,7 @@ jobs:
       - checkout
       - go/with-cache:
           steps:
+            - go/mod-download-cached
             - run:
                 name: Build binaries
                 command: |
