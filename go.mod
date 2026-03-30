@@ -1,15 +1,13 @@
 module github.com/timo-reymann/gitlab-ci-verify/v2
 
-go 1.24.6
-
-toolchain go1.24.9
+go 1.25.0
 
 require (
 	github.com/Ladicle/tabwriter v1.0.0
 	github.com/amenzhinsky/go-memexec v0.7.1
 	github.com/bmatcuk/doublestar/v4 v4.10.0
 	github.com/chainguard-dev/git-urls v1.0.2
-	github.com/fatih/color v1.18.0
+	github.com/fatih/color v1.19.0
 	github.com/go-git/go-git/v5 v5.16.5
 	github.com/google/go-cmp v0.7.0
 	github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510
@@ -86,7 +84,7 @@ require (
 	golang.org/x/crypto v0.47.0 // indirect
 	golang.org/x/net v0.49.0 // indirect
 	golang.org/x/sync v0.19.0 // indirect
-	golang.org/x/sys v0.40.0 // indirect
+	golang.org/x/sys v0.42.0 // indirect
 	google.golang.org/protobuf v1.36.11 // indirect
 	gopkg.in/ini.v1 v1.67.1 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
