@@ -164,18 +164,18 @@ jobs:
           paths:
             - "/tmp/pip-cache"
       - run:
-          name: Clear cache for mkdocs build
+          name: Clear cache for docs build
           command: rm -rf /tmp/pip-cache
       - restore_cache:
-          key: mkdocs-dependencies-{{ checksum "requirements-docs.txt" }}
+          key: docs-dependencies-{{ checksum "requirements-docs.txt" }}
       - run:
-          name: Build mkdocs documentation
+          name: Build properdocs documentation
           command: |
             pip install -r requirements-docs.txt
-            mkdocs build
+            properdocs build
             mv site/* gh-pages/
       - save_cache:
-          key: mkdocs-dependencies-{{ checksum "requirements-docs.txt" }}
+          key: docs-dependencies-{{ checksum "requirements-docs.txt" }}
           paths:
             - "/tmp/pip-cache"
       - run:

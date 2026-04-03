@@ -79,4 +79,4 @@ integration-test: ## Run bats tests on the host
 preview-docs:
 	@python3 -m venv .venv
 	@./.venv/bin/python3 -m pip install -r requirements-docs.txt
-	@mkdocs serve
+	@properdocs serve
