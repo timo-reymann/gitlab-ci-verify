@@ -9,8 +9,8 @@ only_tags: &only_tags
 
 orbs:
   github-cli: circleci/github-cli@2.7.2
-  docker: circleci/docker@2.8.2
-  codecov: codecov/codecov@5.4.3
+  docker: circleci/docker@4.0.0
+  codecov: codecov/codecov@6.0.0
   go: circleci/go@3.0.4
   github-utils: trustedshops-public/github-utils@1.2.0
   semantic-release: trustedshops-public/semantic-release@6.1.0
@@ -244,14 +244,14 @@ jobs:
             echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
             docker buildx create --use
             make build-docker
-      - docker/update-description:
+      - docker/update_description:
           image: timoreymann/gitlab-ci-verify
-          docker-username: DOCKER_USERNAME
-          docker-password: DOCKER_TOKEN
-      - docker/update-description:
+          docker_username: DOCKER_USERNAME
+          docker_password: DOCKER_TOKEN
+      - docker/update_description:
           image: timoreymann/gitlab-ci-lint-api-proxy
-          docker-username: DOCKER_USERNAME
-          docker-password: DOCKER_TOKEN
+          docker_username: DOCKER_USERNAME
+          docker_password: DOCKER_TOKEN
 
 workflows:
   version: 2
