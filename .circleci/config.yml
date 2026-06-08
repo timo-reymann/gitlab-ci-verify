@@ -244,14 +244,14 @@ jobs:
             echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
             docker buildx create --use
             make build-docker
-      - docker/update-description:
+      - docker/update_description:
           image: timoreymann/gitlab-ci-verify
-          docker-username: DOCKER_USERNAME
-          docker-password: DOCKER_TOKEN
-      - docker/update-description:
+          docker_username: DOCKER_USERNAME
+          docker_password: DOCKER_TOKEN
+      - docker/update_description:
           image: timoreymann/gitlab-ci-lint-api-proxy
-          docker-username: DOCKER_USERNAME
-          docker-password: DOCKER_TOKEN
+          docker_username: DOCKER_USERNAME
+          docker_password: DOCKER_TOKEN
 
 workflows:
   version: 2
