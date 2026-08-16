@@ -1,7 +1,11 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "local>timo-reymann/renovate-config"
+    "local>timo-reymann/renovate-config",
+    "local>timo-reymann/renovate-config//presets/ecosystems/go",
+    "local>timo-reymann/renovate-config//presets/groups/go-git-tooling",
+    "local>timo-reymann/renovate-config//presets/groups/go-opa-isolated",
+    "local>timo-reymann/renovate-config//presets/groups/go-yaml-fork"
   ],
   "packageRules": [
     {
