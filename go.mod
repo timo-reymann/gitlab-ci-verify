@@ -14,7 +14,7 @@ require (
 	github.com/hashicorp/go-retryablehttp v0.7.8
 	github.com/open-policy-agent/opa v1.18.2
 	github.com/spf13/pflag v1.0.10
-	github.com/stretchr/testify v1.11.1
+	github.com/stretchr/testify v1.12.0
 	github.com/vmware-labs/yaml-jsonpath v0.3.2
 	gopkg.in/yaml.v3 v3.0.1
 )
