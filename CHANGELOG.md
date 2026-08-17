@@ -1,3 +1,9 @@
+## [2.11.3](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.11.2...v2.11.3) (2026-08-17)
+
+### Bug Fixes
+
+* **deps:** update module github.com/fatih/color to v1.19.0 ([#231](https://github.com/timo-reymann/gitlab-ci-verify/issues/231)) ([1b0f4d9](https://github.com/timo-reymann/gitlab-ci-verify/commit/1b0f4d92cc63001b1255564855e46c5b3ee9e367))
+
 ## [2.11.2](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.11.1...v2.11.2) (2026-07-11)
 
 ### Bug Fixes
