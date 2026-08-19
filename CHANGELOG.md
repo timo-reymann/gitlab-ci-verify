@@ -1,3 +1,9 @@
+## [2.11.4](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.11.3...v2.11.4) (2026-08-19)
+
+### Bug Fixes
+
+* **deps:** update dependency wheel to ==0.48.* ([#235](https://github.com/timo-reymann/gitlab-ci-verify/issues/235)) ([773b876](https://github.com/timo-reymann/gitlab-ci-verify/commit/773b876d6801a8d7f1686a822c181d0135d84715))
+
 ## [2.11.3](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.11.2...v2.11.3) (2026-08-17)
 
 ### Bug Fixes
