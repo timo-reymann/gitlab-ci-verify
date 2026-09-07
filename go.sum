@@ -219,6 +219,8 @@ github.com/open-policy-agent/opa v1.19.1 h1:aB1nOncChnTbQurjRQVJnjTJxditt8Vqszlb
 github.com/open-policy-agent/opa v1.19.1/go.mod h1:pb6Y6klyf7X7X8uXNDflruA9dQC2gMqWROXI5w/kvv0=
 github.com/open-policy-agent/opa v1.20.0 h1:IoeLQRExkdB/lrs8nyP1GxxAPOrqWOUlIxn3L8E/I94=
 github.com/open-policy-agent/opa v1.20.0/go.mod h1:pxxSP1noAirD8UJ7PgAjoRw39IE0Bk/JRFkUP3+51lU=
+github.com/open-policy-agent/opa v1.20.1 h1:wSC3zjHbRyt7X3daV/DsjnhDywzB3l0m0gWhgX1W2vQ=
+github.com/open-policy-agent/opa v1.20.1/go.mod h1:pxxSP1noAirD8UJ7PgAjoRw39IE0Bk/JRFkUP3+51lU=
 github.com/pjbgf/sha1cd v0.3.2 h1:a9wb0bp1oC2TGwStyn0Umc/IGKQnEgF0vVaZ8QF8eo4=
 github.com/pjbgf/sha1cd v0.3.2/go.mod h1:zQWigSxVmsHEZow5qaLtPYxpcKMMQpa09ixqBxuCS6A=
 github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
