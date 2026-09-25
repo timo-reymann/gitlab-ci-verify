@@ -1,3 +1,9 @@
+## [2.11.8](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.11.7...v2.11.8) (2026-09-25)
+
+### Bug Fixes
+
+* **deps:** update module github.com/open-policy-agent/opa to v1.20.2 ([#245](https://github.com/timo-reymann/gitlab-ci-verify/issues/245)) ([9ca68d1](https://github.com/timo-reymann/gitlab-ci-verify/commit/9ca68d1d00be735b2840f6519d25a141c4642b11))
+
 ## [2.11.7](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.11.6...v2.11.7) (2026-09-07)
 
 ### Bug Fixes
