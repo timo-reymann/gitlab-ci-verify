@@ -5,7 +5,7 @@ go 1.26.0
 require (
 	github.com/Ladicle/tabwriter v1.0.0
 	github.com/amenzhinsky/go-memexec v0.7.1
-	github.com/bmatcuk/doublestar/v4 v4.10.0
+	github.com/bmatcuk/doublestar/v4 v4.10.2
 	github.com/chainguard-dev/git-urls v1.0.2
 	github.com/fatih/color v1.19.0
 	github.com/go-git/go-git/v5 v5.16.5
