@@ -4,11 +4,16 @@ The applicable license information is listed below:
 ----
 
 Copyright (c) 2011-2019 Canonical Ltd
+Copyright 2023 Chainguard, Inc
+Copyright 2012 Google Inc. All Rights Reserved.
 Copyright 2017-2018 Sourced Technologies S.L.
 Copyright 2014 Unknwon
-Copyright (c) 2020 VMware, Inc. All rights reserved.
+Copyright 2020 VMware, Inc.
+Copyright (c) 2020 VMware, Inc. All Rights Reserved.
 Copyright 2023 pjbgf
 Copyright 2015 xeipuuv
+Copyright 2015 xeipuuv ( https://github.com/xeipuuv )
+> Copyright (c) 2006 Google Inc. > <http://code.google.com/p/google-diff-match-patch/>
 
                                  Apache License
                            Version 2.0, January 2004
@@ -214,6 +219,8 @@ Copyright 2015 xeipuuv
 
   --
 
+Copyright (c) 2015 Emir Pasic All rights reserved.
+Copyright 2014 Matthew Endsley
 Copyright (c) 2016 Péter Surányi.
 Copyright 2012 Richard Crowley. All rights reserved.
 
@@ -241,16 +248,22 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   --
 
 Copyright (c) 2012 Alex Ogier. All rights reserved.
+Copyright (c) 2021 Aryan Ahadinia. All rights reserved.
+Copyright (c) 2017 Benjamin Scher Purcell. All rights reserved.
 Copyright (c) 2019 Cloudflare. All rights reserved.
 Copyright (c) 2013 Dario Castañé. All rights reserved.
 Copyright (c) 2014-2015 Docker Inc & Go Authors. All rights reserved.
+Copyright (c) 2015, 2021 Emir Pasic. All rights reserved.
+Copyright (c) 2015 Facebook, Inc. All rights reserved.
 Copyright (c) 2009, 2014 Google Inc. All rights reserved.
 Copyright (c) 2011 Open Knowledge Foundation Ltd. All rights reserved.
 Copyright (c) 2013 Patrick Mezard All rights reserved.
-Copyright (c) 2012 Péter Surányi
+Copyright (c) 2009, 2012 Péter Surányi
 Copyright (c) 2009, 2012 Péter Surányi. Portions Copyright (c) The Go
 Copyright (c) 2017-2024 SUSE LLC. All rights reserved.
+Portions Copyright (c) The Go
 Copyright 2009 The Go Authors.
+Copyright 2009-2011, 2016, 2018 The Go Authors. All rights reserved.
 Copyright (c) 2009, 2012, 2017-2018 The Go Authors. All rights reserved.
 Portions Copyright (c) 2009 The Go Authors. All rights reserved.
 
@@ -281,10 +294,85 @@ THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
   --
 
+Copyright (c) 2018 Adam Scarr
+Copyright (c) 2015 Agniva De Sarker
+Copyright (c) 2012 Alex Ogier. All rights reserved.
+Copyright (c) 2018 Aliaksandr Valialkin
+Copyright 2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+Copyright 2017-2020 Authors of Cilium
+Copyright (c) 2014 Bob Matcuk
+Copyright (c) 2018 Brendan McMillion. All rights reserved.
+Copyright (c) 2016 Caleb Spare
+Copyright (c) 2011-2019 Canonical Ltd
+Copyright 2011-2016 Canonical Ltd.
+Copyright (c) 2019 Cloudflare. All rights reserved.
+Copyright (c) 2014 Conformal Systems LLC.
+Copyright 2013-2015 CoreOS, Inc.
+Copyright (c) 2013 Dario Castañé. All rights reserved.
+Copyright 2013-2014 Dario Castañé. All rights reserved.
+Copyright (c) 2013-2024 Dave Collins
+Copyright 2019 David Protasowski
+Copyright (c) 2014-2015 Docker Inc & Go Authors. All rights reserved.
+Copyright (c) 2015 Ernesto Jiménez
+Copyright (c) 2013 Fatih Arslan
 Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>
+Copyright 2012-2013 Google Inc.
+Copyright (c) 2009, 2014 Google Inc. All rights reserved.
+Copyright 2016-2018, 2021, 2023 Google Inc. All rights reserved.
+Copyright (c) 2006 Google Inc. http://code.google.com/p/google-diff-match-patch
+Copyright (c) 2015 HashiCorp, Inc.
 Copyright (c) 2006, 2008 Junio C Hamano
-Copyright 2009 The Go Authors.
-Copyright 2018-2019 The Go Authors. All rights reserved.
+Copyright (c) 2006-2011 Kirill Simonov
+Copyright (c) 2020 Masaaki Goshima
+Copyright (c) 2012-2020 Mat Ryer, Tyler Bunnell and contributors.
+Copyright (c) 2015 Microsoft
+Copyright (c) 2012 Miki Tebeka <miki.tebeka@gmail.com>.
+Copyright 2013 MongoDB, Inc.
+Copyright (c) 2026 Olivier Mengué and contributors.
+Copyright (c) 2018-2019 ProtonTech AG
+Copyright 2019 ProtonTech AG.
+Copyright (c) 2009, 2012 Péter Surányi
+Copyright (c) 2009, 2012 Péter Surányi. Portions Copyright (c) The Go
+Copyright 2012 Richard Crowley. All rights reserved.
+Copyright (c) 2017-2025 SUSE LLC. All rights reserved.
+Copyright 2015 Sander van Harmelen
+Copyright 2023 Segment
+Copyright (c) 2019 Segment.io, Inc.
+Copyright (c) 2016 Sergey Kamardin
+Copyright (c) 2014 Simon Eskildsen
+Copyright 2025 Skeema LLC and the Skeema Knownhosts authors
+copyright 2025 Skeema LLC and the Skeema Knownhosts authors
+Copyright 2017 Sourced Technologies S.L.
+Copyright 2014-2015 Stripe, Inc.
+Copyright (c) 2014 The AUTHORS
+Copyright (c) 2015-2026 The Decred developers
+Copyright 2020-2026 The Decred developers
+Copyright 2022 The Flux authors.
+Portions Copyright (c) The Go
+Copyright 2009, 2017 The Go Authors
+Copyright 2009-2026 The Go Authors. All rights reserved.
+Copyright (c) 2009, 2012, 2017 The Go Authors. All rights reserved.
+Portions Copyright (c) 2009 The Go Authors. All rights reserved.
+Copyright (c) 2017 The Lightning Network Developers
+Copyright 2016, 2025-2026 The OPA Authors
+Copyright 2013-2016 The btcsuite developers
+Copyright (c) 2013-2017 The btcsuite developers
+Copyright (c) 2012-2016 The go-diff Authors. All rights reserved.
+Copyright (c) 2014 The go-patricia AUTHORS
+Copyright 2025 The go-yaml Project Contributors
+Copyright (c) 2025 Timo Reymann
+Copyright (c) 2020 Will Maier
+Copyright (c) Yasuhiro MATSUMOTO <mattn.jp@gmail.com>
+Copyright (c) 2016 Yasuhiro Matsumoto
+Copyright 2017-2018 johandorland ( https://github.com/johandorland )
+Copyright (c) 2015, 2022 lestrrat
+Copyright (c) 2021, 2025 lestrrat-go
+Copyright 2023 pjbgf
+Copyright (c) 2015 present, Facebook, Inc.
+Copyright 2011 staring in when the project was ported over:
+Copyright 2015 xeipuuv
+Copyright 2015 xeipuuv ( https://github.com/xeipuuv )
+> Copyright (c) 2006 Google Inc. > <http://code.google.com/p/google-diff-match-patch/>
 
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
@@ -963,10 +1051,12 @@ Public License instead of this License.  But first, please read
 
   --
 
+Copyright (c) 2017 Benjamin Scher Purcell <benjapurcell@gmail.com>
 Copyright (c) 2012-2016 Dave Collins <dave@davec.name>
 Copyright (c) 2015-2024 The Decred developers
 Copyright (c) 2017 The Lightning Network Developers
 Copyright (c) 2013-2017 The btcsuite developers
+Copyright (c) 2014 Will Maier <wcmaier@m.aier.us>
 
 Permission to use, copy, modify, and/or distribute this software for any purpose
 with or without fee is hereby granted, provided that the above copyright notice
@@ -981,6 +1071,21 @@ TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
 THIS SOFTWARE.
 
   --
+
+Copyright 2008, 2023-2024 Google Inc. All rights reserved.
+Copyright 2008 Google LLC. All rights reserved.
+Copyright (c) 2006-2013 James Graham, Geoffrey Sneddon, and other contributors
+Copyright 2023 Proton AG. All rights reserved.
+Copyright (c) 2018-2019 ProtonTech AG
+Copyright 2019 ProtonTech AG.
+Copyright 2009, 2018-2019 The Go Authors
+Copyright (c) 2009, 2018 The Go Authors. All rights reserved.
+Copyright 2009-2026 The Go Authors. All rights reserved.
+Copyright 2011 ThePiachu. All rights reserved.
+Copyright \d\d\d\d Google (Inc|LLC)\. All rights reserved\.
+BYTE $0xa7; BYTE $0xa8; BYTE $0xa9; BYTE $0xc0
+BYTE $0xa7; BYTE $0xa8; BYTE $0xa9; BYTE $0xc0 BYTE $0xa9; BYTE $0xa7; BYTE $0xb6; BYTE $0xbc
+BYTE $0xa9; BYTE $0xa7; BYTE $0xb6; BYTE $0xbc
 
 Additional IP Rights Grant (Patents)
 
@@ -1005,27 +1110,37 @@ Go shall terminate as of the date such litigation is filed.
   --
 
 Copyright (c) 2018 Adam Scarr
+Copyright (c) 2015 Agniva De Sarker
 Copyright (c) 2018 Aliaksandr Valialkin
 Copyright (c) 2013 Blake Mizerany
 Copyright (c) 2014 Bob Matcuk
 Copyright (c) 2016 Caleb Spare
+Copyright (c) 2014 David Mzareulyan
 Copyright 2019 David Protasowski
 Copyright (c) 2013 Fatih Arslan
+Copyright 2023 Google LLC
 Copyright (c) 2014 Juan Batiz-Benet
+Copyright (c) 2017 Kevin Burke.
 Copyright (c) 2006-2011 Kirill Simonov
+Copyright 2017 Marc Stevens <marc@marc-stevens.nl>
+Copyright 2017 Marc Stevens <marc@marc-stevens.nl>, Dan Shumow (danshu@microsoft.com)
 Copyright (c) 2020 Masaaki Goshima
 Copyright (c) 2012-2020 Mat Ryer, Tyler Bunnell and contributors.
 Copyright (c) 2015 Microsoft
+Copyright (c) Oleg Sklyar, Silvertern
 Copyright (c) 2014 Sam Ghods
 Copyright (c) 2016 Sergey Kamardin
 Copyright (c) 2014 Simon Eskildsen
+Copyright 2018 Sourced Technologies, S.L.
 Copyright (c) 2014 The AUTHORS
 Copyright (c) 2012-2016 The go-diff Authors. All rights reserved.
+Copyright (c) 2013-2017 Thomas Pelletier, Eric Anderton
 Copyright (c) 2020 Will Maier
 Copyright (c) Yasuhiro MATSUMOTO <mattn.jp@gmail.com>
 Copyright (c) 2016 Yasuhiro Matsumoto
 Copyright (c) 2015, 2022 lestrrat
 Copyright (c) 2020-2021, 2025 lestrrat-go
+Copyright 2011 staring in when the project was ported over:
 copyright 2011 staring in when the project was ported over:
 
 Permission is hereby granted, free of charge, to any person obtaining
@@ -1441,6 +1556,132 @@ Exhibit B - "Incompatible With Secondary Licenses" Notice
 
   This Source Code Form is "Incompatible With Secondary Licenses", as
   defined by the Mozilla Public License, v. 2.0.
+
+  --
+
+Copyright (c) 1995-1998 Eric Young (eay@cryptsoft.com)
+Copyright (c) 1995-1998 Eric Young (eay@cryptsoft.com) All rights reserved.
+
+LICENSE ISSUES
+  ==============
+
+  The OpenSSL toolkit stays under a dual license, i.e. both the conditions of
+  the OpenSSL License and the original SSLeay license apply to the toolkit.
+  See below for the actual license texts. Actually both licenses are BSD-style
+  Open Source licenses. In case of any license issues related to OpenSSL
+  please contact openssl-core@openssl.org.
+
+  OpenSSL License
+  ---------------
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in
+   the documentation and/or other materials provided with the
+   distribution.
+
+3. All advertising materials mentioning features or use of this
+   software must display the following acknowledgment:
+   "This product includes software developed by the OpenSSL Project
+   for use in the OpenSSL Toolkit. (http://www.openssl.org/)"
+
+4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to
+   endorse or promote products derived from this software without
+   prior written permission. For written permission, please contact
+   openssl-core@openssl.org.
+
+5. Products derived from this software may not be called "OpenSSL"
+   nor may "OpenSSL" appear in their names without prior written
+   permission of the OpenSSL Project.
+
+6. Redistributions of any form whatsoever must retain the following
+   acknowledgment:
+   "This product includes software developed by the OpenSSL Project
+   for use in the OpenSSL Toolkit (http://www.openssl.org/)"
+
+THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY
+EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR
+ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+This product includes cryptographic software written by Eric Young
+(eay@cryptsoft.com).  This product includes software written by Tim
+Hudson (tjh@cryptsoft.com).
+
+
+ Original SSLeay License
+ -----------------------
+
+Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)
+All rights reserved.
+
+This package is an SSL implementation written
+by Eric Young (eay@cryptsoft.com).
+The implementation was written so as to conform with Netscapes SSL.
+
+This library is free for commercial and non-commercial use as long as
+the following conditions are aheared to.  The following conditions
+apply to all code found in this distribution, be it the RC4, RSA,
+lhash, DES, etc., code; not just the SSL code.  The SSL documentation
+included with this distribution is covered by the same copyright terms
+except that the holder is Tim Hudson (tjh@cryptsoft.com).
+
+Copyright remains Eric Young's, and as such any Copyright notices in
+the code are not to be removed.
+If this package is used in a product, Eric Young should be given attribution
+as the author of the parts of the library used.
+This can be in the form of a textual message at program startup or
+in documentation (online or textual) provided with the package.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+1. Redistributions of source code must retain the copyright
+   notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+3. All advertising materials mentioning features or use of this software
+   must display the following acknowledgement:
+   "This product includes cryptographic software written by
+    Eric Young (eay@cryptsoft.com)"
+   The word 'cryptographic' can be left out if the rouines from the library
+   being used are not cryptographic related :-).
+4. If you include any Windows specific code (or a derivative thereof) from
+   the apps directory (application code) you must include an acknowledgement:
+   "This product includes software written by Tim Hudson (tjh@cryptsoft.com)"
+
+THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ``AS IS'' AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+SUCH DAMAGE.
+
+The licence and distribution terms for any publically available version or
+derivative of this code cannot be changed.  i.e. this code cannot simply be
+copied and put under another distribution licence
+[including the GNU Public Licence.]
 
 ----
 
