@@ -1,3 +1,9 @@
+## [2.11.13](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.11.12...v2.11.13) (2026-10-30)
+
+### Bug Fixes
+
+* **deps:** update dependency coverage to ==7.17.* ([#254](https://github.com/timo-reymann/gitlab-ci-verify/issues/254)) ([2c6c0a8](https://github.com/timo-reymann/gitlab-ci-verify/commit/2c6c0a8e5238dfe1463443100e05cf6660c9479d))
+
 ## [2.11.12](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.11.11...v2.11.12) (2026-10-19)
 
 ### Bug Fixes
