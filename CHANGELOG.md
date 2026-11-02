@@ -1,3 +1,9 @@
+## [2.11.14](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.11.13...v2.11.14) (2026-11-02)
+
+### Bug Fixes
+
+* **deps:** update module github.com/bmatcuk/doublestar/v4 to v4.10.4 ([#255](https://github.com/timo-reymann/gitlab-ci-verify/issues/255)) ([8907dbf](https://github.com/timo-reymann/gitlab-ci-verify/commit/8907dbf4659eed7db418cffca9d55f0ee082b077))
+
 ## [2.11.13](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.11.12...v2.11.13) (2026-10-30)
 
 ### Bug Fixes
