@@ -21,10 +21,10 @@ executors:
       - image: cimg/go:1.27
   python:
     docker:
-      - image: cimg/python:3.13
+      - image: cimg/python:3.15
   node:
     docker:
-      - image: cimg/python:3.13-node
+      - image: cimg/python:3.15-node
 
 jobs:
   unit-test-cli:
