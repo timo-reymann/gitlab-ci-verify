@@ -1,3 +1,9 @@
+## [2.11.15](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.11.14...v2.11.15) (2026-11-18)
+
+### Bug Fixes
+
+* **deps:** update module github.com/spf13/pflag to v1.1.0 ([#262](https://github.com/timo-reymann/gitlab-ci-verify/issues/262)) ([b8b9a64](https://github.com/timo-reymann/gitlab-ci-verify/commit/b8b9a64cf96e5b8e9d0bf26a70b3458fad5cc210))
+
 ## [2.11.14](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.11.13...v2.11.14) (2026-11-02)
 
 ### Bug Fixes
