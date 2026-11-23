@@ -38,7 +38,7 @@ make build
 
 ## Preview documentation
 
-Preview the mkdocs documentation locally with hot-reload for changes.
+Preview the documentation (built with [Zensical](https://zensical.org)) locally with hot-reload for changes.
 
 ```sh
 make preview-docs
