@@ -147,7 +147,7 @@ func (gcv *GitlabCIVerifier) CreateCheckInput() (*checks.CheckInput, error) {
 
 	if gcv.shouldCheckAgainstLintAPI() {
 		logging.Debug("Checking against lint API")
-		lintRes, err := gcv.checkAgainstLintAPI(lintRes, virtual, mergedCiYaml)
+		lintRes, err = gcv.checkAgainstLintAPI(lintRes, virtual, mergedCiYaml)
 		if err != nil {
 			return nil, err
 		}
