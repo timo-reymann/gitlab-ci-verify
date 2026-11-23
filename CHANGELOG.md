@@ -1,3 +1,13 @@
+## [2.12.0](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.11.15...v2.12.0) (2026-11-23)
+
+### Features
+
+* add --lint-ref to validate pipelines in the context of a ref ([c153ad4](https://github.com/timo-reymann/gitlab-ci-verify/commit/c153ad43fcdbd4cca7d8f65bf55a62eb76308b9d)), closes [#264](https://github.com/timo-reymann/gitlab-ci-verify/issues/264)
+
+### Bug Fixes
+
+* pass lint api result to the checks ([82a4660](https://github.com/timo-reymann/gitlab-ci-verify/commit/82a4660254928d9e8d263d1f028ac8c8a7e3d1ea)), closes [#264](https://github.com/timo-reymann/gitlab-ci-verify/issues/264)
+
 ## [2.11.15](https://github.com/timo-reymann/gitlab-ci-verify/compare/v2.11.14...v2.11.15) (2026-11-18)
 
 ### Bug Fixes
