@@ -519,6 +519,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Flags
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="flags.html" class="md-nav__link md-nav__link--active">
         
   
@@ -535,6 +553,36 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#validating-a-feature-branch-lint-ref" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validating a feature branch (--lint-ref)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1316,6 +1364,25 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#validating-a-feature-branch-lint-ref" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validating a feature branch (--lint-ref)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1386,6 +1453,15 @@
 <p>gitlab-ci-verify's behavior can be controlled with various command-line-flags.</p>
 <p>You can get a full list by running</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>gitlab-ci-verify<span class="w"> </span>--help
+</span></code></pre></div>
+<h2 id="validating-a-feature-branch-lint-ref">Validating a feature branch (<code>--lint-ref</code>)</h2>
+<p>By default the CI Lint API resolves <code>include</code> entries, such as CI/CD components, against the default branch
+of your project. When your pipeline includes a component pinned to the current commit, for example
+<code>component: $CI_SERVER_FQDN/$CI_PROJECT_PATH/ci@$CI_COMMIT_SHA</code>, and that component only exists on your
+feature branch, the validation fails or uses the stale component from the default branch.</p>
+<p>Pass <code>--lint-ref</code> with a branch or tag to validate the pipeline in the context of the ref.
+In this mode the CI Lint API runs a pipeline simulation (dry run) instead of the static check:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>gitlab-ci-verify<span class="w"> </span>--lint-ref<span class="w"> </span><span class="s2">"</span><span class="nv">$CI_COMMIT_REF_NAME</span><span class="s2">"</span>
 </span></code></pre></div>
 
 
