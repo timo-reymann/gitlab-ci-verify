@@ -44,10 +44,18 @@ func (g *Client) NewRequestWithContext(ctx context.Context, method string, path 
 }
 
 // LintCiYaml against the api for a project
-func (g *Client) LintCiYaml(ctx context.Context, projectSlug string, ciYaml []byte) (*CiLintResult, error) {
-	wrapped, err := format_conversion.ToJson(map[string]any{
+// When ref is not empty, the lint API validates the pipeline as a dry run in the context of the given
+// branch, tag or commit SHA instead of the default branch of the project
+func (g *Client) LintCiYaml(ctx context.Context, projectSlug string, ciYaml []byte, ref string) (*CiLintResult, error) {
+	payload := map[string]any{
 		"content": string(ciYaml),
-	})
+	}
+	if ref != "" {
+		payload["ref"] = ref
+		payload["dry_run"] = true
+	}
+
+	wrapped, err := format_conversion.ToJson(payload)
 	if err != nil {
 		return nil, err
 	}
@@ -56,7 +64,10 @@ func (g *Client) LintCiYaml(ctx context.Context, projectSlug string, ciYaml []by
 	if err != nil {
 		return nil, err
 	}
-	req.URL.Query().Set("include_merged_yaml", "true")
+
+	query := req.URL.Query()
+	query.Set("include_merged_yaml", "true")
+	req.URL.RawQuery = query.Encode()
 
 	res, err := g.Do(req)
 	if err != nil {

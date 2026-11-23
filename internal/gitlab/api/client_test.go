@@ -3,6 +3,7 @@ package api
 import (
 	"context"
 	"github.com/google/go-cmp/cmp"
+	"io"
 	"net/http"
 	"os"
 	"strings"
@@ -36,12 +37,15 @@ func TestClient_LintCiYaml(t *testing.T) {
 	testCases := []struct {
 		name           string
 		projectSlug    string
+		ref            string
 		response       string
 		expectedResult *CiLintResult
+		verifier       func(request *http.Request)
 	}{
 		{
 			name:        "valid",
 			projectSlug: "org/group/project",
+			ref:         "",
 			response:    `{ "valid": true, "merged_yaml": "merged_yaml", "errors": [], "warnings": [] }`,
 			expectedResult: &CiLintResult{
 				Valid:      true,
@@ -49,10 +53,32 @@ func TestClient_LintCiYaml(t *testing.T) {
 				Errors:     []string{},
 				Warnings:   []string{},
 			},
+			verifier: func(request *http.Request) {
+				if request.URL.Query().Get("include_merged_yaml") != "true" {
+					t.Error("include_merged_yaml query parameter is not sent")
+				}
+				assertRequestBodyContains(t, request, `"content"`, `!"ref"`)
+			},
+		},
+		{
+			name:        "with ref runs dry run in ref context",
+			projectSlug: "org/group/project",
+			ref:         "feature-branch",
+			response:    `{ "valid": true, "merged_yaml": "merged_yaml", "errors": [], "warnings": [] }`,
+			expectedResult: &CiLintResult{
+				Valid:      true,
+				MergedYaml: "merged_yaml",
+				Errors:     []string{},
+				Warnings:   []string{},
+			},
+			verifier: func(request *http.Request) {
+				assertRequestBodyContains(t, request, `"ref":"feature-branch"`, `"dry_run":true`)
+			},
 		},
 		{
 			name:        "warnings",
 			projectSlug: "org/group/project",
+			ref:         "",
 			response:    `{ "valid": false, "merged_yaml": "merged_yaml", "errors": [], "warnings": ["warning text"] }`,
 			expectedResult: &CiLintResult{
 				Valid:      false,
@@ -60,10 +86,12 @@ func TestClient_LintCiYaml(t *testing.T) {
 				Errors:     []string{},
 				Warnings:   []string{"warning text"},
 			},
+			verifier: func(request *http.Request) {},
 		},
 		{
 			name:        "errors",
 			projectSlug: "org/group/project",
+			ref:         "",
 			response:    `{ "valid": false, "merged_yaml": "merged_yaml", "errors": ["error text"], "warnings": [] }`,
 			expectedResult: &CiLintResult{
 				Valid:      false,
@@ -71,6 +99,7 @@ func TestClient_LintCiYaml(t *testing.T) {
 				Errors:     []string{"error text"},
 				Warnings:   []string{},
 			},
+			verifier: func(request *http.Request) {},
 		},
 	}
 
@@ -80,11 +109,12 @@ func TestClient_LintCiYaml(t *testing.T) {
 				if !strings.Contains(request.URL.RawPath, "%2F") {
 					t.Fatal("project parameter is not url escaped properly")
 				}
+				tc.verifier(request)
 			})
 			defer server.Close()
 
 			client := NewClient(server.URL, "token")
-			result, err := client.LintCiYaml(context.TODO(), tc.projectSlug, []byte(""))
+			result, err := client.LintCiYaml(context.TODO(), tc.projectSlug, []byte(""), tc.ref)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -95,6 +125,26 @@ func TestClient_LintCiYaml(t *testing.T) {
 		})
 	}
 
+}
+
+// assertRequestBodyContains checks if the request body contains all the given texts.
+// The first text may be prefixed with "!" to assert it is absent from the body instead.
+func assertRequestBodyContains(t *testing.T, request *http.Request, texts ...string) {
+	t.Helper()
+
+	body, err := io.ReadAll(request.Body)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	for _, text := range texts {
+		negated := strings.HasPrefix(text, "!")
+		expected := strings.TrimPrefix(text, "!")
+
+		if strings.Contains(string(body), expected) == negated {
+			t.Errorf("Request body assertion failed for %s, but got %s", expected, body)
+		}
+	}
 }
 
 func TestNewClientWithMultiTokenSources(t *testing.T) {

@@ -147,7 +147,7 @@ func (gcv *GitlabCIVerifier) CreateCheckInput() (*checks.CheckInput, error) {
 
 	if gcv.shouldCheckAgainstLintAPI() {
 		logging.Debug("Checking against lint API")
-		lintRes, err = gcv.checkAgainstLintAPI(lintRes, virtual, mergedCiYaml)
+		lintRes, err = gcv.checkAgainstLintAPI(virtual)
 		if err != nil {
 			return nil, err
 		}
@@ -175,7 +175,7 @@ func (gcv *GitlabCIVerifier) shouldCheckAgainstLintAPI() bool {
 	return !gcv.configuration.NoLintAPICall && (!gcv.configuration.IsCIEnv() || gcv.configuration.IsCIEnv() && !gcv.configuration.NoLintAPICallInCi)
 }
 
-func (gcv *GitlabCIVerifier) checkAgainstLintAPI(lintRes *ci_yaml.VerificationResultWithRemoteInfo, virtual *ci_yaml.VirtualCiYamlFile, mergedCiYaml *ci_yaml.CiYamlFile) (*ci_yaml.VerificationResultWithRemoteInfo, error) {
+func (gcv *GitlabCIVerifier) checkAgainstLintAPI(virtual *ci_yaml.VirtualCiYamlFile) (*ci_yaml.VerificationResultWithRemoteInfo, error) {
 	logging.Verbose("get remote urls")
 	remoteUrls, err := git.GetRemoteUrls(gcv.projectRoot)
 	if err != nil {
@@ -186,11 +186,12 @@ func (gcv *GitlabCIVerifier) checkAgainstLintAPI(lintRes *ci_yaml.VerificationRe
 	remoteInfos := git.FilterGitlabRemoteUrls(remoteUrls)
 
 	logging.Verbose("validate ci file against gitlab api")
-	lintRes, err = ci_yaml.GetFirstValidationResult(&ci_yaml.ValidationResultInput{
+	lintRes, err := ci_yaml.GetFirstValidationResult(&ci_yaml.ValidationResultInput{
 		RemoteInfos:      remoteInfos,
 		Token:            gcv.configuration.GitlabToken,
 		BaseUrlOverwrite: gcv.configuration.GitlabBaseUrlOverwrite(),
 		CiYaml:           virtual.Combined.FileContent,
+		LintRef:          gcv.configuration.LintRef,
 		Timeout:          3 * time.Second,
 	})
 	if err != nil {
