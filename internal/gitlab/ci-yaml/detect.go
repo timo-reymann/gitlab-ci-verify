@@ -31,6 +31,9 @@ type ValidationResultInput struct {
 	Token            string
 	BaseUrlOverwrite string
 	CiYaml           []byte
+	// LintRef is an optional branch, tag or commit SHA the CI YAML is validated against.
+	// When set, the lint API validates as a dry run in the context of the ref instead of the default branch
+	LintRef string
 	Timeout          time.Duration
 }
 
@@ -51,7 +54,7 @@ func GetFirstValidationResult(vri *ValidationResultInput) (*VerificationResultWi
 
 			var occurredErrs []error
 			gl := api2.NewClientWithMultiTokenSources(baseUrl, vri.Token)
-			lintRes, err := gl.LintCiYaml(ctx, r.RepoSlug, vri.CiYaml)
+			lintRes, err := gl.LintCiYaml(ctx, r.RepoSlug, vri.CiYaml, vri.LintRef)
 			if err != nil {
 				occurredErrs = append(occurredErrs, err)
 				logging.Warn("lint request failed for remote", remoteInfo.Hostname, ":", err.Error())
