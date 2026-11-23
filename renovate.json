@@ -7,6 +7,20 @@
     "local>timo-reymann/renovate-config//presets/groups/go-opa-isolated",
     "local>timo-reymann/renovate-config//presets/groups/go-yaml-fork"
   ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^internal\\/shellcheck\\/bin\\/VERSION$/"
+      ],
+      "matchStrings": [
+        "^v?(?<currentValue>\\d+\\.\\d+\\.\\d+)\\s*$"
+      ],
+      "datasourceTemplate": "github-releases",
+      "packageNameTemplate": "koalaman/shellcheck",
+      "versioningTemplate": "semver"
+    }
+  ],
   "packageRules": [
     {
       "matchPackageNames": [

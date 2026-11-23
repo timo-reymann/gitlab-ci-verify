@@ -22,6 +22,12 @@ gitlab-ci-verify --version
 In addition, you can find information about the latest version in the source tree
 at [internal/shellcheck/bin/README.txt](https://github.com/timo-reymann/gitlab-ci-verify/blob/main/internal/shellcheck/bin/README.txt).
 
+The bundled shellcheck version is pinned in
+[internal/shellcheck/bin/VERSION](https://github.com/timo-reymann/gitlab-ci-verify/blob/main/internal/shellcheck/bin/VERSION).
+Renovate watches this file, and
+[scripts/update-shellcheck.sh](https://github.com/timo-reymann/gitlab-ci-verify/blob/main/scripts/update-shellcheck.sh)
+refreshes the binaries for a version.
+
 ## Execution of the binary
 
 Under the hood gitlab-ci-verify uses [memexec](https://github.com/amenzhinsky/go-memexec). Depending on the platform, the
