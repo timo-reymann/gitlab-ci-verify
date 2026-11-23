@@ -1486,6 +1486,11 @@
 </span></code></pre></div>
 <p>In addition, you can find information about the latest version in the source tree
 at <a href="https://github.com/timo-reymann/gitlab-ci-verify/blob/main/internal/shellcheck/bin/README.txt">internal/shellcheck/bin/README.txt</a>.</p>
+<p>The bundled shellcheck version is pinned in
+<a href="https://github.com/timo-reymann/gitlab-ci-verify/blob/main/internal/shellcheck/bin/VERSION">internal/shellcheck/bin/VERSION</a>.
+Renovate watches this file, and
+<a href="https://github.com/timo-reymann/gitlab-ci-verify/blob/main/scripts/update-shellcheck.sh">scripts/update-shellcheck.sh</a>
+refreshes the binaries for a version.</p>
 <h2 id="execution-of-the-binary">Execution of the binary</h2>
 <p>Under the hood gitlab-ci-verify uses <a href="https://github.com/amenzhinsky/go-memexec">memexec</a>. Depending on the platform, the
 execution method differs:</p>
