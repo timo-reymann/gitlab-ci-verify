@@ -1,4 +1,1 @@
-properdocs==1.6.7
-mkdocs-material==9.8.1
-mkdocs-awesome-nav==3.3.0
-mkdocs-decision-records==2.4.4
+zensical==0.1.3
