@@ -34,7 +34,7 @@ type ValidationResultInput struct {
 	// LintRef is an optional branch, tag or commit SHA the CI YAML is validated against.
 	// When set, the lint API validates as a dry run in the context of the ref instead of the default branch
 	LintRef string
-	Timeout          time.Duration
+	Timeout time.Duration
 }
 
 // GetFirstValidationResult starts a parallel request to all remotes and tries to use the API to lint the CI file
