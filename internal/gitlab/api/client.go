@@ -34,12 +34,12 @@ func (g *Client) Do(r *Request) (*Response, error) {
 }
 
 // NewRequest creates a new request prefixing it with the base url and adding the GitLab access token
-func (g *Client) NewRequest(method string, path string, payload []byte) (*Request, error) {
+func (g *Client) NewRequest(method, path string, payload []byte) (*Request, error) {
 	return NewRequest(context.Background(), method, g.apiBaseUrl, path, g.token, payload)
 }
 
 // NewRequestWithContext creates a new request prefixing it with the base url and adding the GitLab access token bound to a context
-func (g *Client) NewRequestWithContext(ctx context.Context, method string, path string, payload []byte) (*Request, error) {
+func (g *Client) NewRequestWithContext(ctx context.Context, method, path string, payload []byte) (*Request, error) {
 	return NewRequest(ctx, method, g.apiBaseUrl, path, g.token, payload)
 }
 

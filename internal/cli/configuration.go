@@ -34,11 +34,11 @@ type Configuration struct {
 	IncludedOPABundles []string
 }
 
-func (conf *Configuration) addBoolFlag(field *bool, long string, short string, val bool, usage string) {
+func (conf *Configuration) addBoolFlag(field *bool, long, short string, val bool, usage string) {
 	flag.BoolVarP(field, long, short, val, usage)
 }
 
-func (conf *Configuration) addStringsFlag(field *[]string, long string, short string, val []string, usage string) {
+func (conf *Configuration) addStringsFlag(field *[]string, long, short string, val []string, usage string) {
 	if short == "" {
 		flag.StringSliceVar(field, long, val, usage)
 	} else {
@@ -46,7 +46,7 @@ func (conf *Configuration) addStringsFlag(field *[]string, long string, short st
 	}
 }
 
-func (conf *Configuration) addStringFlag(field *string, long string, short string, val string, usage string) {
+func (conf *Configuration) addStringFlag(field *string, long, short, val, usage string) {
 	flag.StringVarP(field, long, short, val, usage)
 }
 
