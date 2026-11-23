@@ -1,0 +1,62 @@
+[project]
+site_name = "gitlab-ci-verify"
+repo_url = "https://github.com/timo-reymann/gitlab-ci-verify"
+use_directory_urls = false
+
+[project.theme]
+# "classic" keeps the Material for MkDocs look the docs had before
+variant = "classic"
+favicon = "images/logo.png"
+logo = "images/logo.png"
+features = [
+  "navigation.instant",
+  "navigation.instant.prefetch",
+  "navigation.tracking",
+  "navigation.tabs",
+  "navigation.path",
+  "navigation.collapse",
+]
+
+[project.theme.icon]
+repo = "material/github"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme)"
+primary = "green"
+toggle.icon = "material/brightness-auto"
+toggle.name = "Switch to light mode"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: light)"
+scheme = "default"
+primary = "green"
+toggle.icon = "material/brightness-7"
+toggle.name = "Switch to dark mode"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: dark)"
+scheme = "slate"
+primary = "green"
+toggle.icon = "material/brightness-4"
+toggle.name = "Switch to system preference"
+
+[project.markdown_extensions]
+admonition = {}
+attr_list = {}
+md_in_html = {}
+pymdownx.highlight.anchor_linenums = true
+pymdownx.highlight.line_spans = "__span"
+pymdownx.highlight.pygments_lang_class = true
+pymdownx.inlinehilite = {}
+pymdownx.snippets = {}
+pymdownx.superfences = {}
+
+[project.plugins.awesome-nav]
+
+# Replaces the status badge the decision-records plugin rendered on ADR pages:
+# the `status` front matter of an ADR is shown as an icon with tooltip in the nav
+[project.extra.status]
+proposed = "Proposed"
+accepted = "Accepted"
+rejected = "Rejected"
+deprecated = "Deprecated"
