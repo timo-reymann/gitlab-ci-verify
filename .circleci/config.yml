@@ -169,10 +169,10 @@ jobs:
       - restore_cache:
           key: docs-dependencies-{{ checksum "requirements-docs.txt" }}
       - run:
-          name: Build properdocs documentation
+          name: Build zensical documentation
           command: |
             pip install -r requirements-docs.txt
-            properdocs build
+            zensical build
             mv site/* gh-pages/
       - save_cache:
           key: docs-dependencies-{{ checksum "requirements-docs.txt" }}
