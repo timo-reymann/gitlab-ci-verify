@@ -45,7 +45,7 @@ func (g *Client) NewRequestWithContext(ctx context.Context, method, path string,
 
 // LintCiYaml against the api for a project
 // When ref is not empty, the lint API validates the pipeline as a dry run in the context of the given
-// branch, tag or commit SHA instead of the default branch of the project
+// branch or tag instead of the default branch of the project
 func (g *Client) LintCiYaml(ctx context.Context, projectSlug string, ciYaml []byte, ref string) (*CiLintResult, error) {
 	payload := map[string]any{
 		"content": string(ciYaml),

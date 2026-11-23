@@ -31,7 +31,7 @@ type ValidationResultInput struct {
 	Token            string
 	BaseUrlOverwrite string
 	CiYaml           []byte
-	// LintRef is an optional branch, tag or commit SHA the CI YAML is validated against.
+	// LintRef is an optional branch or tag the CI YAML is validated against.
 	// When set, the lint API validates as a dry run in the context of the ref instead of the default branch
 	LintRef string
 	Timeout time.Duration
