@@ -4,8 +4,6 @@ repo_url = "https://github.com/timo-reymann/gitlab-ci-verify"
 use_directory_urls = false
 
 [project.theme]
-# "classic" keeps the Material for MkDocs look the docs had before
-variant = "classic"
 favicon = "images/logo.png"
 logo = "images/logo.png"
 features = [
