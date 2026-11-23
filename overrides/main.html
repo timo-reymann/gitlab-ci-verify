@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{#-
+  Replacement for the mkdocs-decision-records plugin, which Zensical cannot run:
+  render the status, date and deciders of an ADR (front matter) as a table below the page title
+  (ADRs have a single h1, so the table appears once).
+-#}
+{% set status_colors = {
+  "accepted": "#28a745",
+  "proposed": "gray",
+  "rejected": "#dc3545",
+  "deprecated": "#6c757d",
+  "superseded": "#17a2b8"
+} %}
+
+{% block content %}
+  {% include "partials/actions.html" %}
+  {% if page.meta and page.meta.status %}
+    {% set deciders = page.meta.deciders | d([]) %}
+    {% set meta_table %}
+      <table>
+        <tr><td><strong>Status</strong></td><td><span style="color: white; background: {{ status_colors[page.meta.status] | d('gray') }}; padding: .4em; border-radius: 8px;">{{ page.meta.status }}</span></td></tr>
+        {% if page.meta.date %}<tr><td><strong>Date</strong></td><td>{{ page.meta.date }}</td></tr>{% endif %}
+        {% if deciders %}
+          <tr><td><strong>{{ "Deciders" if deciders | length > 1 else "Decider" }}</strong></td><td>{{ deciders | join(", ") }}</td></tr>
+        {% endif %}
+      </table>
+    {% endset %}
+    {{ page.content | replace("</h1>", "</h1>" ~ meta_table) | safe }}
+  {% else %}
+    {{ page.content }}
+  {% endif %}
+  {% include "partials/tags.html" %}
+  {% include "partials/source-file.html" %}
+  {% include "partials/feedback.html" %}
+  {% include "partials/comments.html" %}
+{% endblock %}

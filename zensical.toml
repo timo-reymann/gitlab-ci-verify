@@ -4,6 +4,8 @@ repo_url = "https://github.com/timo-reymann/gitlab-ci-verify"
 use_directory_urls = false
 
 [project.theme]
+# overrides/main.html renders the ADR status table (replacement for the decision-records plugin)
+custom_dir = "overrides"
 favicon = "images/logo.png"
 logo = "images/logo.png"
 features = [
