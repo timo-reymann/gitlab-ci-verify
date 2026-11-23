@@ -63,7 +63,7 @@ func (conf *Configuration) defineFlags() {
 	conf.addStringsFlag(&conf.ExcludedChecks, "exclude", "E", []string{}, "Exclude the given check codes")
 	conf.addBoolFlag(&conf.NoLintAPICall, "no-lint-api", "", false, "Add this flag to skip validating against Pipeline Check API. Please note that checks relying on the merged YAML will also not be executed in that case.")
 	conf.addBoolFlag(&conf.NoLintAPICallInCi, "no-lint-api-in-ci", "", false, "Add this flag to avoid validating against Pipeline Check API inside a CI pipeline, as its assumed that running in CI is proof enough the syntax is valid. Please note that checks relying on the merged YAML will also not be executed in that case.")
-	conf.addStringFlag(&conf.LintRef, "lint-ref", "", "", "Branch, tag or commit SHA the CI YAML is validated against. When set, the CI Lint API validates as a dry run in the context of the ref, so includes and variables like $CI_COMMIT_SHA resolve for the given ref instead of the default branch. Useful to verify feature branches, e.g. --lint-ref \"$CI_COMMIT_REF_NAME\"")
+	conf.addStringFlag(&conf.LintRef, "lint-ref", "", "", "Branch or tag the CI YAML is validated against. When set, the CI Lint API validates as a dry run in the context of the ref, so includes and variables like $CI_COMMIT_SHA resolve for the given ref instead of the default branch. Useful to verify feature branches, e.g. --lint-ref \"$CI_COMMIT_REF_NAME\"")
 	conf.addStringsFlag(&conf.IncludedOPABundles, "include-opa-bundle", "I", []string{}, "Include remote OPA bundles for checks")
 }
 

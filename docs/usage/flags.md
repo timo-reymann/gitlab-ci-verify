@@ -15,7 +15,7 @@ of your project. When your pipeline includes a component pinned to the current c
 `component: $CI_SERVER_FQDN/$CI_PROJECT_PATH/ci@$CI_COMMIT_SHA`, and that component only exists on your
 feature branch, the validation fails or uses the stale component from the default branch.
 
-Pass `--lint-ref` with a branch, tag or commit SHA to validate the pipeline in the context of the ref.
+Pass `--lint-ref` with a branch or tag to validate the pipeline in the context of the ref.
 In this mode the CI Lint API runs a pipeline simulation (dry run) instead of the static check:
 
 ```bash
