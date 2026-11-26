@@ -59,12 +59,22 @@ func (l *consoleLogger) Warn(v ...any) {
 	l.warn.Println(v...)
 }
 
+// Notice prints a warning that should always be visible, regardless of the log level
+func (l *consoleLogger) Notice(v ...any) {
+	l.warn.Println(v...)
+}
+
 func (l *consoleLogger) Error(v ...any) {
 	l.error.Println(v...)
 }
 
 func Warn(v ...any) {
 	DefaultLogger.Warn(v...)
+}
+
+// Notice prints a warning that should always be visible, regardless of the log level
+func Notice(v ...any) {
+	DefaultLogger.Notice(v...)
 }
 
 func Error(v ...any) {

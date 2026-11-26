@@ -161,22 +161,7 @@ func (cyf *CiYamlFile) ConfigurationContent() []byte {
 		startLine = cyf.ParsedYamlDoc.Content[0].Line
 	}
 
-	// blank everything up to and including the last document marker before the configuration
-	blankUntil := 0
-	for idx := 0; idx < len(lines) && (startLine == 0 || idx+1 < startLine); idx++ {
-		if documentMarker.Match(lines[idx]) {
-			blankUntil = idx + 1
-		}
-	}
-
-	// blank everything starting with the first document marker after the configuration
-	blankFrom := len(lines)
-	for idx := max(startLine, blankUntil); idx < len(lines); idx++ {
-		if documentMarker.Match(lines[idx]) {
-			blankFrom = idx
-			break
-		}
-	}
+	blankUntil, blankFrom := configurationRange(lines, startLine)
 
 	result := bytes.NewBuffer(make([]byte, 0, len(cyf.FileContent)))
 	for idx, line := range lines {
@@ -190,4 +175,26 @@ func (cyf *CiYamlFile) ConfigurationContent() []byte {
 	}
 
 	return result.Bytes()
+}
+
+// configurationRange returns the 0-based line indexes surrounding the configuration document: all lines before
+// blankUntil and starting with blankFrom are not part of it. startLine is the 1-based line the configuration
+// document starts in, 0 if there is no content.
+func configurationRange(lines [][]byte, startLine int) (blankUntil int, blankFrom int) {
+	// everything up to and including the last document marker before the configuration
+	for idx := 0; idx < len(lines) && (startLine == 0 || idx+1 < startLine); idx++ {
+		if documentMarker.Match(lines[idx]) {
+			blankUntil = idx + 1
+		}
+	}
+
+	// everything starting with the first document marker after the configuration
+	blankFrom = len(lines)
+	for idx := max(startLine, blankUntil); idx < len(lines); idx++ {
+		if documentMarker.Match(lines[idx]) {
+			return blankUntil, idx
+		}
+	}
+
+	return blankUntil, blankFrom
 }

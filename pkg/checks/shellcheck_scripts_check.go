@@ -3,6 +3,7 @@ package checks
 import (
 	"fmt"
 	"maps"
+	"regexp"
 	"slices"
 	"strconv"
 	"strings"
@@ -42,6 +43,18 @@ func (a *analyzedScript) line(shellcheckLine int) ci_yaml2.ScriptPartLine {
 	return a.Lines[lineNo]
 }
 
+// inputInterpolation matches GitLab input interpolations like $[[ inputs.name ]] on a single line
+var inputInterpolation = regexp.MustCompile(`\$\[\[.*?]]`)
+
+// inputInterpolationPlaceholder replaces input interpolations, it is a plain word that is valid in any shell context
+var inputInterpolationPlaceholder = []byte("gitlab_input")
+
+// maskInputInterpolations replaces GitLab input interpolations, which are no valid shell syntax and are resolved by
+// GitLab before the script runs. Line breaks are preserved, so line numbers stay the same.
+func maskInputInterpolations(script []byte) []byte {
+	return inputInterpolation.ReplaceAll(script, inputInterpolationPlaceholder)
+}
+
 func scriptKey(jobName, key string) string {
 	return jobName + "\x00" + key
 }
@@ -74,7 +87,7 @@ func (s ShellScriptCheck) Run(i *CheckInput) ([]CheckFinding, error) {
 		if i.CanProvideMergedYaml() {
 			findings = append(findings, s.mergedYamlFindings(shellChecker, i, localScripts)...)
 		} else {
-			logging.Warn("Shellcheck for the merged YAML is enabled, but the merged YAML is not available as the CI Lint API is not used or the pipeline is invalid")
+			logging.Notice("--shellcheck-merged-yaml is set, but the merged YAML is not available as the CI Lint API is not used or the pipeline is invalid. Only local scripts are analyzed.")
 		}
 	}
 
@@ -101,7 +114,7 @@ func (s ShellScriptCheck) analyze(shellChecker *shellcheck.ShellChecker, flags s
 					continue
 				}
 
-				result, err := shellChecker.AnalyzeSnippet(joinedScript, flags)
+				result, err := shellChecker.AnalyzeSnippet(maskInputInterpolations(joinedScript), flags)
 				if err != nil {
 					logging.Warn("Failed to analyze snippet in job", jobWithScripts.JobName)
 					continue

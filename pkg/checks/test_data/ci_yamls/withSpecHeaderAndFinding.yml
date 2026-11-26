@@ -7,3 +7,4 @@ build:
   image: $[[ inputs.image ]]
   script:
     - echo $UNQUOTED_VARIABLE
+    - echo "$[[ inputs.image ]]" $[[ inputs.image ]]

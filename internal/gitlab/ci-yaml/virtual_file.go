@@ -58,7 +58,7 @@ type VirtualFileResolveFinding struct {
 // Returns nil if the line is not in the virtual CI YAML
 func (v *VirtualCiYamlFile) Resolve(line int) (*VirtualCiYamlFilePart, *location.Location) {
 	idx := sort.Search(len(v.Parts), func(i int) bool {
-		return v.Parts[i].StartLine >= line
+		return v.Parts[i].StartLine > line
 	})
 	var part *VirtualCiYamlFilePart
 	if idx > 0 {
@@ -136,7 +136,8 @@ func addEntryFilePart(virtualFile *VirtualCiYamlFile, entryFile *CiYamlFile, ent
 		CiYamlFile: entryFile,
 		Path:       entryFilePath,
 		StartLine:  1,
-		EndLine:    entryLineCount + 2,
+		// the entry file and the added line break, the next part starts in the following line
+		EndLine: entryLineCount + 1,
 	})
 	// The entry file is kept as-is, including a potential header, as it is the start of the virtual CI YAML
 	combined.writeBoth(entryFile.FileContent)

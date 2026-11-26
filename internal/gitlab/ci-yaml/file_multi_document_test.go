@@ -212,6 +212,17 @@ func TestCreateVirtualCiYamlFile_IncludesWithMultipleDocuments(t *testing.T) {
 		t.Errorf("LintYaml is missing plain include or the include block:\n%s", lintYaml)
 	}
 
+	for idx, part := range virtualFile.Parts {
+		if idx > 0 && virtualFile.Parts[idx-1].EndLine >= part.StartLine {
+			t.Errorf("Part %s overlaps with the previous part", part.Path)
+		}
+
+		_, loc := virtualFile.Resolve(part.StartLine)
+		if loc == nil || loc.File != part.Path || loc.Line != 0 {
+			t.Errorf("Resolve(%d) = %v, want %s:0", part.StartLine, loc, part.Path)
+		}
+	}
+
 	componentPart := virtualFile.Parts[1]
 	componentJob := virtualFile.Combined.ParsedYamlDoc.Content[0]
 	var componentJobLine int
