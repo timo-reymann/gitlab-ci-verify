@@ -38,3 +38,12 @@ execution method differs:
 - Linux: Creates a memory file descriptor that loads the entire binary in the RAM and executes it
 
 For efficiency reasons, the shellcheck instance is reused for all scripts discovered.
+## Which scripts are analyzed
+
+By default, the scripts from the [virtual CI YAML](include-resolution.md) are analyzed: the entry file and all
+local includes. This includes files with a [`spec` header](https://docs.gitlab.com/ci/inputs/), such as CI/CD
+components in your own repository. Their `$[[ inputs.* ]]` expressions are analyzed as written, as only GitLab can
+resolve them.
+
+To also analyze scripts from remote includes and interpolated inputs, enable
+[`--shellcheck-merged-yaml`](../usage/flags.md#shellcheck-for-the-merged-configuration-shellcheck-merged-yaml).

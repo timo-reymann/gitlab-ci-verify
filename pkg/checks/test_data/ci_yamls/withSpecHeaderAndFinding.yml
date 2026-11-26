@@ -1,0 +1,9 @@
+spec:
+  inputs:
+    image:
+      default: alpine
+---
+build:
+  image: $[[ inputs.image ]]
+  script:
+    - echo $UNQUOTED_VARIABLE

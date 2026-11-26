@@ -1,0 +1,9 @@
+spec:
+  inputs:
+    stage:
+      default: test
+---
+test:
+  stage: $[[ inputs.stage ]]
+  script:
+    - echo $UNQUOTED_VARIABLE

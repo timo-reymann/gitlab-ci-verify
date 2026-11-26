@@ -190,7 +190,7 @@ func (gcv *GitlabCIVerifier) checkAgainstLintAPI(virtual *ci_yaml.VirtualCiYamlF
 		RemoteInfos:      remoteInfos,
 		Token:            gcv.configuration.GitlabToken,
 		BaseUrlOverwrite: gcv.configuration.GitlabBaseUrlOverwrite(),
-		CiYaml:           virtual.Combined.FileContent,
+		CiYaml:           virtual.LintYaml,
 		LintRef:          gcv.configuration.LintRef,
 		Timeout:          3 * time.Second,
 	})

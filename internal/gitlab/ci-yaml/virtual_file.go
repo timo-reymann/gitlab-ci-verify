@@ -31,6 +31,11 @@ type VirtualCiYamlFile struct {
 	EntryFilePath string
 	// Combined contains the concat CI YAML file
 	Combined *CiYamlFile
+	// LintYaml contains the CI YAML that is sent to the GitLab CI Lint API.
+	//
+	// It is the same as the content of Combined, except for local includes that have a header (`spec:`). They are
+	// only added via the include block, so GitLab can interpolate their inputs.
+	LintYaml []byte
 	// Parts contains all parts of the virtual CI YAML file in the order they appear
 	Parts []*VirtualCiYamlFilePart
 	// ResolveFindings contains findings generated during virtual file resolution (e.g., empty glob patterns)
@@ -94,7 +99,10 @@ func CreateVirtualCiYamlFile(projectRoot string, entryFilePath string, entryFile
 		ResolveFindings: []VirtualFileResolveFinding{},
 	}
 
-	combined := bytes.NewBuffer(nil)
+	combined := &combinedBuffers{
+		local: bytes.NewBuffer(nil),
+		lint:  bytes.NewBuffer(nil),
+	}
 	line := addEntryFilePart(virtualFile, entryFile, entryFilePath, combined)
 
 	uniqueLocalIncludes := getUniqueLocalIncludes(entryFile)
@@ -110,8 +118,19 @@ func CreateVirtualCiYamlFile(projectRoot string, entryFilePath string, entryFile
 	return virtualFile, nil
 }
 
+// combinedBuffers holds the content for the local analysis and the content sent to the CI Lint API
+type combinedBuffers struct {
+	local *bytes.Buffer
+	lint  *bytes.Buffer
+}
+
+func (c *combinedBuffers) writeBoth(content []byte) {
+	c.local.Write(content)
+	c.lint.Write(content)
+}
+
 // addEntryFilePart adds the entry file as the first part and returns the next line number
-func addEntryFilePart(virtualFile *VirtualCiYamlFile, entryFile *CiYamlFile, entryFilePath string, combined *bytes.Buffer) int {
+func addEntryFilePart(virtualFile *VirtualCiYamlFile, entryFile *CiYamlFile, entryFilePath string, combined *combinedBuffers) int {
 	entryLineCount := bytes.Count(entryFile.FileContent, []byte("\n"))
 	virtualFile.Parts = append(virtualFile.Parts, &VirtualCiYamlFilePart{
 		CiYamlFile: entryFile,
@@ -119,8 +138,9 @@ func addEntryFilePart(virtualFile *VirtualCiYamlFile, entryFile *CiYamlFile, ent
 		StartLine:  1,
 		EndLine:    entryLineCount + 2,
 	})
-	combined.Write(entryFile.FileContent)
-	combined.Write([]byte("\n"))
+	// The entry file is kept as-is, including a potential header, as it is the start of the virtual CI YAML
+	combined.writeBoth(entryFile.FileContent)
+	combined.writeBoth([]byte("\n"))
 	return entryLineCount + 2
 }
 
@@ -131,7 +151,7 @@ func getUniqueLocalIncludes(entryFile *CiYamlFile) []includes2.Include {
 }
 
 // processLocalIncludes processes all local includes and adds them to the virtual file
-func processLocalIncludes(virtualFile *VirtualCiYamlFile, uniqueLocalIncludes []includes2.Include, projectRoot, entryFilePath string, combined *bytes.Buffer, startLine int) (int, error) {
+func processLocalIncludes(virtualFile *VirtualCiYamlFile, uniqueLocalIncludes []includes2.Include, projectRoot, entryFilePath string, combined *combinedBuffers, startLine int) (int, error) {
 	addedIncludePaths := make([]string, 0)
 	line := startLine
 
@@ -175,7 +195,7 @@ func checkAndWarnEmptyGlobPattern(virtualFile *VirtualCiYamlFile, localInclude *
 }
 
 // addIncludeParts adds parts for all resolved include paths
-func addIncludeParts(virtualFile *VirtualCiYamlFile, includePaths []string, addedIncludePaths *[]string, combined *bytes.Buffer, startLine int) int {
+func addIncludeParts(virtualFile *VirtualCiYamlFile, includePaths []string, addedIncludePaths *[]string, combined *combinedBuffers, startLine int) int {
 	line := startLine
 
 	for _, includePath := range includePaths {
@@ -197,8 +217,19 @@ func addIncludeParts(virtualFile *VirtualCiYamlFile, includePaths []string, adde
 
 		*addedIncludePaths = append(*addedIncludePaths, includePath)
 		virtualFile.Parts = append(virtualFile.Parts, part)
-		combined.Write(part.CiYamlFile.FileContent)
-		combined.Write([]byte("\n"))
+		// Only the configuration document is added, so the virtual CI YAML stays a single document. Headers and
+		// document markers are blanked out, which preserves the line numbers.
+		configurationContent := part.CiYamlFile.ConfigurationContent()
+		combined.local.Write(configurationContent)
+		combined.local.Write([]byte("\n"))
+
+		// Files with a header (e.g., spec:inputs) contain input interpolations that only GitLab can resolve.
+		// Inlining them would override the interpolated configuration loaded via the include block, so for the
+		// CI Lint API they are only added via the include block.
+		if !part.CiYamlFile.HasHeader() {
+			combined.lint.Write(configurationContent)
+			combined.lint.Write([]byte("\n"))
+		}
 		line = part.EndLine + 1
 	}
 
@@ -206,19 +237,20 @@ func addIncludeParts(virtualFile *VirtualCiYamlFile, includePaths []string, adde
 }
 
 // finalizeCombinedYaml adds the include block and creates the combined YAML file
-func finalizeCombinedYaml(virtualFile *VirtualCiYamlFile, uniqueLocalIncludes []includes2.Include, combined *bytes.Buffer) error {
-	combined.Write([]byte("\n# Auto generated include block\n"))
+func finalizeCombinedYaml(virtualFile *VirtualCiYamlFile, uniqueLocalIncludes []includes2.Include, combined *combinedBuffers) error {
+	combined.writeBoth([]byte("\n# Auto generated include block\n"))
 	includeBlockYaml, err := joinIncludes(uniqueLocalIncludes)
 	if err != nil {
 		return err
 	}
-	combined.Write(includeBlockYaml)
+	combined.writeBoth(includeBlockYaml)
 
-	combinedCiYaml, err := NewCiYamlFile(combined.Bytes())
+	combinedCiYaml, err := NewCiYamlFile(combined.local.Bytes())
 	if err != nil {
 		return err
 	}
 	virtualFile.Combined = combinedCiYaml
+	virtualFile.LintYaml = combined.lint.Bytes()
 
 	return nil
 }

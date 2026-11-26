@@ -24,6 +24,16 @@ Once this processing is done, the virtual CI YAML is used for checks, including 
 |:---------------------------------------------------------:|
 |     *How includes are joined to the Virtual CI YAML*      |
 
+### Files with a `spec` header
+
+GitLab CI files can start with a [`spec` header](https://docs.gitlab.com/ci/inputs/), separated from the
+configuration by `---`. gitlab-ci-verify follows the same rules as GitLab: when the first YAML document contains
+`spec`, the second document is the configuration, otherwise the first document is.
+
+For local includes with a header, only the configuration is added to the virtual CI YAML, so their jobs are checked
+locally as well. `$[[ inputs.* ]]` expressions stay as written. To let GitLab interpolate the inputs, these files
+are not inlined into the YAML sent to the Pipeline Lint API, it loads them via the include block instead.
+
 ## Limitations
 
 As gitlab-ci-verify cant apply the exact same logic as the Gitlab CI YAML resolver, it has some limitations:

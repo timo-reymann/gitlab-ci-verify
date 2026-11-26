@@ -1,0 +1,12 @@
+include:
+  - component: $CI_SERVER_FQDN/org/components/build@1.0.0
+
+local-job:
+  script:
+    - echo "unchanged"
+    - echo $UNQUOTED_LOCAL
+
+partial-job:
+  script:
+    - echo $UNQUOTED_KEEP
+    - echo "placeholder"

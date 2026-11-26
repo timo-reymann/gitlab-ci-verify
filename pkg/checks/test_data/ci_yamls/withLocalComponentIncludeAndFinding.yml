@@ -1,0 +1,7 @@
+include:
+  - local: /includes/ci/local-components/test.yml
+    inputs:
+      stage: test
+
+stages:
+  - test
