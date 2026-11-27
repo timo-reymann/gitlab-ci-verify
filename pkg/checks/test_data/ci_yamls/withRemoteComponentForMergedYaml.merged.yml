@@ -1,0 +1,11 @@
+local-job:
+  script:
+  - echo "unchanged"
+  - echo $UNQUOTED_LOCAL
+partial-job:
+  script:
+  - echo $UNQUOTED_KEEP
+  - echo $INTERPOLATED
+component-job:
+  script:
+  - echo $UNQUOTED_COMPONENT

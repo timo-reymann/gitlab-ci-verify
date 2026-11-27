@@ -82,6 +82,26 @@ func TestVirtualCiYamlFile_Resolve(t *testing.T) {
 			expectedLoc: location.NewLocation("part2.yml", 4),
 		},
 		{
+			name: "first line of first part",
+			parts: []*VirtualCiYamlFilePart{
+				{StartLine: 1, EndLine: 10, Path: "part1.yml"},
+				{StartLine: 11, EndLine: 20, Path: "part2.yml"},
+			},
+			line:        1,
+			expected:    &VirtualCiYamlFilePart{StartLine: 1, EndLine: 10, Path: "part1.yml"},
+			expectedLoc: location.NewLocation("part1.yml", 0),
+		},
+		{
+			name: "first line of second part",
+			parts: []*VirtualCiYamlFilePart{
+				{StartLine: 1, EndLine: 10, Path: "part1.yml"},
+				{StartLine: 11, EndLine: 20, Path: "part2.yml"},
+			},
+			line:        11,
+			expected:    &VirtualCiYamlFilePart{StartLine: 11, EndLine: 20, Path: "part2.yml"},
+			expectedLoc: location.NewLocation("part2.yml", 0),
+		},
+		{
 			name: "line before first part",
 			parts: []*VirtualCiYamlFilePart{
 				{StartLine: 1, EndLine: 10, Path: "part1.yml"},

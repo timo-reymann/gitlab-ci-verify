@@ -24,6 +24,7 @@ type Configuration struct {
 	Verbose            bool
 	Debug              bool
 	ShellcheckFlags    string
+	ShellcheckMerged   bool
 	OutputFormat       string
 	OutputFile         string
 	FailSeverity       string
@@ -57,6 +58,7 @@ func (conf *Configuration) defineFlags() {
 	conf.addBoolFlag(&conf.Debug, "debug", "", false, "Enable debug output")
 	conf.addBoolFlag(&conf.Verbose, "verbose", "", false, "Enable verbose output")
 	conf.addStringFlag(&conf.ShellcheckFlags, "shellcheck-flags", "", "", "Pass custom flags to shellcheck")
+	conf.addBoolFlag(&conf.ShellcheckMerged, "shellcheck-merged-yaml", "", false, "Also run shellcheck on scripts that only exist in the merged YAML returned by the CI Lint API, e.g. from CI/CD components or with interpolated inputs. These findings have no exact location, they are reported for the entry file and job. Requires the CI Lint API.")
 	conf.addStringFlag(&conf.OutputFormat, "format", "f", "text", "Format for the output, valid options are json, table, text and gitlab. If GITLAB_CI_VERIFY_OUTPUT_FORMAT this parameter is ignored")
 	conf.addStringFlag(&conf.OutputFile, "output", "o", "", "Write the report to a file instead of stdout")
 	conf.addStringFlag(&conf.FailSeverity, "severity", "S", "style", "Set the severity level on which to consider findings as errors and exiting with non zero exit code.")
